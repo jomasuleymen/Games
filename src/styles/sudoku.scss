@@ -1,0 +1,70 @@
+$lineWidth: 2px;
+
+.wrapper{
+    padding: 5px;
+    border: 0.5px solid rgb(15, 13, 13);
+    width: 860px;
+    height: 540px;
+    margin: 0 auto;
+}
+
+.status-block{
+    border: 0.5px solid rgb(15, 13, 13);
+    margin-top: 2px;
+    padding: 3px;
+    height: 5%;
+}
+
+.game-body{
+    display: flex;
+    height: 500px;
+    margin-top: 5px;
+    padding: 0;
+}
+
+.config-block{
+    border: 0.5px solid rgb(15, 13, 13);
+    display: inline-block;
+    margin-left: 3px;
+    flex-grow: 1;
+}
+
+.playground{
+    flex-direction: column;
+    margin-right: 3px;
+    width: 495px;
+    height: 495px;
+    display: flex;
+}
+
+.row{
+    display: flex;
+    flex-grow: 1;
+    padding: 0;
+    margin: 0;
+}
+
+.cell{
+    border: 0.5px solid gray;
+    text-align: center;
+    padding: 10px;
+    flex-grow: 1;
+    margin: 0;
+}
+
+
+.line-left{
+    border-left: $lineWidth solid black;
+}
+
+.line-top{
+    border-top: $lineWidth solid black;
+}
+
+.line-bottom{
+    border-bottom: $lineWidth solid black;
+}
+
+.line-right{
+    border-right: $lineWidth solid black;
+}
