@@ -1,4 +1,5 @@
-$lineWidth: 2px;
+$lineWidth: 2.3px;
+$lineColor: rgb(0, 0, 0);
 
 .wrapper{
     padding: 5px;
@@ -26,7 +27,7 @@ $lineWidth: 2px;
     border: 0.5px solid rgb(15, 13, 13);
     display: inline-block;
     margin-left: 3px;
-    flex-grow: 1;
+    flex: 1;
 }
 
 .playground{
@@ -39,32 +40,39 @@ $lineWidth: 2px;
 
 .row{
     display: flex;
-    flex-grow: 1;
+    flex: 1;
     padding: 0;
     margin: 0;
 }
 
 .cell{
-    border: 0.5px solid gray;
+    border: 0.5px solid rgb(205,214,225);
     text-align: center;
     padding: 10px;
-    flex-grow: 1;
+    flex: 1;
     margin: 0;
+    font-size: 25px;
+    font-weight: bold;
+    user-select: none;
+    outline: none;
+    color: transparent;
+    text-shadow:0 0 0 black;
+    cursor: default;
 }
 
 
 .line-left{
-    border-left: $lineWidth solid black;
+    border-left: $lineWidth solid $lineColor;
 }
 
 .line-top{
-    border-top: $lineWidth solid black;
+    border-top: $lineWidth solid $lineColor;
 }
 
 .line-bottom{
-    border-bottom: $lineWidth solid black;
+    border-bottom: $lineWidth solid $lineColor;
 }
 
 .line-right{
-    border-right: $lineWidth solid black;
+    border-right: $lineWidth solid $lineColor;
 }
