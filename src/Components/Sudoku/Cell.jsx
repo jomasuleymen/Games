@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
+import { isReadOnly, errNumber } from "./data";
 
-function Cell({ value, row, col, selectedCell, selectCell, selectedElement }) {
-    
+function Cell({ value, row, col, backgroundColor, click, isSelected }) {
     const cellClasses = useMemo(() => {
         const classes = ["cell"];
         if (row % 3 == 0) classes.push("line-top");
@@ -11,40 +11,23 @@ function Cell({ value, row, col, selectedCell, selectCell, selectedElement }) {
         return classes;
     }, []);
 
-    const style =
-        selectedElement.current != null
-            ? {
-                  backgroundColor:
-                      selectedCell.row == row && selectedCell.col == col
-                          ? "rgb(186,222,251)"
-                          : row == selectedCell.row ||
-                            col == selectedCell.col ||
-                            (row >= selectedCell.blockRowBegin &&
-                                row <= selectedCell.blockRowBegin + 2 &&
-                                col >= selectedCell.blockColBegin &&
-                                col <= selectedCell.blockColBegin + 2)
-                          ? "rgb(226,235,243)"
-                          : value != 0 && value == selectedElement.current.val
-                          ? "rgb(194,215,234)"
-                          : null,
-              }
-            : null;
+    const readOnly = useMemo(() => {
+        return isReadOnly(row, col);
+    }, []);
 
     return (
         <div
             className={cellClasses.join(" ")}
-            onClick={(event) => {
-                selectedElement.current = event.target;
-                selectCell({
-                    row,
-                    col,
-                    blockRowBegin: row - (row % 3),
-                    blockColBegin: col - (col % 3),
-                });
+            onClick={click}
+            style={{
+                backgroundColor:
+                    !isSelected && errNumber[row][col] > 0
+                        ? "rgb(247,207,214)"
+                        : backgroundColor,
+                color: readOnly ? "black" : "rgb(51, 120, 225)",
             }}
-            style={style}
         >
-            {value != 0 ? value : null}
+            {value || null}
         </div>
     );
 }

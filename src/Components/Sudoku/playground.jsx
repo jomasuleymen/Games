@@ -1,67 +1,87 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useReducer, useRef, useCallback } from "react";
+import { isReadOnly } from "./data";
+import { addIfError, subtractIfError } from "Utils/sudokuUtils";
 
-import Cell from "./Cell";
+import Row from "./Row";
 
-let randomData = [
-    [0, 0, 0, 0, 0, 0, 0, 9, 0],
-    [0, 0, 1, 0, 0, 2, 0, 0, 0],
-    [0, 4, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 2, 0, 0, 0, 0, 0],
-    [0, 0, 4, 0, 0, 2, 0, 0, 0],
-    [0, 3, 0, 0, 0, 0, 0, 4, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [2, 3, 0, 0, 0, 0, 0, 8, 1],
-];
+function Playground({ data }) {
+    const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
-const initData = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-];
-
-function Playground() {
-    const [selectedCell, selectCell] = useState({
+    const selectedCell = useRef({
         row: 0,
         col: 0,
-        blockRowBegin: 0,
-        blockColBegin: 0,
+        squareRowBegin: 0,
+        squareColBegin: 0,
+        value: -1,
     });
-
-    const [data, setData] = useState(initData);
-    const selectedElement = useRef(null);
+    const selectCell = useCallback(
+        (row, col) => {
+            selectedCell.current = {
+                row,
+                col,
+                squareRowBegin: row - (row % 3),
+                squareColBegin: col - (col % 3),
+                value: data[row][col],
+            };
+            forceUpdate();
+        },
+        [selectedCell, data]
+    );
 
     useEffect(() => {
-        setData(randomData);
-        document.addEventListener("keypress", (ev) => {
-            if (ev.key > 0 && ev.key <= 9 && selectedElement.current != null) {
-                selectedElement.current.innerText = ev.key;
+        selectCell(0, 0);
+        document.onkeyup = (ev) => {
+            const { row, col } = selectedCell.current;
+            if (isReadOnly(row, col)) return; // check in backend with initial data
+            const value = data[row][col];
+
+            if (ev.key > 0 && ev.key < 10) {
+                const insertedValue = ev.key - "0";
+                if (insertedValue == value) return;
+
+                data[row][col] = insertedValue;
+                subtractIfError(row, col, value, data);
+                addIfError(row, col, insertedValue, data);
+
+                forceUpdate();
+            } else if (ev.key == "Delete" || ev.key == "Backspace") {
+                data[row][col] = 0;
+                subtractIfError(row, col, value, data);
+                forceUpdate();
             }
-        });
-    }, []);
+        };
+
+        document.onkeydown = (ev) => {
+            let { row, col } = selectedCell.current;
+            if (ev.key == "ArrowUp") {
+                if (row <= 0) return;
+                row -= 1;
+            } else if (ev.key == "ArrowDown") {
+                if (row >= 8) return;
+                row += 1;
+            } else if (ev.key == "ArrowRight") {
+                if (col >= 8) return;
+                col += 1;
+            } else if (ev.key == "ArrowLeft") {
+                if (col <= 0) return;
+                col -= 1;
+            } else {
+                return;
+            }
+            selectCell(row, col);
+        };
+    }, [data]);
 
     return (
         <div className="playground">
             {data.map((row, rowIdx) => (
-                <div className="row" key={rowIdx}>
-                    {row.map((val, colIdx) => (
-                        <Cell
-                            value={val}
-                            key={`${rowIdx}${colIdx}`}
-                            row={rowIdx}
-                            col={colIdx}
-                            selectedCell={selectedCell}
-                            selectCell={selectCell}
-                            selectedElement={selectedElement}
-                        />
-                    ))}
-                </div>
+                <Row
+                    row={row}
+                    key={rowIdx}
+                    rowIndex={rowIdx}
+                    selectCell={selectCell}
+                    selectedCell={selectedCell.current}
+                />
             ))}
         </div>
     );
