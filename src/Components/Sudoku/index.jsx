@@ -1,29 +1,29 @@
 import React from "react";
 
-import Status from "./status";
-import Playground from "./playground";
-import ConfigBlock from "./configBlock";
-import { initialData, allZero } from "./data";
+import Status from "./Status";
+import Playground from "./Playground";
+import ConfigBlock from "./MenuTools";
+import { initialData, initGame } from "./gameData";
 
-import "Styles/sudoku.scss";
+function Wrapper() {
+    const [data, setData] = React.useState(initialData);
 
-function Wrapper(){
-    const [data, setData] = React.useState(allZero);
-    
     React.useEffect(() => {
-        const copyData = initialData.map((row) => row.slice()); // save bone of initial data
-        setData(copyData);
+        initGame()
+            .then((gameData) => {
+                setData(gameData);
+            });
     }, []);
 
     return (
         <div className="wrapper">
-             <Status />
-             <div className="game-body">
+            <Status />
+            <div className="game-body">
                 <Playground data={data} />
                 <ConfigBlock />
-             </div>
+            </div>
         </div>
-    )
+    );
 }
 
 export default Wrapper;

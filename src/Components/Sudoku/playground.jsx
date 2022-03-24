@@ -1,6 +1,8 @@
 import React, { useEffect, useReducer, useRef, useCallback } from "react";
-import { isReadOnly } from "./data";
+import { isReadOnly } from "./gameData";
 import { addIfError, subtractIfError } from "Utils/sudokuUtils";
+
+import "Styles/playground.scss";
 
 import Row from "./Row";
 
@@ -15,12 +17,13 @@ function Playground({ data }) {
         value: -1,
     });
     const selectCell = useCallback(
+        // dispatch
         (row, col) => {
             selectedCell.current = {
                 row,
                 col,
-                squareRowBegin: row - (row % 3),
-                squareColBegin: col - (col % 3),
+                squareRowBegin: Math.floor(row / 3) * 3,
+                squareColBegin: Math.floor(col / 3) * 3,
                 value: data[row][col],
             };
             forceUpdate();
@@ -30,7 +33,7 @@ function Playground({ data }) {
 
     useEffect(() => {
         selectCell(0, 0);
-        document.onkeyup = (ev) => {
+        window.onkeyup = (ev) => {
             const { row, col } = selectedCell.current;
             if (isReadOnly(row, col)) return; // check in backend with initial data
             const value = data[row][col];
@@ -51,7 +54,7 @@ function Playground({ data }) {
             }
         };
 
-        document.onkeydown = (ev) => {
+        window.onkeydown = (ev) => {
             let { row, col } = selectedCell.current;
             if (ev.key == "ArrowUp") {
                 if (row <= 0) return;

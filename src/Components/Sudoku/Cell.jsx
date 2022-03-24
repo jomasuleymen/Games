@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { isReadOnly, errNumber } from "./data";
+import { isReadOnly, errNumber } from "./gameData";
 
 function Cell({ value, row, col, backgroundColor, click, isSelected }) {
     const cellClasses = useMemo(() => {
@@ -11,10 +11,6 @@ function Cell({ value, row, col, backgroundColor, click, isSelected }) {
         return classes;
     }, []);
 
-    const readOnly = useMemo(() => {
-        return isReadOnly(row, col);
-    }, []);
-
     return (
         <div
             className={cellClasses.join(" ")}
@@ -24,7 +20,7 @@ function Cell({ value, row, col, backgroundColor, click, isSelected }) {
                     !isSelected && errNumber[row][col] > 0
                         ? "rgb(247,207,214)"
                         : backgroundColor,
-                color: readOnly ? "black" : "rgb(51, 120, 225)",
+                color: isReadOnly(row, col) ? "black" : "rgb(51, 120, 225)",
             }}
         >
             {value || null}

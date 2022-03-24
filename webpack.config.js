@@ -28,7 +28,7 @@ function getPlugins() {
 
 module.exports = {
     mode,
-    entry: "./src/index.js",
+    entry: ['babel-polyfill', './src/index.js'],
     devtool: "source-map",
     resolve: {
         extensions: ['', '.js', '.jsx'],
@@ -36,6 +36,7 @@ module.exports = {
             Components: path.resolve(__dirname, 'src/Components/'),
             Styles: path.resolve(__dirname, 'src/styles/'),
             Utils: path.resolve(__dirname, 'src/utils/'),
+            Icons: path.resolve(__dirname, 'src/icons/'),
         },
     },
     output: {
