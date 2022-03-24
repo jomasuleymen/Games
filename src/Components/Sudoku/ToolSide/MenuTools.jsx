@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Tools from './ToolSide/Tools';
-import Buttons from './ToolSide/Buttons';
-import NewGame from './ToolSide/newGame';
+import Tools from './Tools';
+import Buttons from './Buttons';
+import NewGame from './newGame';
 
 import 'Styles/tools.scss';
 

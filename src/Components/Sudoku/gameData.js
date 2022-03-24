@@ -1,30 +1,9 @@
-import { solvePuzzle } from "Utils/sudokuUtils";
 import axios from "axios";
 
-// const updateStore = createStore();
-const answer = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-];
-
-const errNumber = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-];
+import { solvePuzzle } from "Utils/sudokuUtils";
+import cellReducer from "Reducers/cellReducer";
+import { createStore } from "redux";
+const store = createStore(cellReducer);
 
 const initialData = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,8 +16,31 @@ const initialData = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
+const errNumber = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+];
 
-let currentData = initialData;
+const answer = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+];
+
+const currentData = [...initialData];
 
 function isReadOnly(row, col) {
     return initialData[row][col] != 0;
@@ -58,15 +60,14 @@ function initGame() {
         .then(resData => {
             resData.data.forEach((rowData, rowIndex) => {
                 initialData[rowIndex] = [...rowData];
+                currentData[rowIndex] = [...rowData];
             });
-            solvePuzzle(initialData);
-            currentData = resData.data;
-            return resData.data;
+            solvePuzzle(initialData); // answer = 
+            return currentData;
         })
         .catch(function (error) {
             console.log(error);
         });
-
 }
 
-export { initialData, isReadOnly, errNumber, answer, initGame, currentData};
+export { initialData, errNumber, currentData, answer, isReadOnly, initGame, store};

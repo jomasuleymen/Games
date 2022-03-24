@@ -1,12 +1,12 @@
 import React from "react";
 
-import Status from "./Status";
-import Playground from "./Playground";
-import ConfigBlock from "./MenuTools";
-import { initialData, initGame } from "./gameData";
+import Status from "./Status/Status";
+import Playground from "./playground/Playground";
+import ConfigBlock from "./ToolSide/MenuTools";
+import { initGame } from "./gameData";
 
 function Wrapper() {
-    const [data, setData] = React.useState(initialData);
+    const [data, setData] = React.useState(false);
 
     React.useEffect(() => {
         initGame()
@@ -19,7 +19,7 @@ function Wrapper() {
         <div className="wrapper">
             <Status />
             <div className="game-body">
-                <Playground data={data} />
+                { data ? <Playground data={data} /> : <div>Loading block </div> }
                 <ConfigBlock />
             </div>
         </div>

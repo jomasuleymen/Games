@@ -37,6 +37,7 @@ module.exports = {
             Styles: path.resolve(__dirname, 'src/styles/'),
             Utils: path.resolve(__dirname, 'src/utils/'),
             Icons: path.resolve(__dirname, 'src/icons/'),
+            Reducers: path.resolve(__dirname, 'src/reducers/'),
         },
     },
     output: {

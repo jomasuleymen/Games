@@ -1,4 +1,3 @@
-
 const selectedCell = {
     row: 0,
     col: 0,
@@ -7,7 +6,7 @@ const selectedCell = {
     value: -1,
 };
 
-function cellReducer(state=selectedCell, action){
+export default function cellReducer(state=selectedCell, action){
     switch(action.type){
         case 'select': return {
             ...action.payload

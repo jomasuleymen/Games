@@ -1,9 +1,9 @@
 import React from "react";
 
-function UndoTool({ name }) {
+function Tool({ name, func }) {
     return (
         <div className="tool">
-            <div className="icon">
+            <div className="icon" onClick={func}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 30 31"
@@ -20,4 +20,4 @@ function UndoTool({ name }) {
     );
 }
 
-export default UndoTool;
+export default Tool;
