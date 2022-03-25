@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { errNumber, currentData } from "../gameData";
+import { errNumber, currentData, isReadOnly, gameId, notes } from "../gameData";
 import { useSelector } from "react-redux";
 import { selectCell } from "Utils/sudokuUtils";
 
@@ -20,7 +20,7 @@ function getCellColor(row, col, value, selectedCell) {
     return null;
 }
 
-function Cell({ row, col, isReadOnly }) {
+function Cell({ row, col }) {
     const selectedCell = useSelector((state) => state);
     const isThisCellSelected =
         row == selectedCell.row && col == selectedCell.col;
@@ -34,6 +34,26 @@ function Cell({ row, col, isReadOnly }) {
         return classes;
     }, []);
 
+    const readOnly = useMemo(() => {
+        return isReadOnly(row, col);
+    }, [gameId]);
+
+    const cell =
+        notes['noteBoard'][row] && notes['noteBoard'][row][col] ? (
+            <div className="noteMode">
+                {notes['noteBoard'][row][col].map((isNumberEntered, index) => {
+                    return (
+                        <div
+                            className="noteNum"
+                            key={index}
+                            style={{ color: isNumberEntered ? "grey" : "transparent" }}
+                        >
+                            {index+1}
+                        </div>
+                    );
+                })}
+            </div>
+        ) : currentData[row][col] || null;
     return (
         <div
             className={cellClasses}
@@ -50,10 +70,10 @@ function Cell({ row, col, isReadOnly }) {
                           currentData[row][col],
                           selectedCell
                       ),
-                color: isReadOnly ? "black" : "rgb(51, 120, 225)",
+                color: readOnly ? "black" : "rgb(51, 120, 225)",
             }}
         >
-            {currentData[row][col] || null}
+            {cell}
         </div>
     );
 }

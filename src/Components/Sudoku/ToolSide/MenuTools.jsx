@@ -6,14 +6,14 @@ import NewGame from './newGame';
 
 import 'Styles/tools.scss';
 
-function ConfigBlock(){
+function ConfigBlock({newGame}){
     return (
         <div className='config-block'>
-            <NewGame />
+            <NewGame newGame={newGame} />
             <Tools />
             <Buttons />
         </div>
     );
 }
 
-export default ConfigBlock;
+export default React.memo(ConfigBlock);

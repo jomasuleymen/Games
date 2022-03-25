@@ -7,20 +7,25 @@ import { initGame } from "./gameData";
 
 function Wrapper() {
     const [data, setData] = React.useState(false);
-
-    React.useEffect(() => {
+    
+    const newGame = React.useCallback(() => {
         initGame()
-            .then((gameData) => {
-                setData(gameData);
-            });
-    }, []);
+        .then((gameData) => {
+            setData(gameData);
+        });
+    }, [setData]);
+    
+        React.useEffect(() => {
+            newGame();
+        }, []);
+        
 
     return (
         <div className="wrapper">
             <Status />
             <div className="game-body">
                 { data ? <Playground data={data} /> : <div>Loading block </div> }
-                <ConfigBlock />
+                <ConfigBlock newGame={newGame} />
             </div>
         </div>
     );

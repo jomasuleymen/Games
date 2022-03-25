@@ -38,6 +38,7 @@ module.exports = {
             Utils: path.resolve(__dirname, 'src/utils/'),
             Icons: path.resolve(__dirname, 'src/icons/'),
             Reducers: path.resolve(__dirname, 'src/reducers/'),
+            Stores: path.resolve(__dirname, 'src/stores/'),
         },
     },
     output: {

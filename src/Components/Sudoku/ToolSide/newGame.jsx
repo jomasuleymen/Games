@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-function NewGame(){
+function NewGame({ newGame }) {
     return (
-        <div className='newGame'>
-            <button>New Game</button>
+        <div className="newGame">
+            <button onClick={newGame}>New Game</button>
         </div>
     );
 }

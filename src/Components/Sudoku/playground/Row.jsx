@@ -8,7 +8,6 @@ function Row({ row, rowIndex }) {
                 <Cell
                     row={rowIndex}
                     col={colIndex}
-                    isReadOnly={value != 0}
                     key={colIndex}
                 />
             ))}
