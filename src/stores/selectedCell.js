@@ -1,4 +1,4 @@
 import { createStore } from "redux";
-import cellReducer from "Reducers/cellReducer";
+import cellReducer from "@reducers/cellReducer";
 
 export default createStore(cellReducer);

@@ -1,16 +1,17 @@
-import React from 'react'
-import Wrapper from './Components/Sudoku/index'
-import cellStore from 'Stores/selectedCell';
-import { Provider } from 'react-redux';
+import React from "react";
+import { Provider } from "react-redux";
 
-import './styles/style.scss';
+import Playground from "@components/sudoku";
+import cellStore from "@stores/selectedCell";
 
-function App(){
+import "@styles/style.scss";
+
+function App() {
     return (
         <Provider store={cellStore}>
-            <Wrapper />
+            <Playground />
         </Provider>
-    )
-};
+    );
+}
 
 export default App;

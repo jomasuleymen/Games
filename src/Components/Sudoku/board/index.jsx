@@ -1,24 +1,21 @@
-import React, { useEffect } from "react";
-import cellStore from "Stores/selectedCell";
-import {
-    selectCell,
-    insertToSelectedCell,
-    clearSelectedCell,
-} from "Utils/sudokuUtils";
-import "Styles/playground.scss";
+import React from "react";
+
+import selectedCell from "@stores/selectedCell";
+
+import { board } from "../data/board-data";
 
 import Row from "./Row";
 
 window.onkeyup = (ev) => {
     if (ev.key > 0 && ev.key < 10) {
-        insertToSelectedCell(parseInt(ev.key));
+        board.insertToSelectedCell(parseInt(ev.key));
     } else if (ev.key == "Delete" || ev.key == "Backspace") {
-        clearSelectedCell();
+        board.eraseSelectedCell();
     }
 };
 
 window.onkeydown = (ev) => {
-    let { row, col } = cellStore.getState();
+    let { row, col } = selectedCell.getState();
 
     switch (ev.key) {
         case "ArrowUp": {
@@ -44,20 +41,21 @@ window.onkeydown = (ev) => {
         default:
             return;
     }
-    selectCell(row, col);
+    board.selectCell(row, col);
 };
-function Playground({ data }) {
-    useEffect(() => {
-        selectCell(0, 0);
-    }, [data]);
-
+function Board() {
     return (
-        <div className="playground">
-            {data.map((row, rowIdx) => (
+        <div id="board">
+            <div id="board_pause" onClick={ () => { 
+                document.getElementsByClassName('status-icon')[0].click();
+             }}>
+                <div className="sign"></div>
+            </div>
+            {board.currentData.map((row, rowIdx) => (
                 <Row row={row} key={rowIdx} rowIndex={rowIdx} />
             ))}
         </div>
     );
 }
 
-export default Playground;
+export default Board;

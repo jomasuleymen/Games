@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-function NoteTool({ name, func, Icon }) {
+function NoteItem({ name, func, Icon }) {
     const [noteMode, setNodeMode] = useState(false);
 
     return (
-        <div className="tool">
-            <div className={`noteStatus ${noteMode ? "noteOn" : "noteOff"}`}>{noteMode ? "ON" : "OFF"}</div>
+        <div className="control-item">
+            <div className={`note-status ${noteMode ? "note-on" : "note-off"}`}>{noteMode ? "ON" : "OFF"}</div>
             <div
-                className="icon"
+                className="control-icon"
                 onClick={() => {
                     func();
                     setNodeMode(!noteMode);
@@ -18,9 +18,9 @@ function NoteTool({ name, func, Icon }) {
             >
                 <Icon />
             </div>
-            <div className="tool-name">{name}</div>
+            <div className="control-name">{name}</div>
         </div>
     );
 }
 
-export default NoteTool;
+export default NoteItem;

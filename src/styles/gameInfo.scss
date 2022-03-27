@@ -1,0 +1,115 @@
+.game-info {
+    user-select: none;
+    margin-top: 2px;
+    padding: 3px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .auto-check {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 3px;
+
+        .text {
+            color: rgb(148, 163, 190);
+            font-size: 13px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        #checkMistakes {
+            display: none;
+
+            &:checked+label {
+                background-color: rgb(47, 138, 243);
+
+                &:before {
+                    transform: translateX(20px);
+                    background-color: #FFF;
+                }
+            }
+        }
+
+        label {
+            width: 30px;
+            height: 16.5px;
+            padding: 0 4px;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            border-radius: 10px;
+            background-color: rgb(226, 231, 237);
+            cursor: pointer;
+
+            &:before {
+                display: block;
+                height: 11px;
+                width: 11px;
+                content: "";
+                border-radius: 50%;
+                transition: transform .3s ease;
+                background-color: rgb(115, 115, 116);
+            }
+        }
+    }
+
+    .time {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 5px;
+        padding: 0 5px;
+
+        #timer {
+            margin-right: 5px;
+            padding: 0 5px;
+            color: rgb(148, 163, 190);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.8px;
+        }
+
+        .status-icon {
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(233, 238, 244);
+            border-radius: 50%;
+            user-select: none;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgb(223, 228, 233);
+            }
+        }
+
+        .play-pause-icon {
+            width: 0;
+            height: 8px;
+            border: 0;
+            padding: 0;
+            background: transparent;
+            box-sizing: border-box;
+            border-color: transparent transparent transparent #202020;
+            transition: 100ms all ease;
+            cursor: pointer;
+            
+            &.icon-pause {
+                border-style: double;
+                border-width: 0px 0 0px 8px;
+            }
+            
+            &.icon-play{
+                border-style: solid;
+                border-width: 5px 0 5px 8px;
+            }
+        }
+
+    }
+
+}

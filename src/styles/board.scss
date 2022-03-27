@@ -1,10 +1,9 @@
 $lineWidth: 2.3px;
 $lineColor: rgb(0, 0, 0);
 
-.wrapper{
+.game{
     padding: 5px;
-    border: 0.5px solid rgb(15, 13, 13);
-    width: 860px;
+    width: 780px;
     height: 540px;
     margin: 0 auto;
 }
@@ -16,12 +15,51 @@ $lineColor: rgb(0, 0, 0);
     padding: 0;
 }
 
-.playground{
+#board{
+    position: relative;
     flex-direction: column;
     margin-right: 3px;
     width: 495px;
     height: 100%;
     display: flex;
+    
+    &.pause{
+        cursor: pointer;
+        .cell{
+            pointer-events: none;
+            background-color: white !important;
+        }
+    }
+}
+
+
+#board_pause{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: rgb(35, 119, 247);
+    justify-content: center;
+    align-items: center;
+    display: none;
+
+    .sign{
+        width: 0;
+        height: 0;
+        border: 0;
+        padding: 0;
+        margin-left: 5px;
+        background: transparent;
+        border-color: transparent transparent transparent white;
+        cursor: pointer;
+        border-radius: 5px;
+        border-style: solid;
+        border-width: 13px 0 13px 20px;
+    }
 }
 
 .row{

@@ -33,12 +33,12 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.jsx'],
         alias: {
-            Components: path.resolve(__dirname, 'src/Components/'),
-            Styles: path.resolve(__dirname, 'src/styles/'),
-            Utils: path.resolve(__dirname, 'src/utils/'),
-            Icons: path.resolve(__dirname, 'src/icons/'),
-            Reducers: path.resolve(__dirname, 'src/reducers/'),
-            Stores: path.resolve(__dirname, 'src/stores/'),
+            "@src": path.resolve(__dirname, 'src/'),
+            "@components": path.resolve(__dirname, 'src/components/'),
+            "@reducers": path.resolve(__dirname, 'src/reducers/'),
+            "@stores": path.resolve(__dirname, 'src/stores/'),
+            "@styles": path.resolve(__dirname, 'src/styles/'),
+            "@utils": path.resolve(__dirname, 'src/utils/')
         },
     },
     output: {
