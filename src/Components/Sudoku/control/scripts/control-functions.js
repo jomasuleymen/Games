@@ -1,5 +1,4 @@
-import { board } from "@components/sudoku/data/board-data";
-import cellStore from '@stores/selectedCell';
+import board from "@components/sudoku/data/board-data";
 
 function eraseSelectedCell() {
     board.eraseSelectedCell();
@@ -10,7 +9,7 @@ function toggleNoteMode() {
 }
 
 function giveHint() {
-    const { row, col } = cellStore.getState();
+    const { row, col } = board.selectedCell;
     board.setHint(row, col);
 }
 

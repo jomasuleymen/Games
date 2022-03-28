@@ -1,18 +1,19 @@
 import React, { useState } from "react";
+import game from "../data/game-data";
 
-function NewGameBtn({ startNewGame }) {
+function NewGameBtn() {
 
-    const [display, setDisplay] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
 
     return (
         <div className="new-game">
-            <button onClick={() => { setDisplay(!display) }}>New Game</button>
-            <div className={`new-game-body ${display ? '' : 'hidden'}`}>
+            <button onClick={() => { setShowMenu(!showMenu) }}>New Game</button>
+            <div className={`new-game-body ${showMenu ? '' : 'hidden'}`}>
                 <div className="difficulties">
-                    <div className="difficulty" onClick={() => { startNewGame('easy'); setDisplay(false) }}><span className="new-game-sudoku-icon"></span>Easy</div>
-                    <div className="difficulty" onClick={() => { startNewGame('medium'); setDisplay(false) }}><span className="new-game-sudoku-icon"></span>Medium</div>
-                    <div className="difficulty" onClick={() => { startNewGame('hard'); setDisplay(false) }}><span className="new-game-sudoku-icon"></span>Hard</div>
-                    <div className="difficulty" onClick={() => { startNewGame('restart'); setDisplay(false) }}><span className="new-game-sudoku-icon"></span>Restart</div>
+                    <div className="difficulty" onClick={() => { game.initGame('easy'); setShowMenu(false) }}><span className="new-game-sudoku-icon"></span>Easy</div>
+                    <div className="difficulty" onClick={() => { game.initGame('medium'); setShowMenu(false) }}><span className="new-game-sudoku-icon"></span>Medium</div>
+                    <div className="difficulty" onClick={() => { game.initGame('hard'); setShowMenu(false) }}><span className="new-game-sudoku-icon"></span>Hard</div>
+                    <div className="difficulty" onClick={() => { game.initGame('restart'); setShowMenu(false) }}><span className="new-game-sudoku-icon"></span>Restart</div>
                 </div>
             </div>
         </div>

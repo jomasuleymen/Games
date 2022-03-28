@@ -3,26 +3,29 @@ import React from "react";
 import GameInfo from "./gameInfo";
 import Board from "./board";
 import Control from "./control";
-
-import { initGame } from "./data/board-data";
+import { useSelector } from "react-redux";
+import game from "./data/game-data";
 import "@styles/board.scss";
 
-function Playground() {
-    const newGame = React.useCallback((difficulty) => {
-        initGame(difficulty);
-    }, []);
+function GameBody() {
+    const isPaused = useSelector((state) => state.gameStatus);
+    return (
+        <div id="game-body" className={`${isPaused ? "pause" : null}`}>
+            <Board />
+            <Control />
+        </div>
+    );
+}
 
+function Playground() {
     React.useEffect(() => {
-        newGame('easy');
+        game.initGame("easy");
     }, []);
 
     return (
         <div className="game">
             <GameInfo />
-            <div className="game-body">
-                <Board />
-                <Control startNewGame={newGame} />
-            </div>
+            <GameBody />
         </div>
     );
 }

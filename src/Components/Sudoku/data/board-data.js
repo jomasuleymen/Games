@@ -1,15 +1,13 @@
-import axios from "axios";
-
 import { setSolution, checkForErrors, revertErrors } from "@utils/sudoku-utils";
 import { zeroFilledMatrix } from "@utils/arrayUtils";
-import cellStore from "@stores/selectedCell";
+import stores from "@stores/stores";
+
 import Note from "./note-data";
 import History from "./state-data";
 
 
 class Board {
-    static size = 9;
-    #solution = []; // make private
+    #solution = [];
 
     constructor() {
         this.note = new Note();
@@ -21,8 +19,6 @@ class Board {
         this.currentData = [...this.initialData];
 
         this.copyState = {};
-
-        this.isPaused = false; // to game data
     }
 
     isReadOnly(row, col) {
@@ -45,16 +41,26 @@ class Board {
         }
         this.note.clear();
         this.history.clear();
+        this.selectCell(0, 0);
     }
 
     createBoard(newData) {
-        this.clearBoard();
         setSolution(newData, this);
         newData.forEach((row, index) => {
             this.initialData[index] = [...row];
             this.currentData[index] = [...row];
         });
-        this.refreshBoard();
+        this.selectCell(0, 0);
+    }
+
+    restart(){
+        this.initialData.forEach((row, index) => {
+            this.currentData[index] = [...row];
+            this.errorData[index] = Array(9).fill(0);
+        });
+        this.note.clear();
+        this.history.clear();
+        this.selectCell(0, 0);
     }
 
     /**
@@ -68,17 +74,6 @@ class Board {
 
     isValueCorrect(row, col) {
         return this.#solution[row][col] == this.currentData[row][col];
-    }
-
-    toggleAutoCheck() {
-        this.autoCheck = !this.autoCheck;
-        this.refreshBoard();
-    }
-
-    /* Play - Pause */
-    toggleStatus() {
-        this.isPaused = !this.isPaused;
-        this.refreshBoard();
     }
 
     /* Cell functions */
@@ -100,7 +95,7 @@ class Board {
 
     /* Cell functions with refresh board */
     selectCell(row, col) {
-        cellStore.dispatch({
+        stores.dispatch({
             type: "select",
             payload: {
                 row,
@@ -113,11 +108,11 @@ class Board {
     }
 
     refreshBoard() {
-        cellStore.dispatch({ type: "refresh" });
+        stores.dispatch({ type: "refresh" });
     }
 
     insertToSelectedCell(newValue, isHint, isUndo) {
-        const { row, col } = cellStore.getState();
+        const { row, col } = this.selectedCell;
         if (!isHint && (this.isReadOnly(row, col) || newValue < 1 || newValue > 9)) return;
 
         const oldValue = this.getCellValue(row, col);
@@ -146,11 +141,11 @@ class Board {
     }
 
     eraseSelectedCell(isUndo) {
-        const { row, col } = cellStore.getState();
+        const { row, col } = this.selectedCell;
+        const oldValue = this.getCellValue(row, col);
 
         if (this.isReadOnly(row, col)) return;
 
-        const oldValue = this.getCellValue(row, col);
         const oldNote = [...this.note.getNote(row, col)];
         
         this.note.eraseNote(row, col);
@@ -165,25 +160,13 @@ class Board {
         if (!isUndo)
             this.history.addState(row, col, oldValue, oldNote);
     }
+
+    get selectedCell(){
+        return stores.getState().selectedCell;
+    }
 }
 
 
 const board = new Board();
 
-function initGame(difficulty) {
-    if (difficulty == 'restart') {
-        board.createBoard(board.initialData); // optimize later
-    }
-    else {
-        axios
-            .get(`https://sugoku.herokuapp.com/board?difficulty=${difficulty}`)
-            .then((resData) => {
-                board.createBoard(resData.data["board"]);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-}
-
-export { board, initGame };
+export default board;

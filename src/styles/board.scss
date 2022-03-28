@@ -8,11 +8,19 @@ $lineColor: rgb(0, 0, 0);
     margin: 0 auto;
 }
 
-.game-body{
+#game-body{
     display: flex;
     height: 480px;
     margin-top: 5px;
     padding: 0;
+
+    &.pause{
+        .cell{
+            pointer-events: none;
+            color: white !important;
+            background-color: white !important;
+        }
+    }
 }
 
 #board{
@@ -22,15 +30,6 @@ $lineColor: rgb(0, 0, 0);
     width: 495px;
     height: 100%;
     display: flex;
-    
-    &.pause{
-        cursor: pointer;
-        .cell{
-            pointer-events: none;
-            color: white !important;
-            background-color: white !important;
-        }
-    }
 }
 
 
@@ -47,6 +46,7 @@ $lineColor: rgb(0, 0, 0);
     justify-content: center;
     align-items: center;
     display: none;
+    pointer-events: all !important;
 
     .sign{
         width: 0;

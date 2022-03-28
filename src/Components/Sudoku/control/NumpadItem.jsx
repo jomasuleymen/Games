@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { board } from '../data/board-data';
+import board from '../data/board-data';
 
 function NumpadItem({num}){
     return (

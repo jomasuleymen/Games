@@ -13,7 +13,7 @@ function getClassName(row, col){
 function Row({ row, rowIndex }) {
     return (
         <div className="row" >
-            {row.map((value, colIndex) => (
+            {row.map((_, colIndex) => (
                 <Cell
                     row={rowIndex}
                     col={colIndex}

@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { board } from "@components/sudoku/data/board-data";
+import board from "@components/sudoku/data/board-data";
+import game from "@components/sudoku/data/game-data";
 
 function getCellColor(row, col, value, selectedCell) {
     if (board.hasCellError(row, col)) return "rgb(247,207,214)";
@@ -20,7 +21,7 @@ function getCellColor(row, col, value, selectedCell) {
 }
 
 function Cell({ row, col, className }) {
-    const selectedCell = useSelector((state) => state);
+    const selectedCell = useSelector((state) => state.selectedCell);
     const isThisCellSelected =
         row == selectedCell.row && col == selectedCell.col;
 
@@ -64,7 +65,7 @@ function Cell({ row, col, className }) {
                       ),
                 color: board.isReadOnly(row, col)
                     ? "black"
-                    : board.autoCheck && !board.isValueCorrect(row, col)
+                    : game.autoCheck && !board.isValueCorrect(row, col)
                     ? "rgb(231,101,117)"
                     : "rgb(51, 120, 225)",
             }}

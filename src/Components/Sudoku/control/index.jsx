@@ -6,10 +6,10 @@ import Numpad from './Numpad';
 
 import '@styles/control.scss';
 
-function Control({startNewGame}){
+function Control(){
     return (
         <div className='control'>
-            <NewGameBtn startNewGame={startNewGame} />
+            <NewGameBtn />
             <ControlItems />
             <Numpad />
         </div>

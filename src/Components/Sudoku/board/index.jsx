@@ -1,9 +1,8 @@
 import React from "react";
 
-import selectedCell from "@stores/selectedCell";
-
-import { board } from "../data/board-data";
-
+import board from "../data/board-data";
+import game from '../data/game-data';
+import {useSelector} from 'react-redux';
 import Row from "./Row";
 
 window.onkeyup = (ev) => {
@@ -15,7 +14,7 @@ window.onkeyup = (ev) => {
 };
 
 window.onkeydown = (ev) => {
-    let { row, col } = selectedCell.getState();
+    let { row, col } = board.selectedCell;
 
     switch (ev.key) {
         case "ArrowUp": {
@@ -43,19 +42,38 @@ window.onkeydown = (ev) => {
     }
     board.selectCell(row, col);
 };
-function Board() {
+
+function PlayButton() {
+    const isPaused = useSelector(state => state.gameStatus);
     return (
-        <div id="board">
-            <div id="board_pause" onClick={ () => { 
-                document.getElementsByClassName('status-icon')[0].click();
-             }}>
-                <div className="sign"></div>
-            </div>
-            {board.currentData.map((row, rowIdx) => (
-                <Row row={row} key={rowIdx} rowIndex={rowIdx} />
-            ))}
+        <div
+            id="board_pause"
+            style={{display: isPaused ? "flex" : "none"}}
+            onClick={() => {
+                game.resume();
+            }}
+        >
+            <div className="sign"></div>
         </div>
     );
 }
 
-export default Board;
+function Rows() {
+    return (
+        <>
+            {board.currentData.map((row, rowIdx) => (
+                <Row row={row} key={rowIdx} rowIndex={rowIdx} />
+            ))}
+        </>
+    );
+}
+function Board() {
+    return (
+        <div id="board">
+            <PlayButton />
+            <Rows />
+        </div>
+    );
+}
+
+export default React.memo(Board);
