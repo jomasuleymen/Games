@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { board } from "@components/sudoku/data/board-data";
 
@@ -24,27 +24,27 @@ function Cell({ row, col, className }) {
     const isThisCellSelected =
         row == selectedCell.row && col == selectedCell.col;
 
-    const cellNote = board.note.getCellNote(row, col);
-
-    const cell = cellNote ? (
-        <div className="noteMode">
-            {cellNote.map((isNumberEntered, index) => {
-                return (
-                    <div
-                        className="noteNum"
-                        key={index}
-                        style={{
-                            color: isNumberEntered ? "grey" : "transparent",
-                        }}
-                    >
-                        {index + 1}
-                    </div>
-                );
-            })}
-        </div>
-    ) : (
-        board.getCellValue(row, col) || null
-    );
+    const cell = useMemo(() => {
+        return board.note.noteCount(row, col) > 0 ? (
+            <div className="noteMode">
+                {board.note.getNote(row, col).map((isNumberEntered, index) => {
+                    return (
+                        <div
+                            className="noteNum"
+                            key={index}
+                            style={{
+                                color: isNumberEntered ? "grey" : "transparent",
+                            }}
+                        >
+                            {index + 1}
+                        </div>
+                    );
+                })}
+            </div>
+        ) : (
+            board.getCellValue(row, col) || null
+        );
+    }, [board.note.noteCount(row, col), board.getCellValue(row, col)]);
 
     return (
         <div
@@ -62,7 +62,11 @@ function Cell({ row, col, className }) {
                           board.getCellValue(row, col),
                           selectedCell
                       ),
-                color: board.isReadOnly(row, col) ? "black" : board.autoCheck && !board.isValueRight(row, col) ? "rgb(231,101,117)" : "rgb(51, 120, 225)",
+                color: board.isReadOnly(row, col)
+                    ? "black"
+                    : board.autoCheck && !board.isValueCorrect(row, col)
+                    ? "rgb(231,101,117)"
+                    : "rgb(51, 120, 225)",
             }}
         >
             {cell}

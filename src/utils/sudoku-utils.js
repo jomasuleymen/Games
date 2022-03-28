@@ -1,10 +1,7 @@
-import {
-    board
-} from "@components/sudoku/data/board-data";
-
-async function solvePuzzle(data) {
+async function setSolution(data, board) {
     const copyData = data.map((row) => [...row]);
     solve(copyData, 0, 0);
+    board.solution = copyData;
 }
 
 function solve(data, row, col) {
@@ -32,25 +29,71 @@ function solve(data, row, col) {
     return false;
 }
 
-function isValid(data, row, col, value) {
+function isValid(data, row, col, value) { // minimize and optimize
+    let rowSquare = Math.floor(row / 3) * 3;
+    let colSquare = Math.floor(col / 3) * 3;
+
     for (let i = 0; i < 9; i++) {
         if (data[row][i] == value && i != col) return false;
 
         if (data[i][col] == value && i != row) return false;
+
+        if (rowSquare == row && colSquare == col)
+            continue;
+
+        if (data[rowSquare][colSquare] == value)
+            return false;
+
+        colSquare += 1;
+
+        if ((i + 1) % 3 == 0) {
+            rowSquare += 1;
+            colSquare = Math.floor(col / 3) * 3;
+        }
     }
 
-    let rowParentIndex = Math.floor(row / 3) * 3;
-    let colParentIndex = Math.floor(col / 3) * 3;
-
-    for (let i = 0; i < 3; i++)
-        for (let j = 0; j < 3; j++) {
-            if (rowParentIndex + i == row && colParentIndex + j == col)
-                continue;
-
-            if (data[rowParentIndex + i][colParentIndex + j] == value)
-                return false;
-        }
     return true;
 }
 
-export { solvePuzzle };
+
+function checkForErrors(row, col, currentData, errorData) {
+    compute(row, col, currentData, errorData, 1);
+}
+
+function revertErrors(row, col, currentData, errorData) {
+    compute(row, col, currentData, errorData, -1);
+}
+
+function compute(row, col, currentData, errorData, step) {
+    const newValue = currentData[row][col];
+    if (newValue == 0) return;
+
+    let rowSquare = Math.floor(row / 3) * 3;
+    let colSquare = Math.floor(col / 3) * 3;
+
+    for (let i = 0; i < 9; i++) {
+        if (newValue == currentData[i][col] && i != row) {
+            errorData[i][col] += step;
+            errorData[row][col] += step;
+        }
+
+        if (newValue == currentData[row][i] && i != col) {
+            errorData[row][i] += step;
+            errorData[row][col] += step;
+        }
+
+        if (newValue == currentData[rowSquare][colSquare] && rowSquare != row && colSquare != col) {
+            errorData[rowSquare][colSquare] += step
+            errorData[row][col] += step;
+        }
+        colSquare += 1;
+
+        if ((i + 1) % 3 == 0) {
+            rowSquare += 1;
+            colSquare = Math.floor(col / 3) * 3;
+        }
+    }
+}
+
+
+export { setSolution, checkForErrors, revertErrors };

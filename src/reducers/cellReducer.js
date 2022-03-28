@@ -11,6 +11,9 @@ export default function cellReducer(state=selectedCell, action){
         case 'select': return {
             ...action.payload
         };
+        case 'refresh': return {
+            ...state
+        };
         default: return state;
     }
 }

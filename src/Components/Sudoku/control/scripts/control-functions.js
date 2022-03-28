@@ -20,10 +20,10 @@ function undo() {
 
     const { row, col } = prevState;
     board.selectCell(row, col);
-    if (prevState.value == 0){
+    if (prevState.value == 0) {
         board.eraseSelectedCell(true);
-        board.note.setCellNote(row, col, prevState.note);
-    }else
+        board.note.setNote(row, col, prevState.note);
+    } else
         board.insertToSelectedCell(prevState.value, false, true);
 }
 

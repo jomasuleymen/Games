@@ -56,16 +56,16 @@ function GameInfo() {
                         if (!event.target.classList.contains('play-pause-icon'))
                             childClasses = event.target.firstChild.classList;
 
-                        if (board.status == 'play') {
-                            childClasses.remove("icon-pause");
-                            childClasses.add("icon-play");
-                            document.getElementById('board_pause').style.display = 'flex';
-                            document.getElementById('board').classList.add('pause');
-                        } else {
+                        if (board.isPaused) {
                             childClasses.remove("icon-play");
                             childClasses.add("icon-pause");
                             document.getElementById('board_pause').style.display = 'none';
                             document.getElementById('board').classList.remove('pause');
+                        } else {
+                            childClasses.remove("icon-pause");
+                            childClasses.add("icon-play");
+                            document.getElementById('board_pause').style.display = 'flex';
+                            document.getElementById('board').classList.add('pause');
                         }
                         board.toggleStatus();
                         isPaused = !isPaused;
