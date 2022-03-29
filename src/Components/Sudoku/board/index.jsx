@@ -1,9 +1,9 @@
 import React from "react";
+import {useSelector} from 'react-redux';
 
 import board from "../data/board-data";
 import game from '../data/game-data';
-import {useSelector} from 'react-redux';
-import Row from "./Row";
+import Grid from "./Grid";
 
 window.onkeyup = (ev) => {
     if (ev.key > 0 && ev.key < 10) {
@@ -58,20 +58,11 @@ function PlayButton() {
     );
 }
 
-function Rows() {
-    return (
-        <>
-            {board.currentData.map((row, rowIdx) => (
-                <Row row={row} key={rowIdx} rowIndex={rowIdx} />
-            ))}
-        </>
-    );
-}
 function Board() {
     return (
         <div id="board">
             <PlayButton />
-            <Rows />
+            <Grid/>
         </div>
     );
 }

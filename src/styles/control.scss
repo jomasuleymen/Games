@@ -3,6 +3,7 @@
     display: inline-block;
     margin-left: 3px;
     flex: 1;
+    padding: 0 8px;
 }
 
 .new-game{
@@ -119,10 +120,14 @@
     font-weight: bold;
 }
 
-.numpad-row{
-    display: flex;
-    align-items: center;
+#numpad{
+    width: 270px;
+    height: 270px;
+    display: grid;
     justify-content: center;
+    grid-template-columns: repeat(3, minmax(80px, 1fr));
+    grid-template-rows: repeat(3, minmax(80px, 1fr));
+    gap: 5px;
     padding: 5px;
 }
 
@@ -133,9 +138,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 85px;
-    height: 85px;
-    margin: 0 5px;
+    margin: 0;
     font-size: 40px;
     user-select: none;
     cursor: pointer;

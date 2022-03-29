@@ -1,21 +1,26 @@
 $lineWidth: 2.3px;
 $lineColor: rgb(0, 0, 0);
 
-.game{
+:root {
+    --board-width: 500px;
+    --grid-size: 500px;
+}
+
+.game {
     padding: 5px;
     width: 780px;
     height: 540px;
     margin: 0 auto;
 }
 
-#game-body{
+#game-body {
     display: flex;
     height: 480px;
     margin-top: 5px;
     padding: 0;
 
-    &.pause{
-        .cell{
+    &.pause {
+        .cell {
             pointer-events: none;
             color: white !important;
             background-color: white !important;
@@ -23,17 +28,17 @@ $lineColor: rgb(0, 0, 0);
     }
 }
 
-#board{
+#board {
     position: relative;
     flex-direction: column;
     margin-right: 3px;
-    width: 495px;
+    width: --board-width;
     height: 100%;
     display: flex;
 }
 
 
-#board_pause{
+#board_pause {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -48,7 +53,7 @@ $lineColor: rgb(0, 0, 0);
     display: none;
     pointer-events: all !important;
 
-    .sign{
+    .sign {
         width: 0;
         height: 0;
         border: 0;
@@ -63,15 +68,21 @@ $lineColor: rgb(0, 0, 0);
     }
 }
 
-.row{
-    display: flex;
-    flex: 1;
+#grid {
+    width: var(--grid-size);
+    height: var(--grid-size);
+
+    display: grid;
+    grid-template-columns: repeat(9, minmax(40px, 1fr));
+    grid-template-rows: repeat(9, minmax(40px, 1fr));
+    gap: 0;
+
     padding: 0;
     margin: 0;
 }
 
-.cell{
-    border: 0.5px solid rgb(205,214,225);
+.cell {
+    border: 0.5px solid rgb(205, 214, 225);
     padding: 0;
     margin: 0;
     display: flex;
@@ -83,11 +94,9 @@ $lineColor: rgb(0, 0, 0);
     outline: none;
     cursor: default;
     font-size: 30px;
-
-    
 }
 
-.noteMode{
+.noteMode {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -96,7 +105,7 @@ $lineColor: rgb(0, 0, 0);
     margin: 0;
 }
 
-.noteNum{
+.noteNum {
     flex-basis: 30%;
     margin: 0;
     padding: 0;
@@ -106,18 +115,18 @@ $lineColor: rgb(0, 0, 0);
 }
 
 
-.line-left{
+.line-left {
     border-left: $lineWidth solid $lineColor;
 }
 
-.line-top{
+.line-top {
     border-top: $lineWidth solid $lineColor;
 }
 
-.line-bottom{
+.line-bottom {
     border-bottom: $lineWidth solid $lineColor;
 }
 
-.line-right{
+.line-right {
     border-right: $lineWidth solid $lineColor;
 }
