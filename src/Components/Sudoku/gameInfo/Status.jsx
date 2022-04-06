@@ -3,7 +3,7 @@ import game from "@components/sudoku/data/game-data";
 import { useSelector } from "react-redux";
 
 function Status() {
-    const isPaused = useSelector((state) => state.gameStatus);
+    const isPaused = useSelector(({sudoku}) => sudoku.gameStatus);
 
     return (
         <div
@@ -14,7 +14,7 @@ function Status() {
         >
             <div
                 className={`play-pause-icon ${
-                    isPaused ? "icon-pause" : "icon-play"
+                    isPaused ? "icon-play" : "icon-pause"
                 }`}
             ></div>
         </div>

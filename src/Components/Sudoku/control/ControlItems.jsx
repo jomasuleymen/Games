@@ -7,9 +7,9 @@ import {
     toggleNoteMode,
     giveHint,
     undo,
-} from "./scripts/control-functions";
+} from "./helpers/control-functions";
 
-import { UndoIcon, EraseIcon, NotesIcon, HintIcon } from "./scripts/icons";
+import { UndoIcon, EraseIcon, NotesIcon, HintIcon } from "./helpers/icons";
 
 function ControlItems() {
     return (

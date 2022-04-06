@@ -1,0 +1,21 @@
+.sudoku-game {
+    padding: 5px;
+    width: 780px;
+    height: 540px;
+    margin: 0 auto;
+}
+
+#game-body {
+    display: flex;
+    height: 480px;
+    margin-top: 5px;
+    padding: 0;
+
+    &.pause {
+        .cell {
+            pointer-events: none;
+            color: white !important;
+            background-color: white !important;
+        }
+    }
+}

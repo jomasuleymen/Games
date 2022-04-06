@@ -3,7 +3,7 @@ import React from "react";
 import AutoCheck from "./AutoCheck";
 import Timer from './Timer';
 
-import "@styles/gameInfo.scss";
+import "./gameInfo.scss";
 
 function GameInfo() {
     return (

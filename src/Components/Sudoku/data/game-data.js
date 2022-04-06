@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import board from "./board-data";
-import stores from "@stores/stores";
+import actions from "@actions/sudoku-actions";
 
 class Game {
     constructor() {
@@ -17,26 +17,26 @@ class Game {
     }
 
     pause() {
-        stores.dispatch({ type: 'pause' });
+        actions.pause();
         this.isPaused = true;
     }
 
     resume() {
-        stores.dispatch({ type: 'resume' });
+        actions.resume();
         this.isPaused = false;
     }
 
     /* Play - Pause */
     toggleStatus() {
-        stores.dispatch({ type: 'toggle' });
-        this.isPaused = stores.getState().gameStatus;
+        actions.toggle();
+        this.isPaused = actions.getStatus();
     }
 
     initGame(difficulty) {
-        document.getElementById('timer').innerText = '00:00';
         this.isPaused = true;
         this.timer = 0;
-        
+        document.getElementById("timer").innerText = "00:00";
+
         if (difficulty == "restart") {
             board.restart();
             setTimeout(() => {
@@ -46,17 +46,17 @@ class Game {
             board.clearBoard();
             axios
                 .get(
-                    `https://sugoku.herokuapp.com/board?difficulty=${difficulty}`
+                    `http://localhost:3000/sudoku/generate?difficulty=${difficulty}`
                 )
-                .then((resData) => {
-                    board.createBoard(resData.data["board"]);
+                .then(({ data: genData }) => {
+                    board.createBoard(genData);
                     setTimeout(() => {
                         this.resume();
                     }, 300);
                 })
                 .catch(function (error) {
                     console.log(error);
-                })
+                });
         }
     }
 }

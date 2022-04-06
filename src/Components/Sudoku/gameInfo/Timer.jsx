@@ -14,7 +14,7 @@ function Timer() {
             return time;
         }
 
-        setInterval(() => {
+        const interval = setInterval(() => {
             if (!game.isPaused) {
                 game.timer += 1;
                 let time = "";
@@ -30,6 +30,10 @@ function Timer() {
                 timerHtml.innerText = time;
             }
         }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        }
     }, []);
     return (
             <div className="time">

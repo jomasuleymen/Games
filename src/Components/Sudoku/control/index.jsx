@@ -4,7 +4,7 @@ import NewGameBtn from './NewGameBtn';
 import ControlItems from './ControlItems';
 import Numpad from './Numpad';
 
-import '@styles/control.scss';
+import './control.scss';
 
 function Control(){
     return (

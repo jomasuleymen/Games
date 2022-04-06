@@ -1,0 +1,25 @@
+.register-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 30px;
+
+    input::placeholder{
+        font-size: 13px;
+    }
+
+    input, button{
+        outline: none !important;
+        box-shadow: none !important;
+        font-size: 13px;
+    }
+
+    .error{
+        font-size: 12px !important;
+    }
+
+    .form-contol{
+        padding: 2px;
+    }
+}

@@ -1,0 +1,31 @@
+#game-categories {
+    border: 0.5px solid black;
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    padding: 5px;
+    gap: 1rem;
+
+    .game {
+        border: 0.5px solid black;
+        width: 200px;
+        height: 210px;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        
+        .game-icon {
+            border: 0.5px solid black;
+            background-size: 100% 100%;
+            flex: 1;
+        }
+        
+        .game-title {
+            border: 0.5px solid black;
+            padding: 0.1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

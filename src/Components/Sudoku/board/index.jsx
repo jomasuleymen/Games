@@ -5,6 +5,8 @@ import board from "../data/board-data";
 import game from '../data/game-data';
 import Grid from "./Grid";
 
+import './board.scss';
+
 window.onkeyup = (ev) => {
     if (ev.key > 0 && ev.key < 10) {
         board.insertToSelectedCell(parseInt(ev.key));
@@ -44,7 +46,7 @@ window.onkeydown = (ev) => {
 };
 
 function PlayButton() {
-    const isPaused = useSelector(state => state.gameStatus);
+    const isPaused = useSelector(({sudoku}) => sudoku.gameStatus);
     return (
         <div
             id="board_pause"

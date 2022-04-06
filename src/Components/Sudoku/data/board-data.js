@@ -1,6 +1,6 @@
 import { setSolution, checkForErrors, revertErrors } from "@utils/sudoku-utils";
 import { zeroFilledMatrix } from "@utils/arrayUtils";
-import stores from "@stores/stores";
+import actions from "@actions/sudoku-actions";
 
 import Note from "./note-data";
 import History from "./state-data";
@@ -93,22 +93,13 @@ class Board {
         this.currentData[row][col] = newValue;
     }
 
-    /* Cell functions with refresh board */
+    /* Cell functions with refreshing board */
     selectCell(row, col) {
-        stores.dispatch({
-            type: "select",
-            payload: {
-                row,
-                col,
-                squareRowBegin: Math.floor(row / 3) * 3,
-                squareColBegin: Math.floor(col / 3) * 3,
-                value: this.getCellValue(row, col),
-            },
-        });
+        actions.selectCell(row, col, this.getCellValue(row, col));
     }
 
     refreshBoard() {
-        stores.dispatch({ type: "refresh" });
+        actions.refreshBoard();
     }
 
     insertToSelectedCell(newValue, isHint, isUndo) {
@@ -162,7 +153,7 @@ class Board {
     }
 
     get selectedCell(){
-        return stores.getState().selectedCell;
+        return actions.getSelectedCell();
     }
 }
 
