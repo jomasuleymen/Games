@@ -31,8 +31,7 @@ class Note {
 
     setNote(row, col, cellNotes) {
         if (cellNotes && cellNotes instanceof Array && cellNotes.length == 9){
-            const notes = this.notes[row][col];
-            cellNotes.forEach((el, index) => notes[index] = el);
+            this.notes[row][col] = cellNotes;
             this.cellNotesCount[row][col] = cellNotes.filter(el => el == true).length;
         }
     }

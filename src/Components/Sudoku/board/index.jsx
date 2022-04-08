@@ -45,7 +45,7 @@ window.onkeydown = (ev) => {
     board.selectCell(row, col);
 };
 
-function PlayButton() {
+function ResumePause() {
     const isPaused = useSelector(({sudoku}) => sudoku.gameStatus);
     return (
         <div
@@ -63,7 +63,7 @@ function PlayButton() {
 function Board() {
     return (
         <div id="board">
-            <PlayButton />
+            <ResumePause />
             <Grid/>
         </div>
     );

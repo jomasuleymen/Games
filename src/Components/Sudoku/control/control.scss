@@ -2,7 +2,6 @@
     height: 100%;
     display: inline-block;
     margin-left: 3px;
-    flex: 1;
     padding: 0 8px;
 }
 
@@ -121,8 +120,6 @@
 }
 
 #numpad{
-    width: 270px;
-    height: 270px;
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(3, minmax(80px, 1fr));

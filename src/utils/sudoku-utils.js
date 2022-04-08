@@ -1,12 +1,13 @@
 async function setSolution(data, board) {
+    const start = Date.now();
     const copyData = data.map((row) => [...row]);
     solve(copyData, 0, 0);
+    console.log((Date.now() - start) / 1000);
     board.solution = copyData;
 }
 
 function solve(data, row, col) {
     if (row == 8 && col == 9) {
-        board.solution = data;
         return true;
     }
 
@@ -23,53 +24,39 @@ function solve(data, row, col) {
         if (isValid(data, row, col, i)) {
             data[row][col] = i;
             if (solve(data, row, col + 1)) return true;
+            data[row][col] = 0;
         }
     }
-    data[row][col] = 0;
     return false;
 }
 
-function isValid(data, row, col, value) { // minimize and optimize
-    let rowSquare = Math.floor(row / 3) * 3;
-    let colSquare = Math.floor(col / 3) * 3;
-
+function isValid(data, row, col, value) {
     for (let i = 0; i < 9; i++) {
-        if (data[row][i] == value && i != col) return false;
-
-        if (data[i][col] == value && i != row) return false;
-
-        if (rowSquare == row && colSquare == col)
-            continue;
-
-        if (data[rowSquare][colSquare] == value)
-            return false;
-
-        colSquare += 1;
-
-        if ((i + 1) % 3 == 0) {
-            rowSquare += 1;
-            colSquare = Math.floor(col / 3) * 3;
-        }
+        if (data[row][i] == value) return false;
+        if (data[i][col] == value) return false;
     }
+
+    let box_start_row = row - (row % 3);
+    let box_start_col = col - (col % 3);
+
+    for (let r = box_start_row; r < box_start_row + 3; r++)
+        for (let c = box_start_col; c < box_start_col + 3; c++)
+            if (data[r][c] == value) return false;
 
     return true;
 }
 
-
 function checkForErrors(row, col, currentData, errorData) {
-    compute(row, col, currentData, errorData, 1);
+    CheckRevertComputes(row, col, currentData, errorData, 1);
 }
 
 function revertErrors(row, col, currentData, errorData) {
-    compute(row, col, currentData, errorData, -1);
+    CheckRevertComputes(row, col, currentData, errorData, -1);
 }
 
-function compute(row, col, currentData, errorData, step) {
+function CheckRevertComputes(row, col, currentData, errorData, step) {
     const newValue = currentData[row][col];
     if (newValue == 0) return;
-
-    let rowSquare = Math.floor(row / 3) * 3;
-    let colSquare = Math.floor(col / 3) * 3;
 
     for (let i = 0; i < 9; i++) {
         if (newValue == currentData[i][col] && i != row) {
@@ -81,19 +68,17 @@ function compute(row, col, currentData, errorData, step) {
             errorData[row][i] += step;
             errorData[row][col] += step;
         }
-
-        if (newValue == currentData[rowSquare][colSquare] && rowSquare != row && colSquare != col) {
-            errorData[rowSquare][colSquare] += step
-            errorData[row][col] += step;
-        }
-        colSquare += 1;
-
-        if ((i + 1) % 3 == 0) {
-            rowSquare += 1;
-            colSquare = Math.floor(col / 3) * 3;
-        }
     }
-}
 
+    let box_start_row = row - (row % 3);
+    let box_start_col = col - (col % 3);
+
+    for (let r = box_start_row; r < box_start_row + 3; r++)
+        for (let c = box_start_col; c < box_start_col + 3; c++)
+            if (newValue == currentData[r][c] && r != row && c != col) {
+                errorData[r][c] += step;
+                errorData[row][col] += step;
+            }
+}
 
 export { setSolution, checkForErrors, revertErrors };

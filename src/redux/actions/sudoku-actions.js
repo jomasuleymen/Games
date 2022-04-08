@@ -1,4 +1,10 @@
-import { SELECT_CELL, REFRESH, PAUSE, RESUME, TOGGLE } from "@types/sudoku";
+import {
+    SELECT_CELL,
+    PAUSE,
+    RESUME,
+    TOGGLE,
+    UPDATE_RECORD,
+} from "@types/sudoku";
 import stores from "@stores/stores";
 
 const selectCell = (row, col, cellValue) => {
@@ -12,38 +18,38 @@ const selectCell = (row, col, cellValue) => {
             value: cellValue,
         },
     });
-}
-
-const refreshBoard = () => {
-    stores.dispatch({ type: REFRESH });
-}
+};
 
 const pause = () => {
-    stores.dispatch({type: PAUSE});
-}
+    stores.dispatch({ type: PAUSE });
+};
 
 const resume = () => {
-    stores.dispatch({type: RESUME});
-}
+    stores.dispatch({ type: RESUME });
+};
 
 const toggle = () => {
-    stores.dispatch({type: TOGGLE});
-}
+    stores.dispatch({ type: TOGGLE });
+};
 
 const getSelectedCell = () => {
     return stores.getState().sudoku.selectedCell;
-}
+};
 
 const getStatus = () => {
     return stores.getState().sudoku.gameStatus;
-}
+};
+
+const updateRecord = (data) => {
+    stores.dispatch({ type: UPDATE_RECORD, payload: data });
+};
 
 export default {
     selectCell,
-    refreshBoard,
     pause,
     resume,
     toggle,
     getSelectedCell,
-    getStatus
+    getStatus,
+    updateRecord,
 };

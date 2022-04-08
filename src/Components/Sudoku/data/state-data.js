@@ -10,17 +10,21 @@ class History {
         return false;
     }
 
-    addState(row, col, value, note) {
+    addState(row, col, value, notes) {
         const prevState = this.history.slice(-1)[0];
         if (
             prevState &&
             row == prevState.row &&
             col == prevState.col &&
             value == prevState.value &&
-            this.isSameNote(note, prevState.note)
+            this.isSameNote(notes, prevState.note)
         )
             return;
-        this.history.push({ row, col, value, note });
+        
+        if (notes.includes(true))
+            this.history.push({ row, col, notes });
+        else
+            this.history.push({ row, col, value });
     }
 
     popState() {

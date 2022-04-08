@@ -11,7 +11,6 @@ module.exports = (app) => {
     app.use(cookieParser());
     app.use((req, res, next) => {
         console.log("request");
-        console.log(req.headers);
         next();
     });
 };

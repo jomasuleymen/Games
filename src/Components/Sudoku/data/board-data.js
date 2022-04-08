@@ -5,62 +5,51 @@ import actions from "@actions/sudoku-actions";
 import Note from "./note-data";
 import History from "./state-data";
 
-
 class Board {
-    #solution = [];
+    #solution = zeroFilledMatrix();
 
     constructor() {
         this.note = new Note();
         this.history = new History();
 
         this.initialData = zeroFilledMatrix();
+        this.currentData = zeroFilledMatrix();
         this.errorData = zeroFilledMatrix();
-        this.#solution = zeroFilledMatrix();
-        this.currentData = [...this.initialData];
 
-        this.copyState = {};
+        this.errorsNum = 0;
+        this.game = null;
     }
 
     isReadOnly(row, col) {
         return this.initialData[row][col] != 0;
     }
 
-    setHint(row, col) {
+    setHint() {
+        const { row, col } = this.selectedCell;
         this.initialData[row][col] = this.#solution[row][col];
         this.history.filterHistory(row, col);
         this.insertToSelectedCell(this.#solution[row][col], true);
     }
 
-    clearBoard() {
-        for (let i = 0; i < 9; i++) {
-            for (let j = 0; j < 9; j++) {
-                this.#solution[i][j] = 0;
-                this.errorData[i][j] = 0;
-                this.currentData[i][j] = 0;
-            }
-        }
-        this.note.clear();
-        this.history.clear();
-        this.selectCell(0, 0);
-    }
-
-    createBoard(newData) {
-        setSolution(newData, this);
-        newData.forEach((row, index) => {
+    createBoard(newBoardData) {
+        newBoardData.forEach((row, index) => {
+            this.currentData[index] = [...row];
             this.initialData[index] = [...row];
-            this.currentData[index] = [...row];
-        });
-        this.selectCell(0, 0);
-    }
-
-    restart(){
-        this.initialData.forEach((row, index) => {
-            this.currentData[index] = [...row];
             this.errorData[index] = Array(9).fill(0);
         });
+
         this.note.clear();
         this.history.clear();
+
         this.selectCell(0, 0);
+
+        if (newBoardData !== this.initialData) {
+            setSolution(newBoardData, this);
+        }
+    }
+
+    restart() {
+        this.createBoard(this.initialData);
     }
 
     /**
@@ -99,12 +88,17 @@ class Board {
     }
 
     refreshBoard() {
-        actions.refreshBoard();
+        const { row, col } = this.selectedCell;
+        actions.selectCell(row, col, this.getCellValue(row, col));
     }
 
     insertToSelectedCell(newValue, isHint, isUndo) {
         const { row, col } = this.selectedCell;
-        if (!isHint && (this.isReadOnly(row, col) || newValue < 1 || newValue > 9)) return;
+        if (
+            !isHint &&
+            (this.isReadOnly(row, col) || newValue < 1 || newValue > 9)
+        )
+            return;
 
         const oldValue = this.getCellValue(row, col);
         const oldNote = [...this.note.getNote(row, col)];
@@ -114,15 +108,19 @@ class Board {
             this.setCellValue(row, col, 0);
         }
 
-        if (isHint || !this.note.isEnabled) {
+        if (this.note.isEnabled && !isHint) {
+            this.note.addNote(row, col, newValue);
+        } else {
             this.note.eraseNote(row, col);
 
             if (isHint || oldValue != newValue) {
                 this.setCellValue(row, col, newValue);
                 checkForErrors(row, col, this.currentData, this.errorData);
+
+                if (newValue === this.#solution[row][col]) {
+                    this.checkDataForSolution();
+                }
             }
-        } else {
-            this.note.addNote(row, col, newValue);
         }
 
         this.refreshBoard();
@@ -133,12 +131,12 @@ class Board {
 
     eraseSelectedCell(isUndo) {
         const { row, col } = this.selectedCell;
-        const oldValue = this.getCellValue(row, col);
 
         if (this.isReadOnly(row, col)) return;
 
+        const oldValue = this.getCellValue(row, col);
         const oldNote = [...this.note.getNote(row, col)];
-        
+
         this.note.eraseNote(row, col);
 
         if (this.cellHasNumber(row, col)) {
@@ -147,16 +145,37 @@ class Board {
         }
 
         this.refreshBoard();
-
-        if (!isUndo)
-            this.history.addState(row, col, oldValue, oldNote);
+        if (!isUndo) this.history.addState(row, col, oldValue, oldNote);
     }
 
-    get selectedCell(){
+    loadPrevState() {
+        const prevState = this.history.popState();
+        if (!prevState) return;
+
+        const { row, col } = prevState;
+
+        this.selectCell(row, col);
+        if (prevState.notes) {
+            this.eraseSelectedCell(true);
+            this.note.setNote(row, col, prevState.notes);
+        } else if (prevState.value == 0) this.eraseSelectedCell(true);
+        else this.insertToSelectedCell(prevState.value, false, true);
+    }
+
+    get selectedCell() {
         return actions.getSelectedCell();
     }
-}
 
+    /* logic */
+
+    checkDataForSolution() {
+        for (let i = 0; i < 9; i++)
+            for (let j = 0; j < 9; j++)
+                if (this.#solution[i][j] != this.currentData[i][j]) return;
+
+        this.game.finishGame();
+    }
+}
 
 const board = new Board();
 

@@ -1,4 +1,4 @@
-import { SELECT_CELL, REFRESH } from "@types/sudoku";
+import { SELECT_CELL } from "@types/sudoku";
 
 const selectedCell = {
     row: 0,
@@ -13,10 +13,6 @@ export default function cellReducer(state = selectedCell, action) {
         case SELECT_CELL:
             return {
                 ...action.payload,
-            };
-        case REFRESH:
-            return {
-                ...state,
             };
         default:
             return state;

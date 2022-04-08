@@ -1,21 +1,30 @@
-.sudoku-game {
-    padding: 5px;
-    width: 780px;
-    height: 540px;
-    margin: 0 auto;
-}
-
-#game-body {
+.sudoku{
+    border: 0.5px solid black;
     display: flex;
-    height: 480px;
-    margin-top: 5px;
-    padding: 0;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-    &.pause {
-        .cell {
-            pointer-events: none;
-            color: white !important;
-            background-color: white !important;
+    .sudoku-game {
+        padding: 5px;
+    }
+    
+    .sudoku-recorder{
+        padding: 5px;
+    }
+    
+    #game-body {
+        display: flex;
+        height: 480px;
+        margin-top: 5px;
+        padding: 0;
+    
+        &.pause {
+            .cell {
+                pointer-events: none;
+                color: white !important;
+                background-color: white !important;
+            }
         }
     }
 }

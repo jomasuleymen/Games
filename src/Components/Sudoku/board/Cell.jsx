@@ -21,7 +21,7 @@ function getCellColor(row, col, value, selectedCell) {
 }
 
 function Cell({ row, col, className }) {
-    const selectedCell = useSelector(({sudoku}) => sudoku.selectedCell);
+    const selectedCell = useSelector(({ sudoku }) => sudoku.selectedCell);
     const isThisCellSelected =
         row == selectedCell.row && col == selectedCell.col;
 

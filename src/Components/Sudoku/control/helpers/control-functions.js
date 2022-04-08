@@ -9,21 +9,11 @@ function toggleNoteMode() {
 }
 
 function giveHint() {
-    const { row, col } = board.selectedCell;
-    board.setHint(row, col);
+    board.setHint();
 }
 
 function undo() {
-    const prevState = board.history.popState();
-    if (!prevState) return;
-
-    const { row, col } = prevState;
-    board.selectCell(row, col);
-    if (prevState.value == 0) {
-        board.eraseSelectedCell(true);
-        board.note.setNote(row, col, prevState.note);
-    } else
-        board.insertToSelectedCell(prevState.value, false, true);
+    board.loadPrevState();
 }
 
 export { eraseSelectedCell, toggleNoteMode, giveHint, undo };

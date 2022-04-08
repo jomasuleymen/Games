@@ -3,7 +3,7 @@ const config = require("config");
 
 const auth = async (req, res, next) => {
     try {
-        const token = req.cookies.token;
+        const token = req.headers.token;
         if (!token) throw new Error("not valid token");
 
         req.user = jwt.verify(token, config.get("secretKey"));

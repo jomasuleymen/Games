@@ -39,9 +39,9 @@ function App() {
                 <NavBar />
                 <Routes>
                     <Route path="/" element={<Navigate to="/games" />} />
-                    <Route path="/games" element={<Games />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/games" element={<Games />} />
                     <Route path="/sudoku" element={<Sudoku />} />
                 </Routes>
                 <ToastContainer />

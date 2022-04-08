@@ -1,7 +1,7 @@
-import axios from "axios";
+import httpService from "@services/httpService";
 
 import board from "./board-data";
-import actions from "@actions/sudoku-actions";
+import sudokuActions from "@actions/sudoku-actions";
 
 class Game {
     constructor() {
@@ -9,6 +9,9 @@ class Game {
         this.timer = 0;
         this.autoCheck = false;
         this.isPaused = false;
+        this.difficulty = "easy";
+
+        this.board.game = this;
     }
 
     toggleAutoCheck() {
@@ -17,22 +20,37 @@ class Game {
     }
 
     pause() {
-        actions.pause();
+        sudokuActions.pause();
         this.isPaused = true;
     }
 
     resume() {
-        actions.resume();
+        sudokuActions.resume();
         this.isPaused = false;
     }
 
     /* Play - Pause */
     toggleStatus() {
-        actions.toggle();
-        this.isPaused = actions.getStatus();
+        sudokuActions.toggle();
+        this.isPaused = sudokuActions.getStatus();
     }
 
-    initGame(difficulty) {
+    setRecords() {
+        const isAuth = localStorage.getItem("x-auth-token");
+        if (isAuth) {
+            httpService
+                .get("http://localhost:3000/sudoku/record")
+                .then(({ data }) => {
+                    if (data) sudokuActions.updateRecord(data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }
+
+    initGame(difficulty, isStart) {
+        if (isStart) this.setRecords();
         this.isPaused = true;
         this.timer = 0;
         document.getElementById("timer").innerText = "00:00";
@@ -43,19 +61,40 @@ class Game {
                 this.resume();
             }, 300);
         } else {
-            board.clearBoard();
-            axios
+            httpService
                 .get(
                     `http://localhost:3000/sudoku/generate?difficulty=${difficulty}`
                 )
                 .then(({ data: genData }) => {
+                    this.difficulty = difficulty;
                     board.createBoard(genData);
                     setTimeout(() => {
                         this.resume();
-                    }, 300);
+                    }, 200);
                 })
                 .catch(function (error) {
                     console.log(error);
+                });
+        }
+    }
+
+    finishGame() {
+        const spentTime = this.timer;
+        this.isPaused = true;
+        const data = {
+            spentTime,
+            difficulty: this.difficulty,
+        };
+
+        const isAuth = localStorage.getItem("x-auth-token");
+        if (isAuth) {
+            httpService
+                .put("http://localhost:3000/sudoku/record", data)
+                .then(({ data }) => {
+                    sudokuActions.updateRecord({ [this.difficulty]: data });
+                })
+                .catch((err) => {
+                    console.log(err);
                 });
         }
     }
