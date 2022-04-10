@@ -1,12 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Joi from "joi";
 
 import Form from "@components/common/Form";
 import userServices from "@services/userServices";
-import { useNavigate } from "react-router-dom";
 
 function Register() {
-
     const navigate = useNavigate();
 
     function doSubmit(data, setErrors) {
@@ -47,7 +46,8 @@ function Register() {
                 tlds: {
                     allow: false,
                 },
-            }).required(),
+            })
+            .required(),
         password: Joi.string().min(6).required(),
     });
 

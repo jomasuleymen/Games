@@ -5,14 +5,14 @@
         "paths": {
             "@components/*": ["components/*"],
             "@reducers/*": ["redux/reducers/*"],
-            "@stores/*": ["redux/stores/*"],
-            "@types/*": ["redux/types/*"],
+            "@store": ["redux/store.js"],
             "@actions/*": ["redux/actions/*"],
             "@styles/*": ["styles/*"],
             "@utils/*": ["utils/*"],
             "@pages/*": ["pages/*"],
             "@services/*": ["services/*"],
+            "@app/*": ["app/*"],
         },
     },
-    "exclude": ["build", "dist"]
+    "exclude": ["node_modules", "build", "dist"]
 }

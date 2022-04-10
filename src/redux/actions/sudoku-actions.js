@@ -1,47 +1,57 @@
+import { selectCell as selectCellReducer, updateCells } from "@reducers/sudoku/cellReducer";
 import {
-    SELECT_CELL,
-    PAUSE,
-    RESUME,
-    TOGGLE,
-    UPDATE_RECORD,
-} from "@types/sudoku";
-import stores from "@stores/stores";
+    pause as pauseGame,
+    resume as resumeGame,
+    toggle as toggleStatus,
+    loading,
+    loaded,
+    reset,
+} from "@reducers/sudoku/gameStatusReducer";
+import { updateRecord as updateRecordReducer } from "@reducers/sudoku/record";
+
+import store from "@store";
 
 const selectCell = (row, col, cellValue) => {
-    stores.dispatch({
-        type: SELECT_CELL,
-        payload: {
-            row,
-            col,
-            squareRowBegin: Math.floor(row / 3) * 3,
-            squareColBegin: Math.floor(col / 3) * 3,
-            value: cellValue,
-        },
-    });
+    store.dispatch(selectCellReducer({ row, col, cellValue }));
 };
 
+const refreshBoard = () => {
+    store.dispatch(updateCells());
+}
+
 const pause = () => {
-    stores.dispatch({ type: PAUSE });
+    store.dispatch(pauseGame());
 };
 
 const resume = () => {
-    stores.dispatch({ type: RESUME });
+    store.dispatch(resumeGame());
 };
 
 const toggle = () => {
-    stores.dispatch({ type: TOGGLE });
+    store.dispatch(toggleStatus());
 };
 
 const getSelectedCell = () => {
-    return stores.getState().sudoku.selectedCell;
+    return store.getState().sudoku.selectedCell;
 };
 
 const getStatus = () => {
-    return stores.getState().sudoku.gameStatus;
+    return store.getState().sudoku.gameStatus;
 };
 
 const updateRecord = (data) => {
-    stores.dispatch({ type: UPDATE_RECORD, payload: data });
+    store.dispatch(updateRecordReducer(data));
+};
+
+const resetStatus = () => {
+    store.dispatch(reset());
+};
+
+const loadingData = () => {
+    store.dispatch(loading());
+};
+const loadedData = () => {
+    store.dispatch(loaded());
 };
 
 export default {
@@ -52,4 +62,8 @@ export default {
     getSelectedCell,
     getStatus,
     updateRecord,
+    resetStatus,
+    loadingData,
+    loadedData,
+    refreshBoard
 };

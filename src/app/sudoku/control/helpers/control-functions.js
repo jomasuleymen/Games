@@ -1,4 +1,4 @@
-import board from "@components/sudoku/data/board-data";
+import board from "@app/sudoku/data/board-data";
 
 function eraseSelectedCell() {
     board.eraseSelectedCell();

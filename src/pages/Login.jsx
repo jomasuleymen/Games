@@ -4,9 +4,9 @@ import Joi from "joi";
 
 import Form from "@components/common/Form";
 import userServices from "@services/userServices";
-import toast from "@utils/toast";
 import userActions from "@actions/user-actions";
 import http from "@services/httpService";
+import toast from "@utils/toast";
 
 function Login() {
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ function Login() {
 
                 toast.success(`Hello, ${user.username}`);
 
-                const token = res.headers["x-auth-token"];
+                const token = res.headers["x-auth-token"]; /* reafactor -> separate */
                 localStorage.setItem("x-auth-token", token);
                 http.setJwt(token);
                 navigate("/games");

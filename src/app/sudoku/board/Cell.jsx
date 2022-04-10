@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import board from "@components/sudoku/data/board-data";
-import game from "@components/sudoku/data/game-data";
+import board from "@app/sudoku/data/board-data";
+import game from "@app/sudoku/data/game-data";
 
 function getCellColor(row, col, value, selectedCell) {
     if (board.hasCellError(row, col)) return "rgb(247,207,214)";
@@ -24,7 +24,6 @@ function Cell({ row, col, className }) {
     const selectedCell = useSelector(({ sudoku }) => sudoku.selectedCell);
     const isThisCellSelected =
         row == selectedCell.row && col == selectedCell.col;
-
     const cell = useMemo(() => {
         return board.note.noteCount(row, col) > 0 ? (
             <div className="noteMode">

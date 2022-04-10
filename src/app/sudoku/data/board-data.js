@@ -88,8 +88,7 @@ class Board {
     }
 
     refreshBoard() {
-        const { row, col } = this.selectedCell;
-        actions.selectCell(row, col, this.getCellValue(row, col));
+        actions.refreshBoard();
     }
 
     insertToSelectedCell(newValue, isHint, isUndo) {

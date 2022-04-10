@@ -2,25 +2,92 @@ $lineWidth: 2.3px;
 $lineColor: rgb(0, 0, 0);
 
 :root {
-    --board-width: 500px;
-    --grid-size: 500px;
+    --board-width: 480px;
+    --grid-size: 480px;
 }
 
 #board {
-    position: relative;
-    flex-direction: column;
-    margin-right: 3px;
-    width: --board-width;
+    width: var(--board-width);
     height: 100%;
+    position: relative;
+    margin-right: 3px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 
+// loader
+$brand-success: rgb(35, 119, 247);
+$loader-size: 3em;
+$check-height: calc($loader-size / 2);
+$check-width: calc($check-height / 2);
+$check-left: (calc($loader-size / 6) + calc($loader-size / 12));
+$check-thickness: 3px;
+$check-color: $brand-success;
+
+.circle-loader {
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-left-color: $check-color;
+    position: absolute;
+    animation: loader-spin 1s infinite linear;
+    border-radius: 50%;
+    width: $loader-size;
+    height: $loader-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.load-complete {
+    -webkit-animation: none;
+    animation: none;
+    border-color: $check-color;
+    transition: border 500ms ease-out;
+}
+
+.checkmark {
+
+    animation-duration: 800ms;
+    animation-timing-function: ease;
+    animation-name: checkmark;
+    transform: scaleY(-1) rotate(135deg);
+    opacity: 1;
+    height: $check-height;
+    width: $check-width;
+    display: inline-block;
+    border-left: $check-thickness solid $check-color;
+    border-bottom: $check-thickness solid $check-color;
+    margin-bottom: 7px;
+    content: '';
+}
+
+@keyframes loader-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes checkmark {
+    0% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+// 
+
 #board_pause {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 55px;
     height: 55px;
     border-radius: 50%;
@@ -28,8 +95,9 @@ $lineColor: rgb(0, 0, 0);
     background-color: rgb(35, 119, 247);
     justify-content: center;
     align-items: center;
-    display: none;
+    display: flex;
     pointer-events: all !important;
+    z-index: 10;
 
     .sign {
         width: 0;

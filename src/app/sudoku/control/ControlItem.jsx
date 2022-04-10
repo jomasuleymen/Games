@@ -4,7 +4,7 @@ function ControlItem({ name, func, Icon }) {
     return (
         <div className="control-item">
             <div className="control-icon" onClick={func}>
-                < Icon /> 
+                <Icon />
             </div>
             <div className="control-name">{name}</div>
         </div>

@@ -1,12 +1,14 @@
-import { SET_USER } from "@types/user";
+import { createSlice } from "@reduxjs/toolkit";
 
-const currentUser = null;
+const userSlice = createSlice({
+    name: "user",
+    initialState: null,
+    reducers: {
+        setUser: (state, { payload }) => {
+            return payload;
+        },
+    },
+});
 
-export default function cellReducer(user = currentUser, action) {
-    switch (action.type) {
-        case SET_USER:
-            return action.payload;
-        default:
-            return user;
-    }
-}
+export default userSlice.reducer;
+export const { setUser } = userSlice.actions;

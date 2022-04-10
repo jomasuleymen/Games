@@ -1,11 +1,11 @@
-.control{
+.control {
     height: 100%;
     display: inline-block;
     margin-left: 3px;
     padding: 0 8px;
 }
 
-.new-game{
+.new-game {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,10 +13,10 @@
     margin-bottom: 5px;
     position: relative;
 
-    button{
+    button {
         width: 280px;
         height: 55px;
-        background-color: rgb(0,114,227);
+        background-color: rgb(0, 114, 227);
         color: white;
         outline: none;
         border: none;
@@ -28,7 +28,7 @@
         letter-spacing: 1.5px;
     }
 
-    .new-game-body{
+    .new-game-body {
         width: 300px;
         padding: 10px;
         position: absolute;
@@ -38,17 +38,17 @@
         box-shadow: 0 5px 20px 0 rgb(0 0 0 / 20%);
         border-radius: 7px;
     }
-    
-    .difficulties{
-        background-color: rgb(243,246,250);        
+
+    .difficulties {
+        background-color: rgb(243, 246, 250);
         border-radius: 7px;
     }
 
-    .difficulty{
+    .difficulty {
         padding: 2px;
-        border-bottom: 0.5px solid rgb(224,232,247);
+        border-bottom: 0.5px solid rgb(224, 232, 247);
         padding: 12px 10px;
-        color: rgb(0,114,227);
+        color: rgb(0, 114, 227);
         font-weight: 600;
         cursor: pointer;
         user-select: none;
@@ -58,36 +58,36 @@
         align-items: center;
     }
 
-    .new-game-sudoku-icon{
+    .new-game-sudoku-icon {
         display: inline-block;
         width: 20px;
         height: 20px;
         margin-right: 10px;
-        background-image: url('@styles/sudoku-icons.png');
+        background-image: url('@styles/images/sudoku-icons.png');
         background-position: 99.4565% .6369%;
         background-size: 345.3333% 309.3333%;
     }
-    
-    .difficulty:last-child{
+
+    .difficulty:last-child {
         border-bottom: none;
         border-bottom-right-radius: 7px;
         border-bottom-left-radius: 7px;
     }
-    
-    .difficulty:first-child{
+
+    .difficulty:first-child {
         border-top-right-radius: 7px;
         border-top-left-radius: 7px;
     }
 
 }
 
-.control-items{
+.control-items {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.control-item{
+.control-item {
     width: 56px;
     height: 80px;
     display: flex;
@@ -99,8 +99,8 @@
     position: relative;
 }
 
-.control-icon{
-    background-color: rgb(233,238,244);
+.control-icon {
+    background-color: rgb(233, 238, 244);
     fill: #0072E3;
     cursor: pointer;
     border-radius: 50%;
@@ -110,7 +110,7 @@
     align-items: center;
 }
 
-.control-name{
+.control-name {
     text-align: center;
     margin-top: 2px;
     user-select: none;
@@ -119,7 +119,7 @@
     font-weight: bold;
 }
 
-#numpad{
+#numpad {
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(3, minmax(80px, 1fr));
@@ -128,8 +128,8 @@
     padding: 5px;
 }
 
-.numpad-item{
-    background-color: rgb(233,238,244);
+.numpad-item {
+    background-color: rgb(233, 238, 244);
     color: #0072E3;
     border-radius: 5%;
     display: flex;
@@ -143,11 +143,11 @@
 
 .control-icon:hover,
 .numpad-item:hover,
-.difficulty:hover{
+.difficulty:hover {
     background-color: rgb(223, 228, 233);
 }
 
-.note-status{
+.note-status {
     position: absolute;
     right: 0px;
     top: 2px;
@@ -161,14 +161,14 @@
     user-select: none;
 }
 
-.note-on{
-    background-color: rgb(0,114,227);
+.note-on {
+    background-color: rgb(0, 114, 227);
 }
 
-.note-off{
+.note-off {
     background-color: rgb(192, 192, 192);
 }
 
-.hidden{
+.hidden {
     display: none;
 }

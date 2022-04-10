@@ -1,6 +1,6 @@
 import React from "react";
 
-import game from "@components/sudoku/data/game-data";
+import game from "@app/sudoku/data/game-data";
 
 function AutoCheck() {
     return (

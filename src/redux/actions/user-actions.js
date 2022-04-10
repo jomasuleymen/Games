@@ -1,11 +1,8 @@
-import { SET_USER } from "@types/user";
-import stores from "@stores/stores";
+import store from "@store";
+import { setUser as setUserReducer } from "@reducers/userReducer";
 
 const setUser = (user) => {
-    stores.dispatch({
-        type: SET_USER,
-        payload: user,
-    });
+    store.dispatch(setUserReducer(user));
 };
 
 export default {

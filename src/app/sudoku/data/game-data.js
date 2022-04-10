@@ -53,27 +53,30 @@ class Game {
         if (isStart) this.setRecords();
         this.isPaused = true;
         this.timer = 0;
+        sudokuActions.resetStatus();
         document.getElementById("timer").innerText = "00:00";
 
-        if (difficulty == "restart") {
+        if (difficulty === "restart") {
             board.restart();
             setTimeout(() => {
                 this.resume();
-            }, 300);
+            }, 200);
         } else {
+            sudokuActions.loadingData();
             httpService
                 .get(
                     `http://localhost:3000/sudoku/generate?difficulty=${difficulty}`
                 )
-                .then(({ data: genData }) => {
+                .then(({ data }) => {
                     this.difficulty = difficulty;
-                    board.createBoard(genData);
+                    board.createBoard(data);
+                    sudokuActions.resetStatus();
                     setTimeout(() => {
                         this.resume();
                     }, 200);
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.log(error); // setError sudoku actions later
                 });
         }
     }
@@ -88,6 +91,7 @@ class Game {
 
         const isAuth = localStorage.getItem("x-auth-token");
         if (isAuth) {
+            sudokuActions.loadingData();
             httpService
                 .put("http://localhost:3000/sudoku/record", data)
                 .then(({ data }) => {
@@ -95,6 +99,9 @@ class Game {
                 })
                 .catch((err) => {
                     console.log(err);
+                })
+                .finally(() => {
+                    sudokuActions.resetStatus();
                 });
         }
     }

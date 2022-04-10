@@ -19,12 +19,21 @@
         margin-top: 5px;
         padding: 0;
     
-        &.pause {
+        &.freeze {
+            
+            .control-items,
+            #numpad,
+            #grid{
+                pointer-events: none;
+                opacity: 0.5;
+            }
+            
             .cell {
                 pointer-events: none;
                 color: white !important;
                 background-color: white !important;
             }
+            
         }
     }
 }

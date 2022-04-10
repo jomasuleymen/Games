@@ -1,20 +1,29 @@
-import { SELECT_CELL } from "@types/sudoku";
+import { createSlice } from "@reduxjs/toolkit";
 
-const selectedCell = {
-    row: 0,
-    col: 0,
-    squareRowBegin: 0,
-    squareColBegin: 0,
-    value: -1,
-};
-
-export default function cellReducer(state = selectedCell, action) {
-    switch (action.type) {
-        case SELECT_CELL:
+const selectedCellSlice = createSlice({
+    name: "selectedCell",
+    initialState: {
+        row: 0,
+        col: 0,
+        squareRowBegin: 0,
+        squareColBegin: 0,
+        value: -1,
+    },
+    reducers: {
+        selectCell: (state, { payload }) => {
+            state.row = payload.row;
+            state.col = payload.col;
+            state.value = payload.cellValue;
+            state.squareRowBegin = payload.row - (payload.row % 3);
+            state.squareColBegin = payload.col - (payload.col % 3);
+        },
+        updateCells: (state) => {
             return {
-                ...action.payload,
+                ...state,
             };
-        default:
-            return state;
-    }
-}
+        },
+    },
+});
+
+export default selectedCellSlice.reducer;
+export const { selectCell, updateCells } = selectedCellSlice.actions;

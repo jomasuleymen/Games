@@ -1,30 +1,33 @@
-import { UPDATE_RECORD } from "@types/sudoku";
-const record = {
-    easy: {
-        min: null,
-        average: null,
-        played: null
-    },
-    medium: {
-        min: null,
-        average: null,
-        played: null
-    },
-    hard: {
-        min: null,
-        average: null,
-        played: null
-    }
-}
+import { createSlice } from "@reduxjs/toolkit";
 
-export default function cellReducer(state = record, action) {
-    switch (action.type) {
-        case UPDATE_RECORD:
+const recordSlice = createSlice({
+    name: "record",
+    initialState: {
+        easy: {
+            min: null,
+            average: null,
+            played: null,
+        },
+        medium: {
+            min: null,
+            average: null,
+            played: null,
+        },
+        hard: {
+            min: null,
+            average: null,
+            played: null,
+        },
+    },
+    reducers: {
+        updateRecord: (state, action) => {
             return {
                 ...state,
                 ...action.payload,
             };
-        default:
-            return state;
-    }
-}
+        },
+    },
+});
+
+export default recordSlice.reducer;
+export const { updateRecord } = recordSlice.actions;
