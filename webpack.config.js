@@ -36,9 +36,7 @@ module.exports = {
         alias: {
             "@src": path.resolve(__dirname, "src/"),
             "@components": path.resolve(__dirname, "src/components/"),
-            "@reducers": path.resolve(__dirname, "src/redux/reducers/"),
-            "@store": path.resolve(__dirname, "src/redux/store.js"),
-            "@actions": path.resolve(__dirname, "src/redux/actions/"),
+            "@store": path.resolve(__dirname, "src/store/"),
             "@styles": path.resolve(__dirname, "src/styles/"),
             "@utils": path.resolve(__dirname, "src/utils/"),
             "@pages": path.resolve(__dirname, "src/pages/"),

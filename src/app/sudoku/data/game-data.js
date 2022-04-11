@@ -1,7 +1,7 @@
 import httpService from "@services/httpService";
 
 import board from "./board-data";
-import sudokuActions from "@actions/sudoku-actions";
+import sudokuActions from "@store/sudoku/sudokuActions";
 
 class Game {
     constructor() {
@@ -20,18 +20,18 @@ class Game {
     }
 
     pause() {
-        sudokuActions.pause();
+        sudokuActions.pauseGame();
         this.isPaused = true;
     }
 
     resume() {
-        sudokuActions.resume();
+        sudokuActions.resumeGame();
         this.isPaused = false;
     }
 
     /* Play - Pause */
     toggleStatus() {
-        sudokuActions.toggle();
+        sudokuActions.toggleStatus();
         this.isPaused = sudokuActions.getStatus();
     }
 
@@ -79,6 +79,10 @@ class Game {
                     console.log(error); // setError sudoku actions later
                 });
         }
+
+        // setTimeout(() => {
+        //     this.finishGame();
+        // }, 2000);
     }
 
     finishGame() {
@@ -89,21 +93,16 @@ class Game {
             difficulty: this.difficulty,
         };
 
-        const isAuth = localStorage.getItem("x-auth-token");
-        if (isAuth) {
-            sudokuActions.loadingData();
-            httpService
-                .put("http://localhost:3000/sudoku/record", data)
-                .then(({ data }) => {
-                    sudokuActions.updateRecord({ [this.difficulty]: data });
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-                .finally(() => {
-                    sudokuActions.resetStatus();
-                });
-        }
+        sudokuActions.loadingData();
+        httpService
+            .put("http://localhost:3000/sudoku/record", data)
+            .then(({ data }) => {
+                sudokuActions.updateRecord({ [this.difficulty]: data });
+                sudokuActions.verified();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 }
 

@@ -4,14 +4,12 @@
         "jsx": "react",
         "paths": {
             "@components/*": ["components/*"],
-            "@reducers/*": ["redux/reducers/*"],
-            "@store": ["redux/store.js"],
-            "@actions/*": ["redux/actions/*"],
             "@styles/*": ["styles/*"],
             "@utils/*": ["utils/*"],
             "@pages/*": ["pages/*"],
             "@services/*": ["services/*"],
             "@app/*": ["app/*"],
+            "@store/*": ["store/*"],
         },
     },
     "exclude": ["node_modules", "build", "dist"]

@@ -10,12 +10,12 @@ import "./sudoku.scss";
 import game from "./data/game-data";
 
 function GameBody() {
-    const { isPause, loadStatus } = useSelector(
+    const { isPause, isLoading, isSuccess } = useSelector(
         ({ sudoku }) => sudoku.gameStatus
     );
-    
-    const className = isPause || loadStatus ? "freeze" : null;
-    
+
+    const className = isPause || isLoading || isSuccess ? "freeze" : null;
+
     return (
         <div id="game-body" className={className}>
             <Board />

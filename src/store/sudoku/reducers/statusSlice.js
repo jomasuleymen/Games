@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const gameStatusSlice = createSlice({
     name: "status",
     initialState: {
-        loadStatus: null,
+        isLoading: false,
+        isSuccess: false,
         isPause: false,
     },
     reducers: {
@@ -16,19 +17,21 @@ const gameStatusSlice = createSlice({
         toggle: (state) => {
             state.isPause = !state.isPause;
         },
-        loading: (state) => {
-            state.loadStatus = "loading";
+        isLoading: (state, payload) => {
+            state.isLoading = payload;
         },
-        loaded: (state) => {
-            state.loadStatus = "loaded";
+        success: (state) => {
+            state.isLoading = false;
+            state.isSuccess = true;
         },
         reset: (state) => {
-            state.loadStatus = null;
+            state.isSuccess = false;
+            state.isLoading = false;
             state.isPause = false;
         },
     },
 });
 
 export default gameStatusSlice.reducer;
-export const { pause, resume, toggle, loading, loaded, reset } =
+export const { pause, resume, toggle, isLoading, success, reset } =
     gameStatusSlice.actions;

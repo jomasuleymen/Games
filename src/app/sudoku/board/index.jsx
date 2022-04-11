@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 import board from "../data/board-data";
 import game from "../data/game-data";
 import Grid from "./Grid";
-import { setOnkeyDown, setOnkeyUp } from "@utils/windowListeners";
 
+import Spinner from "@components/common/Spinner";
+import useKeyUpDown from "@utils/hooks/useKeyUpDown";
 import "./board.scss";
 
 const onkeyup = (ev) => {
@@ -59,43 +60,22 @@ function ResumePause() {
     );
 }
 
-function Loader({ data: loadStatus }) {
-    let className = "circle-loader";
-    if (loadStatus == "loaded") className += " load-complete";
-    return (
-        <div className={className}>
-            <div
-                className="checkmark"
-                style={{ display: loadStatus == "loaded" ? "block" : "none" }}
-            ></div>
-        </div>
-    );
-}
-
 function BoardStatus() {
-    const { isPause, loadStatus } = useSelector(
+    const { isPause, isLoading, isSuccess } = useSelector(
         ({ sudoku }) => sudoku.gameStatus
     );
 
-    if (loadStatus) return <Loader loadStatus={loadStatus} />;
+    if (isLoading) return <Spinner status={"loading"} />;
+    if (isSuccess) return <Spinner status={"success"} />;
     if (isPause) return <ResumePause />;
     return null;
 }
 
 function Board() {
-
-    useEffect(() => {
-        const resetKeyUp = setOnkeyUp(onkeyup);
-        const resetKeyDown = setOnkeyDown(onkeydown);
-
-        return () => {
-            resetKeyDown();
-            resetKeyUp();
-        }
-    }, [])
+    useKeyUpDown(onkeyup, onkeydown);
 
     return (
-        <div id="board" className="finish">
+        <div id="board">
             <BoardStatus />
             <Grid />
         </div>

@@ -4,7 +4,7 @@ import Joi from "joi";
 
 import Form from "@components/common/Form";
 import userServices from "@services/userServices";
-import userActions from "@actions/user-actions";
+import userActions from "@store/auth/userActions";
 import http from "@services/httpService";
 import toast from "@utils/toast";
 

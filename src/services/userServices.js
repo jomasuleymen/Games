@@ -1,6 +1,6 @@
 import http from "./httpService";
 import config from "@src/config.json";
-import userActions from "@actions/user-actions";
+import userActions from "@store/auth/userActions";
 
 const apiEndpoint = config.apiEndpoint + "users/";
 

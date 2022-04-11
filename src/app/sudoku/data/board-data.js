@@ -1,6 +1,6 @@
 import { setSolution, checkForErrors, revertErrors } from "@utils/sudoku-utils";
 import { zeroFilledMatrix } from "@utils/arrayUtils";
-import actions from "@actions/sudoku-actions";
+import actions from "@store/sudoku/sudokuActions";
 
 import Note from "./note-data";
 import History from "./state-data";
