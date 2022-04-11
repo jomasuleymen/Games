@@ -13,7 +13,7 @@ function Register() {
 
         userServices
             .registerUser(data)
-            .then((res) => {
+            .then((response) => {
                 navigate("/login");
             })
             .catch((error) => {

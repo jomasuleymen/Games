@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
-import userActions from "./store/auth/userActions";
 import userServices from "@services/userServices";
 
 import { ToastContainer } from "react-toastify";
@@ -13,8 +12,7 @@ import store from "@store/store";
 function App() {
     useEffect(() => {
         const setCurrentUserIfExists = (async () => {
-            const user = await userServices.getCurrentUser();
-            if (user) userActions.setUser(user);
+            const user = await userServices.setCurrentUser();
         });
 
         setCurrentUserIfExists();

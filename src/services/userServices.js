@@ -8,31 +8,41 @@ const registerUser = (data) => {
     return http.post(apiEndpoint + "register", data);
 };
 
-const getCurrentUser = async () => {
-    try {
-        const token = localStorage.getItem("x-auth-token");
-        if (!token) return null;
+const loginUser = (data) => {
+    return http.post(apiEndpoint + "login", data).then((res) => {
+        const user = res.data;
+        userActions.setUser(user);
 
-        const response = await http.post(apiEndpoint + "me", { token });
-        return response.data;
-    } catch (err) {
-        logout();
-    }
-    return null;
+        const token = res.headers["x-auth-token"]; /* reafactor -> separate */
+        localStorage.setItem("x-auth-token", token);
+        http.setJwt(token);
+    });
 };
 
-const loginUser = (data) => {
-    return http.post(apiEndpoint + "login", data);
+const setCurrentUser = async () => {
+    const token = localStorage.getItem("x-auth-token");
+    if (!token) return;
+
+    http.setJwt(token);
+    http.get(apiEndpoint + "me")
+        .then(({ data: user }) => {
+            userActions.setUser(user);
+        })
+        .catch((error) => {
+            localStorage.removeItem("x-auth-token");
+            http.setJwt(null);
+        });
 };
 
 const logout = () => {
-    userActions.setUser(null);
     localStorage.removeItem("x-auth-token");
+    userActions.setUser(null);
     http.setJwt(null);
+    location.reload();
 };
 
 export default {
-    getCurrentUser,
+    setCurrentUser,
     registerUser,
     loginUser,
     logout,

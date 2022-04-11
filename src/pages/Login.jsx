@@ -4,9 +4,6 @@ import Joi from "joi";
 
 import Form from "@components/common/Form";
 import userServices from "@services/userServices";
-import userActions from "@store/auth/userActions";
-import http from "@services/httpService";
-import toast from "@utils/toast";
 
 function Login() {
     const navigate = useNavigate();
@@ -14,16 +11,8 @@ function Login() {
         for (let name in data) data[name] = data[name].trim();
 
         userServices
-            .loginUser(data, setErrors)
-            .then((res) => {
-                const user = res.data;
-                userActions.setUser(user);
-
-                toast.success(`Hello, ${user.username}`);
-
-                const token = res.headers["x-auth-token"]; /* reafactor -> separate */
-                localStorage.setItem("x-auth-token", token);
-                http.setJwt(token);
+            .loginUser(data)
+            .then(() => {
                 navigate("/games");
             })
             .catch((error) => {

@@ -18,7 +18,7 @@ const login = async (req, res) => {
         const token = jwt.sign(
             {
                 _id: user.id,
-                isAdmin: isError.isAdmin,
+                isAdmin: user.isAdmin,
             },
             config.get("secretKey"),
             {
@@ -40,14 +40,13 @@ const login = async (req, res) => {
 
 const me = async (req, res) => {
     try {
-        const token = req.body.token;
+        const token = req.headers.token;
         if (!token) throw new Error("token not valid");
 
         const { _id } = jwt.verify(token, config.get("secretKey"));
 
         const user = await userServices.getUserById(_id);
         if (!user) res.json({ user: user || null });
-
         res.json({
             username: user.username,
             email: user.email,
