@@ -47,14 +47,14 @@ function isValid(data, row, col, value) {
 }
 
 function checkForErrors(row, col, currentData, errorData) {
-    CheckRevertComputes(row, col, currentData, errorData, 1);
+    CheckRevertHelper(row, col, currentData, errorData, 1);
 }
 
 function revertErrors(row, col, currentData, errorData) {
-    CheckRevertComputes(row, col, currentData, errorData, -1);
+    CheckRevertHelper(row, col, currentData, errorData, -1);
 }
 
-function CheckRevertComputes(row, col, currentData, errorData, step) {
+function CheckRevertHelper(row, col, currentData, errorData, step) {
     const newValue = currentData[row][col];
     if (newValue == 0) return;
 

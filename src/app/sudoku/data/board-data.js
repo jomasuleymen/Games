@@ -1,4 +1,4 @@
-import { setSolution, checkForErrors, revertErrors } from "@utils/sudoku-utils";
+import { setSolution, checkForErrors, revertErrors } from "@app/sudoku/helpers/sudokuHelpers";
 import { zeroFilledMatrix } from "@utils/arrayUtils";
 import actions from "@store/sudoku/sudokuActions";
 
