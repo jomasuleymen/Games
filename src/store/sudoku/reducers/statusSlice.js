@@ -6,6 +6,7 @@ const gameStatusSlice = createSlice({
         isLoading: false,
         isSuccess: false,
         isPause: false,
+        isFailed: false,
     },
     reducers: {
         pause: (state) => {
@@ -24,14 +25,18 @@ const gameStatusSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = true;
         },
+        failed: (state) => {
+            state.isFailed = true;
+        },
         reset: (state) => {
             state.isSuccess = false;
             state.isLoading = false;
             state.isPause = false;
+            state.isFailed = false;
         },
     },
 });
 
 export default gameStatusSlice.reducer;
-export const { pause, resume, toggle, isLoading, success, reset } =
+export const { pause, resume, toggle, isLoading, success, reset, failed } =
     gameStatusSlice.actions;

@@ -31,12 +31,14 @@ function NavBar() {
 
     return (
         <nav className="navbar">
-            <Link to="/games" className="item logo">
-                Games
-            </Link>
+            <div className="wrapper">
+                <Link to="/games" className="item logo">
+                    Games
+                </Link>
 
-            {!user && <Authenticate />}
-            {user && <User />}
+                {!user && <Authenticate />}
+                {user && <User />}
+            </div>
         </nav>
     );
 }

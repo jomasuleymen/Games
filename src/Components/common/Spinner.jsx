@@ -3,15 +3,16 @@ import "@styles/spinner.scss";
 
 function Spinner({ status }) {
     /*
-        statuses: "loading", "success", "error"
+        statuses: "loading", "success", "failed"
     */
+    let className = "circle-loader";
+
+    if (status != "loading") className += " load-complete " + status;
+
     return (
-        <div
-            className={`circle-loader ${
-                status != "loading" ? "load-complete" : ""
-            }`}
-        >
+        <div className={className}>
             {status == "success" && <div className="checkmark"></div>}
+            {status == "failed" && <div className="cross"></div>}
         </div>
     );
 }

@@ -8,13 +8,15 @@ import Sudoku from "@app/sudoku";
 
 function MainRoutes() {
     return (
-        <Routes>
-            <Route path="/" element={<Navigate to="/games" />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/sudoku" element={<Sudoku />} />
-        </Routes>
+        <div id="main">
+            <Routes>
+                <Route path="/" element={<Navigate to="/games" />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/games" element={<Games />} />
+                <Route path="/sudoku" element={<Sudoku />} />
+            </Routes>
+        </div>
     );
 }
 

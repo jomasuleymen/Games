@@ -15,13 +15,18 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 const setJwt = (jwt) => {
-    axios.defaults.headers.common['token'] = jwt;
-}
+    axios.defaults.headers.common["token"] = jwt;
+};
+
+const hasJwt = () => {
+    return axios.defaults.headers.common["token"];
+};
 
 export default {
     get: axios.get,
     post: axios.post,
     put: axios.put,
     delete: axios.delete,
-    setJwt
+    setJwt,
+    hasJwt,
 };

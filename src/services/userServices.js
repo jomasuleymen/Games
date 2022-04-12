@@ -8,12 +8,12 @@ const registerUser = (data) => {
     return http.post(apiEndpoint + "register", data);
 };
 
-const loginUser = (data) => {
+const loginUser = async (data) => {
     return http.post(apiEndpoint + "login", data).then((res) => {
         const user = res.data;
         userActions.setUser(user);
 
-        const token = res.headers["x-auth-token"]; /* reafactor -> separate */
+        const token = res.headers["x-auth-token"]; /* refactor -> separate */
         localStorage.setItem("x-auth-token", token);
         http.setJwt(token);
     });

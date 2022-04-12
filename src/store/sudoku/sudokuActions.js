@@ -9,8 +9,10 @@ import {
     isLoading,
     success,
     reset,
+    failed
 } from "./reducers/statusSlice";
 import { updateRecord as updateRecordReducer } from "./reducers/recordSlice";
+import { refreshInfo } from "./reducers/gameInfoSlice";
 
 import store from "@store/store";
 
@@ -65,6 +67,14 @@ const updateRecord = (data) => {
     store.dispatch(updateRecordReducer(data));
 };
 
+const refreshGameInfo = () => {
+    store.dispatch(refreshInfo());
+}
+
+const gameFailed = () => {
+    store.dispatch(failed());
+}
+
 export default {
     pauseGame,
     resumeGame,
@@ -81,4 +91,6 @@ export default {
     verified,
 
     updateRecord,
+    refreshGameInfo,
+    gameFailed
 };

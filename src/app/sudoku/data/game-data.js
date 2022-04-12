@@ -1,17 +1,32 @@
-import httpService from "@services/httpService";
-
 import board from "./board-data";
 import sudokuActions from "@store/sudoku/sudokuActions";
-
+import {
+    loadRecords,
+    uploadResult,
+    generateSudoku,
+    isAuth,
+} from "../helpers/services";
 class Game {
+    #MAX_HINTS = 3;
+    #MAX_MISTAKES = 3;
+
+    LEVELS = ["Easy", "Medium", "Hard", "Restart"];
+
     constructor() {
         this.board = board;
-        this.timer = 0;
-        this.autoCheck = false;
-        this.isPaused = false;
-        this.difficulty = "easy";
-
         this.board.game = this;
+
+        this.autoCheck = false;
+        this.difficulty = "Easy";
+        this.resetGame();
+    }
+
+    resetGame() {
+        this.timer = 0;
+        this.isPaused = false;
+        this.usedHints = 0;
+        this.mistakes = 0;
+        this.isFailed = false;
     }
 
     toggleAutoCheck() {
@@ -31,78 +46,80 @@ class Game {
 
     /* Play - Pause */
     toggleStatus() {
-        sudokuActions.toggleStatus();
-        this.isPaused = sudokuActions.getStatus();
-    }
-
-    setRecords() {
-        const isAuth = localStorage.getItem("x-auth-token");
-        if (isAuth) {
-            httpService
-                .get("http://localhost:3000/sudoku/record")
-                .then(({ data }) => {
-                    if (data) sudokuActions.updateRecord(data);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+        if (!this.isFailed) {
+            sudokuActions.toggleStatus();
+            this.isPaused = !this.isPaused;
         }
     }
 
-    initGame(difficulty, isStart) {
-        if (isStart) this.setRecords();
-        this.isPaused = true;
-        this.timer = 0;
+    madeError() {
+        this.mistakes += 1;
+        sudokuActions.refreshGameInfo();
+        if (this.mistakes >= this.MAX_MISTAKES) {
+            this.isPaused = true;
+            this.isFailed = true;
+            sudokuActions.gameFailed();
+        }
+    }
+
+    hintUsed() {
+        this.usedHints += 1;
+        sudokuActions.refreshGameInfo();
+    }
+
+    get MAX_HINTS() {
+        return this.#MAX_HINTS;
+    }
+
+    get MAX_MISTAKES() {
+        return this.#MAX_MISTAKES;
+    }
+
+    refreshStatusBar() {
         sudokuActions.resetStatus();
+        sudokuActions.refreshGameInfo();
+        this.isPaused = false;
+    }
+
+    async initGame(difficulty, isStart) {
+        if (isStart && isAuth) {
+            loadRecords().then(({ data }) => {
+                if (data) sudokuActions.updateRecord(data);
+            });
+        }
+
+        this.resetGame();
+        this.isPaused = true;
         document.getElementById("timer").innerText = "00:00";
 
         if (difficulty === "restart") {
             board.restart();
-            setTimeout(() => {
-                this.resume();
-            }, 200);
+            this.refreshStatusBar();
         } else {
             sudokuActions.loadingData();
-            httpService
-                .get(
-                    `http://localhost:3000/sudoku/generate?difficulty=${difficulty}`
-                )
-                .then(({ data }) => {
-                    this.difficulty = difficulty;
-                    board.createBoard(data);
-                    sudokuActions.resetStatus();
-                    setTimeout(() => {
-                        this.resume();
-                    }, 200);
-                })
-                .catch(function (error) {
-                    console.log(error); // setError sudoku actions later
-                });
+            generateSudoku(difficulty).then(({ data }) => {
+                this.difficulty = difficulty;
+                board.createBoard(data);
+                this.refreshStatusBar();
+            });
         }
-
-        // setTimeout(() => {
-        //     this.finishGame();
-        // }, 2000);
     }
 
-    finishGame() {
-        const spentTime = this.timer;
-        this.isPaused = true;
-        const data = {
-            spentTime,
-            difficulty: this.difficulty,
-        };
+    async finishGame() {
+        if (this.mistakes < this.#MAX_MISTAKES) {
+            const spentTime = this.timer;
+            this.isPaused = true;
+            const data = {
+                spentTime,
+                difficulty: this.difficulty,
+            };
 
-        sudokuActions.loadingData();
-        httpService
-            .put("http://localhost:3000/sudoku/record", data)
-            .then(({ data }) => {
+            sudokuActions.loadingData();
+            uploadResult(data).then(({ data }) => {
                 sudokuActions.updateRecord({ [this.difficulty]: data });
                 sudokuActions.verified();
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+            });
+        }
     }
 }
 

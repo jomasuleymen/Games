@@ -38,7 +38,7 @@ function Form({ inputs, doSubmit, btnText, schema }) {
     }
 
     return (
-        <form className="register-form" onSubmit={submit}>
+        <form className="form" onSubmit={submit}>
             {inputs.map(({ name, placeholder, type }, idx) => (
                 <Input
                     name={name}

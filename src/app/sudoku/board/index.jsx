@@ -10,10 +10,12 @@ import useKeyUpDown from "@utils/hooks/useKeyUpDown";
 import "./board.scss";
 
 const onkeyup = (ev) => {
-    if (ev.key > 0 && ev.key < 10) {
-        board.insertToSelectedCell(parseInt(ev.key));
-    } else if (ev.key == "Delete" || ev.key == "Backspace") {
-        board.eraseSelectedCell();
+    if (!game.isPaused) {
+        if (ev.key > 0 && ev.key < 10) {
+            board.insertToSelectedCell(parseInt(ev.key));
+        } else if (ev.key == "Delete" || ev.key == "Backspace") {
+            board.eraseSelectedCell();
+        }
     }
 };
 
@@ -49,24 +51,20 @@ const onkeydown = (ev) => {
 
 function ResumePause() {
     return (
-        <div
-            id="board_pause"
-            onClick={() => {
-                game.resume();
-            }}
-        >
+        <div id="board_pause" onClick={() => game.resume()}>
             <div className="sign"></div>
         </div>
     );
 }
 
 function BoardStatus() {
-    const { isPause, isLoading, isSuccess } = useSelector(
+    const { isPause, isLoading, isSuccess, isFailed } = useSelector(
         ({ sudoku }) => sudoku.gameStatus
     );
 
     if (isLoading) return <Spinner status={"loading"} />;
     if (isSuccess) return <Spinner status={"success"} />;
+    if (isFailed) return <Spinner status={"failed"} />;
     if (isPause) return <ResumePause />;
     return null;
 }

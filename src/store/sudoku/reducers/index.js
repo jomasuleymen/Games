@@ -1,11 +1,13 @@
+import { combineReducers } from "redux";
+
 import cellReducer from "./cellSlice";
 import statusReducer from "./statusSlice";
 import recordReducer from "./recordSlice";
-
-import { combineReducers } from "redux";
+import gameInfoSlice from './gameInfoSlice';
 
 export default combineReducers({
     selectedCell: cellReducer,
     gameStatus: statusReducer,
     record: recordReducer,
+    gameInfo: gameInfoSlice
 });

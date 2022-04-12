@@ -11,15 +11,11 @@ import store from "@store/store";
 
 function App() {
     useEffect(() => {
-        const setCurrentUserIfExists = (async () => {
-            const user = await userServices.setCurrentUser();
-        });
-
-        setCurrentUserIfExists();
+        userServices.setCurrentUser();
     }, []);
 
     return (
-        <React.Fragment>
+        <>
             <ToastContainer />
             <BrowserRouter>
                 <Provider store={store}>
@@ -27,7 +23,7 @@ function App() {
                     <MainRoutes />
                 </Provider>
             </BrowserRouter>
-        </React.Fragment>
+        </>
     );
 }
 

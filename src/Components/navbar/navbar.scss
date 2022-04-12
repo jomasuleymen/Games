@@ -3,70 +3,86 @@
         box-sizing: border-box;
     }
 
+    background-color: rgb(1, 0, 1);
     display: flex;
+    justify-content: center;
     align-items: center;
-    color: white;
-    position: relative;
-    background-color: rgb(1,0,1);
-    padding: 0 8px !important;
-
-    a {
-        text-decoration: none;
-        color: white;
-        display: block;
-        padding: 5px;
-        
-        &:hover{
-            color: white;
-        }
-    }
-
-    .logo {
-        font-size: 1.5rem;
-    }
-
-    .auth {
-        margin-left: auto;
+    &, & .wrapper{
         padding: 0;
-        height: 100%;
+        margin: 0;
+    }
+
+    .wrapper {
+
+        width: 100%;
+        max-width: var(--max-width);
         display: flex;
-        list-style: none;
-        list-style-type: none;
-        width: 130px;
+        align-items: center;
+        color: white;
+        position: relative;
+        padding: 0 8px !important;
         justify-content: space-between;
-        align-items: center;
-    }
+        padding: 1px;
 
-    .signIn{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgb(0,93,222);
-        border-radius: 5px;
-        padding: 3px 10px;
-        
-        &:hover{
-            background-color: rgb(5, 84, 196);
+        a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 5px;
+
+            &:hover {
+                color: white;
+            }
+        }
+
+        .logo {
+            font-size: 1.5rem;
+        }
+
+        .auth {
+            margin-left: auto;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            list-style: none;
+            list-style-type: none;
+            width: 130px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .signIn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(0, 93, 222);
+            border-radius: 5px;
+            padding: 3px 10px;
+
+            &:hover {
+                background-color: rgb(5, 84, 196);
+            }
+        }
+
+        .signUp {
+            &:hover {
+                color: bisque;
+            }
+        }
+
+        .user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(0, 93, 222);
+            border-radius: 5px;
+            padding: 3px 10px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgb(5, 84, 196);
+            }
         }
     }
 
-    .signUp{
-        &:hover{
-            color: bisque;
-        }
-    }
-
-    .user{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgb(0,93,222);
-        border-radius: 5px;
-        padding: 3px 10px;
-        cursor: pointer;
-        
-        &:hover{
-            background-color: rgb(5, 84, 196);
-        }
-    }
 }

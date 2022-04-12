@@ -1,9 +1,13 @@
-import { setSolution, checkForErrors, revertErrors } from "@app/sudoku/helpers/sudokuHelpers";
+import {
+    setSolution,
+    checkForErrors,
+    revertErrors,
+} from "@app/sudoku/helpers/sudokuHelpers";
 import { zeroFilledMatrix } from "@utils/arrayUtils";
 import actions from "@store/sudoku/sudokuActions";
 
 import Note from "./note-data";
-import History from "./state-data";
+import History from "./state-history";
 
 class Board {
     #solution = zeroFilledMatrix();
@@ -26,9 +30,12 @@ class Board {
 
     setHint() {
         const { row, col } = this.selectedCell;
-        this.initialData[row][col] = this.#solution[row][col];
-        this.history.filterHistory(row, col);
-        this.insertToSelectedCell(this.#solution[row][col], true);
+        if (!this.isReadOnly(row, col) && this.game.usedHints < this.game.MAX_HINTS) {
+            this.initialData[row][col] = this.#solution[row][col];
+            this.history.filterHistory(row, col);
+            this.insertToSelectedCell(this.#solution[row][col], true);
+            this.game.hintUsed();
+        }
     }
 
     createBoard(newBoardData) {
@@ -118,6 +125,8 @@ class Board {
 
                 if (newValue === this.#solution[row][col]) {
                     this.checkDataForSolution();
+                } else {
+                    this.game.madeError();
                 }
             }
         }

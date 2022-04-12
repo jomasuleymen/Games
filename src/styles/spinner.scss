@@ -1,10 +1,10 @@
-$brand-success: rgb(35, 119, 247);
+$check-color: rgb(35, 119, 247);
+$cross-color: rgb(245, 84, 81);
 $loader-size: 3em;
 $check-height: calc($loader-size / 2);
 $check-width: calc($check-height / 2);
 $check-left: (calc($loader-size / 6) + calc($loader-size / 12));
 $check-thickness: 3px;
-$check-color: $brand-success;
 
 .circle-loader {
     border: 2px solid rgba(0, 0, 0, 0.2);
@@ -23,12 +23,10 @@ $check-color: $brand-success;
 .load-complete {
     -webkit-animation: none;
     animation: none;
-    border-color: $check-color;
     transition: border 500ms ease-out;
 }
 
 .checkmark {
-
     animation-duration: 800ms;
     animation-timing-function: ease;
     animation-name: checkmark;
@@ -42,6 +40,39 @@ $check-color: $brand-success;
     margin-bottom: 7px;
     content: '';
 }
+
+.success {
+    border-color: $check-color;
+}
+
+.failed {
+    border-color: $cross-color;
+}
+
+.cross {
+    width: 32px;
+    height: 32px;
+    position: relative;
+
+    &:before,
+    &:after {
+        position: absolute;
+        left: 15px;
+        content: ' ';
+        height: 33px;
+        width: 2px;
+        background-color: $cross-color;
+    }
+
+    &:before {
+        transform: rotate(45deg);
+    }
+
+    &:after {
+        transform: rotate(-45deg);
+    }
+}
+
 
 @keyframes loader-spin {
     0% {

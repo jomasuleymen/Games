@@ -3,6 +3,10 @@
     src: url('./fonts/SourceSansPro-Regular.ttf');
 }
 
+:root{
+    --max-width: 1000px;
+}
+
 * {
     font-family: 'Source Sans Pro', sans-serif;
 }
@@ -12,16 +16,18 @@ body {
     padding: 0;
 }
 
-.pause {
-    pointer-events: none;
+#main{
+    max-width: var(--max-width);
+    margin: 0 auto;
+    position: relative;
 }
 
-.Toastify__toast-container{
+.Toastify__toast-container {
     --toastify-toast-min-height: 20px;
     --toastify-toast-width: 230px;
     font-size: 15px;
 }
 
-.Toastify__toast-container--top-right{
+.Toastify__toast-container--top-right {
     top: 3.5em !important;
 }
