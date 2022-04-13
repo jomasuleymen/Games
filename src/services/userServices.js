@@ -1,8 +1,7 @@
 import http from "./httpService";
-import config from "@src/config.json";
 import userActions from "@store/auth/userActions";
 
-const apiEndpoint = config.apiEndpoint + "users/";
+const apiEndpoint = "users/";
 
 const registerUser = (data) => {
     return http.post(apiEndpoint + "register", data);

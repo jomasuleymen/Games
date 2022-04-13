@@ -55,7 +55,7 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         clean: true,
     },
-    devtool: isDev ? "source-map" : "",
+    devtool: isDev ? "source-map" : false,
     resolve: {
         extensions: ["", ".js", ".jsx"],
         alias: {

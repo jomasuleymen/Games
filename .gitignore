@@ -4,6 +4,8 @@
 /node_modules
 /backend/node_modules
 /dist
+/.vscode
+
 /.pnp
 .pnp.js
 

@@ -3,7 +3,7 @@ import toast from "@utils/toast";
 
 const loadRecords = async () => {
     return await httpService
-        .get("http://localhost:3000/sudoku/record")
+        .get("sudoku/record")
         .catch((err) => {
             console.log(err);
         });
@@ -11,7 +11,7 @@ const loadRecords = async () => {
 
 const uploadResult = async (data) => {
     return await httpService
-        .put("http://localhost:3000/sudoku/record", data)
+        .put("sudoku/record", data)
         .catch(function (error) {
             toast.warning('Please login for saving your records') // setError sudoku actions later
         });
@@ -20,7 +20,7 @@ const uploadResult = async (data) => {
 const generateSudoku = async (difficulty) => {
     return await httpService
         .get(
-            `http://localhost:3000/sudoku/generate?difficulty=${difficulty.toLocaleLowerCase()}`
+            `sudoku/generate?difficulty=${difficulty.toLocaleLowerCase()}`
         )
         .catch(function (error) {
             console.log(error); // setError sudoku actions later
