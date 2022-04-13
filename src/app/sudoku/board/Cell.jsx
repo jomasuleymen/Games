@@ -22,9 +22,11 @@ function getCellColor(row, col, value, selectedCell) {
 
 function Cell({ row, col, className }) {
     const selectedCell = useSelector(({ sudoku }) => sudoku.selectedCell);
+
     const isThisCellSelected =
         row == selectedCell.row && col == selectedCell.col;
-    const cell = useMemo(() => {
+
+    const cellValue = useMemo(() => {
         return board.note.noteCount(row, col) > 0 ? (
             <div className="noteMode">
                 {board.note.getNote(row, col).map((isNumberEntered, index) => {
@@ -41,9 +43,9 @@ function Cell({ row, col, className }) {
                     );
                 })}
             </div>
-        ) : (
-            board.getCellValue(row, col) || null
-        );
+        ) : board.getCellValue(row, col) ? (
+            <span>{board.getCellValue(row, col)}</span>
+        ) : null;
     }, [board.note.noteCount(row, col), board.getCellValue(row, col)]);
 
     return (
@@ -69,7 +71,7 @@ function Cell({ row, col, className }) {
                     : "rgb(51, 120, 225)",
             }}
         >
-            {cell}
+            {cellValue}
         </div>
     );
 }

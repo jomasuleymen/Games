@@ -1,12 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 import board from "../data/board-data";
 import game from "../data/game-data";
 import Grid from "./Grid";
-
-import Spinner from "@components/common/Spinner";
+import BoardStatus from "./BoardStatus";
 import useKeyUpDown from "@utils/hooks/useKeyUpDown";
+
 import "./board.scss";
 
 const onkeyup = (ev) => {
@@ -48,26 +47,6 @@ const onkeydown = (ev) => {
     }
     board.selectCell(row, col);
 };
-
-function ResumePause() {
-    return (
-        <div id="board_pause" onClick={() => game.resume()}>
-            <div className="sign"></div>
-        </div>
-    );
-}
-
-function BoardStatus() {
-    const { isPause, isLoading, isSuccess, isFailed } = useSelector(
-        ({ sudoku }) => sudoku.gameStatus
-    );
-
-    if (isLoading) return <Spinner status={"loading"} />;
-    if (isSuccess) return <Spinner status={"success"} />;
-    if (isFailed) return <Spinner status={"failed"} />;
-    if (isPause) return <ResumePause />;
-    return null;
-}
 
 function Board() {
     useKeyUpDown(onkeyup, onkeydown);

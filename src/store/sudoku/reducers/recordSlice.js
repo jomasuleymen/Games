@@ -3,17 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 const recordSlice = createSlice({
     name: "record",
     initialState: {
-        easy: {
+        Easy: {
             min: null,
             average: null,
             played: null,
         },
-        medium: {
+        Medium: {
             min: null,
             average: null,
             played: null,
         },
-        hard: {
+        Hard: {
             min: null,
             average: null,
             played: null,

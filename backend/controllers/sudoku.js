@@ -21,17 +21,23 @@ const record = async (req, res) => {
         record = await Sudoku.create({
             user: req.user,
         });
+        record[difficulty].min = spentTime;
+    } else {
+        record[difficulty].min = Math.min(record[difficulty].min, spentTime);
     }
+
     const recordData = record[difficulty];
-    recordData.min = Math.min(recordData.min, spentTime);
     recordData.played += 1;
     recordData.allTime += spentTime;
     recordData.average = recordData.allTime / recordData.played;
     await record.save();
+
     res.json({
-        min: recordData.min,
-        played: recordData.played,
-        average: recordData.average,
+        [difficulty]: {
+            min: recordData.min,
+            played: recordData.played,
+            average: recordData.average,
+        },
     });
 };
 
@@ -42,9 +48,9 @@ const getRecord = async (req, res) => {
         return;
     }
     res.json({
-        easy: record.easy,
-        medium: record.medium,
-        hard: record.hard,
+        Easy: record.Easy,
+        Medium: record.Medium,
+        Hard: record.Hard,
     });
 };
 

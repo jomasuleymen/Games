@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 
 const sudokuSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
-    easy: {
+    Easy: {
         min: {
             type: Number,
-            default: null,
+            default: 0,
         },
         average: {
             type: Number,
-            default: null,
+            default: 0,
         },
         allTime: {
             type: Number,
@@ -20,14 +20,14 @@ const sudokuSchema = new mongoose.Schema({
             default: 0,
         },
     },
-    medium: {
+    Medium: {
         min: {
             type: Number,
-            default: 999999,
+            default: 0,
         },
         average: {
             type: Number,
-            default: 999999,
+            default: 0,
         },
         allTime: {
             type: Number,
@@ -38,14 +38,14 @@ const sudokuSchema = new mongoose.Schema({
             default: 0,
         },
     },
-    hard: {
+    Hard: {
         min: {
             type: Number,
-            default: 999999,
+            default: 0,
         },
         average: {
             type: Number,
-            default: 999999,
+            default: 0,
         },
         allTime: {
             type: Number,

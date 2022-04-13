@@ -1,4 +1,5 @@
 import httpService from "@services/httpService";
+import toast from "@utils/toast";
 
 const loadRecords = async () => {
     return await httpService
@@ -11,8 +12,8 @@ const loadRecords = async () => {
 const uploadResult = async (data) => {
     return await httpService
         .put("http://localhost:3000/sudoku/record", data)
-        .catch((err) => {
-            console.log(err);
+        .catch(function (error) {
+            toast.warning('Please login for saving your records') // setError sudoku actions later
         });
 };
 
@@ -26,8 +27,4 @@ const generateSudoku = async (difficulty) => {
         });
 };
 
-const isAuth = () => {
-    return httpService.hasJwt;
-};
-
-export { loadRecords, uploadResult, generateSudoku, isAuth };
+export { loadRecords, uploadResult, generateSudoku };

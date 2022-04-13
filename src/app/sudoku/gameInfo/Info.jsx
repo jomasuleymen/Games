@@ -7,12 +7,20 @@ function Info() {
 
     return (
         <div className="info-bar">
-            <div className="difficulty-info">Difficulty {game.difficulty}</div>
-            <div className="errors-count">
-                Mistakes {game.mistakes}/{game.MAX_MISTAKES}
+            <div className="info">
+                Difficulty <span>{game.difficulty}</span>
             </div>
-            <div className="hint-count">
-                Hints {game.usedHints}/{game.MAX_HINTS}
+            <div className="info">
+                Mistakes{" "}
+                <span>
+                    {game.mistakes}/{game.MAX_MISTAKES}
+                </span>
+            </div>
+            <div className="info">
+                Hints{" "}
+                <span>
+                    {game.usedHints}/{game.MAX_HINTS}
+                </span>
             </div>
         </div>
     );

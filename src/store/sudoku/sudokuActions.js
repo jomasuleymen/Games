@@ -2,18 +2,10 @@ import {
     selectCell as selectCellReducer,
     updateCells,
 } from "./reducers/cellSlice";
-import {
-    pause,
-    resume,
-    toggle,
-    isLoading,
-    success,
-    reset,
-    failed
-} from "./reducers/statusSlice";
+import { setStatus } from "./reducers/statusSlice";
 import { updateRecord as updateRecordReducer } from "./reducers/recordSlice";
 import { refreshInfo } from "./reducers/gameInfoSlice";
-
+import game from "@app/sudoku/data/game-data";
 import store from "@store/store";
 
 /* Cell actions */
@@ -30,36 +22,34 @@ const refreshBoard = () => {
 };
 
 /* Game statuses */
-const pauseGame = () => {
-    store.dispatch(pause());
+const toggleStatus = () => {
+    let nextStatus = game.STATUSES.PAUSE;
+    if (getCurrentStatus() === nextStatus) nextStatus = game.STATUSES.PLAYING;
+    store.dispatch(setStatus(nextStatus));
 };
 
 const resumeGame = () => {
-    store.dispatch(resume());
-};
-
-const toggleStatus = () => {
-    store.dispatch(toggle());
+    store.dispatch(setStatus(game.STATUSES.PLAYING));
 };
 
 const resetStatus = () => {
-    store.dispatch(reset());
+    store.dispatch(setStatus(game.STATUSES.PLAYING));
 };
 
 const loadingData = () => {
-    store.dispatch(isLoading(true));
+    store.dispatch(setStatus(game.STATUSES.LOADING));
 };
 
-const loadedData = () => {
-    store.dispatch(isLoading(false));
+const dataVerified = () => {
+    store.dispatch(setStatus(game.STATUSES.SUCCESS));
 };
 
-const verified = () => {
-    store.dispatch(success());
-}
+const gameFailed = () => {
+    store.dispatch(setStatus(game.STATUSES.FAILED));
+};
 
-const getStatus = () => {
-    return store.getState().sudoku.gameStatus;
+const getCurrentStatus = () => {
+    return store.getState().sudoku.gameStatus.status;
 };
 
 /* Game records */
@@ -67,30 +57,24 @@ const updateRecord = (data) => {
     store.dispatch(updateRecordReducer(data));
 };
 
-const refreshGameInfo = () => {
+const refreshInfoComponent = () => {
     store.dispatch(refreshInfo());
-}
-
-const gameFailed = () => {
-    store.dispatch(failed());
-}
+};
 
 export default {
-    pauseGame,
-    resumeGame,
     toggleStatus,
     resetStatus,
-    getStatus,
+    getCurrentStatus,
 
     selectCell,
     getSelectedCell,
     refreshBoard,
 
     loadingData,
-    loadedData,
-    verified,
+    resumeGame,
+    dataVerified,
 
     updateRecord,
-    refreshGameInfo,
-    gameFailed
+    refreshInfoComponent,
+    gameFailed,
 };

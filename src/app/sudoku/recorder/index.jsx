@@ -21,9 +21,9 @@ function Recorder() {
                         <th scope="row">
                             <label className="badge bg-success">Easy</label>
                         </th>
-                        <td>{record.easy.min || "-"}</td>
-                        <td>{record.easy.average || "-"}</td>
-                        <td>{record.easy.played || "-"}</td>
+                        <td>{record.Easy.min || "-"}</td>
+                        <td>{record.Easy.average || "-"}</td>
+                        <td>{record.Easy.played || "-"}</td>
                     </tr>
                     <tr>
                         <th scope="row">
@@ -31,17 +31,17 @@ function Recorder() {
                                 Medium
                             </label>
                         </th>
-                        <td>{record.medium.min || "-"}</td>
-                        <td>{record.medium.average || "-"}</td>
-                        <td>{record.medium.played || "-"}</td>
+                        <td>{record.Medium.min || "-"}</td>
+                        <td>{record.Medium.average || "-"}</td>
+                        <td>{record.Medium.played || "-"}</td>
                     </tr>
                     <tr>
                         <th scope="row">
                             <label className="badge bg-danger">Hard</label>
                         </th>
-                        <td>{record.hard.min || "-"}</td>
-                        <td>{record.hard.average || "-"}</td>
-                        <td>{record.hard.played || "-"}</td>
+                        <td>{record.Hard.min || "-"}</td>
+                        <td>{record.Hard.average || "-"}</td>
+                        <td>{record.Hard.played || "-"}</td>
                     </tr>
                 </tbody>
             </table>

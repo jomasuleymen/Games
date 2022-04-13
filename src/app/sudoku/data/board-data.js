@@ -4,7 +4,7 @@ import {
     revertErrors,
 } from "@app/sudoku/helpers/sudokuHelpers";
 import { zeroFilledMatrix } from "@utils/arrayUtils";
-import actions from "@store/sudoku/sudokuActions";
+import sudokuActions from "@store/sudoku/sudokuActions";
 
 import Note from "./note-data";
 import History from "./state-history";
@@ -91,11 +91,11 @@ class Board {
 
     /* Cell functions with refreshing board */
     selectCell(row, col) {
-        actions.selectCell(row, col, this.getCellValue(row, col));
+        sudokuActions.selectCell(row, col, this.getCellValue(row, col));
     }
 
     refreshBoard() {
-        actions.refreshBoard();
+        sudokuActions.refreshBoard();
     }
 
     insertToSelectedCell(newValue, isHint, isUndo) {
@@ -171,7 +171,7 @@ class Board {
     }
 
     get selectedCell() {
-        return actions.getSelectedCell();
+        return sudokuActions.getSelectedCell();
     }
 
     /* logic */

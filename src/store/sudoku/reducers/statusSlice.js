@@ -1,42 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import game from "@app/sudoku/data/game-data";
 
 const gameStatusSlice = createSlice({
     name: "status",
     initialState: {
-        isLoading: false,
-        isSuccess: false,
-        isPause: false,
-        isFailed: false,
+        status: game.STATUSES.PLAYING,
     },
     reducers: {
-        pause: (state) => {
-            state.isPause = true;
-        },
-        resume: (state) => {
-            state.isPause = false;
-        },
-        toggle: (state) => {
-            state.isPause = !state.isPause;
-        },
-        isLoading: (state, payload) => {
-            state.isLoading = payload;
-        },
-        success: (state) => {
-            state.isLoading = false;
-            state.isSuccess = true;
-        },
-        failed: (state) => {
-            state.isFailed = true;
-        },
-        reset: (state) => {
-            state.isSuccess = false;
-            state.isLoading = false;
-            state.isPause = false;
-            state.isFailed = false;
+        setStatus: (state, { payload }) => {
+            state.status = payload;
         },
     },
 });
 
 export default gameStatusSlice.reducer;
-export const { pause, resume, toggle, isLoading, success, reset, failed } =
-    gameStatusSlice.actions;
+export const { setStatus } = gameStatusSlice.actions;

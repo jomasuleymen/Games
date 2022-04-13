@@ -1,17 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 import game from "@app/sudoku/data/game-data";
 
-function Status() {
-    const { isPause } = useSelector(({ sudoku }) => sudoku.gameStatus);
-
+function Status({ isPause, isToggable }) {
     return (
         <div
             id="status-icon"
-            onClick={() => {
-                game.toggleStatus();
-            }}
+            onClick={isToggable ? () => game.toggleStatus() : null}
         >
             <div
                 className={`play-pause-icon ${

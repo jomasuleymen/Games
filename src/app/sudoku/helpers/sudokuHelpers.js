@@ -2,7 +2,6 @@ async function setSolution(data, board) {
     const start = Date.now();
     const copyData = data.map((row) => [...row]);
     solve(copyData, 0, 0);
-    console.log((Date.now() - start) / 1000);
     board.solution = copyData;
 }
 

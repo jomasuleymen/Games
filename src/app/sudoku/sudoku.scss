@@ -30,8 +30,11 @@
             
             .cell, .cell * {
                 pointer-events: none;
-                color: white !important;
                 background-color: white !important;
+            }
+
+            .cell *{
+                display: none;
             }
             
         }

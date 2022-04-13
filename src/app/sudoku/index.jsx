@@ -10,12 +10,10 @@ import "./sudoku.scss";
 import game from "./data/game-data";
 
 function GameBody() {
-    const { isPause, isLoading, isSuccess, isFailed } = useSelector(
-        ({ sudoku }) => sudoku.gameStatus
-    );
-
-    const className = isPause || isLoading || isSuccess || isFailed ? "freeze" : null;
-
+    const { status } = useSelector(({ sudoku }) => sudoku.gameStatus);
+    const className = status !== game.STATUSES.PLAYING ? "freeze" : null;
+    
+    
     return (
         <div id="game-body" className={className}>
             <Board />
@@ -26,7 +24,7 @@ function GameBody() {
 
 function Sudoku() {
     React.useEffect(() => {
-        game.initGame("Easy", true);
+        game.initGame(game.LEVELS[0], true);
     }, []);
 
     return (

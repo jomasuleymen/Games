@@ -1,32 +1,32 @@
 import board from "./board-data";
 import sudokuActions from "@store/sudoku/sudokuActions";
-import {
-    loadRecords,
-    uploadResult,
-    generateSudoku,
-    isAuth,
-} from "../helpers/services";
+import { loadRecords, uploadResult, generateSudoku } from "../helpers/services";
 class Game {
     #MAX_HINTS = 3;
     #MAX_MISTAKES = 3;
 
     LEVELS = ["Easy", "Medium", "Hard", "Restart"];
+    STATUSES = {
+        LOADING: "loading",
+        PAUSE: "pause",
+        FAILED: "failed",
+        SUCCESS: "success",
+        PLAYING: "playing",
+    };
 
     constructor() {
         this.board = board;
         this.board.game = this;
 
         this.autoCheck = false;
-        this.difficulty = "Easy";
+        this.difficulty = this.LEVELS[0];
         this.resetGame();
     }
 
     resetGame() {
         this.timer = 0;
-        this.isPaused = false;
         this.usedHints = 0;
         this.mistakes = 0;
-        this.isFailed = false;
     }
 
     toggleAutoCheck() {
@@ -34,29 +34,19 @@ class Game {
         board.refreshBoard();
     }
 
-    pause() {
-        sudokuActions.pauseGame();
-        this.isPaused = true;
+    /* Play - Pause */
+    toggleStatus() {
+        sudokuActions.toggleStatus();
     }
 
     resume() {
         sudokuActions.resumeGame();
-        this.isPaused = false;
-    }
-
-    /* Play - Pause */
-    toggleStatus() {
-        if (!this.isFailed) {
-            sudokuActions.toggleStatus();
-            this.isPaused = !this.isPaused;
-        }
     }
 
     madeError() {
         this.mistakes += 1;
-        sudokuActions.refreshGameInfo();
+        sudokuActions.refreshInfoComponent();
         if (this.mistakes >= this.MAX_MISTAKES) {
-            this.isPaused = true;
             this.isFailed = true;
             sudokuActions.gameFailed();
         }
@@ -64,7 +54,7 @@ class Game {
 
     hintUsed() {
         this.usedHints += 1;
-        sudokuActions.refreshGameInfo();
+        sudokuActions.refreshInfoComponent();
     }
 
     get MAX_HINTS() {
@@ -75,32 +65,37 @@ class Game {
         return this.#MAX_MISTAKES;
     }
 
+    get isPaused() {
+        return sudokuActions.getCurrentStatus() === this.STATUSES.PAUSE;
+    }
+
     refreshStatusBar() {
         sudokuActions.resetStatus();
-        sudokuActions.refreshGameInfo();
-        this.isPaused = false;
+        sudokuActions.refreshInfoComponent();
     }
 
     async initGame(difficulty, isStart) {
-        if (isStart && isAuth) {
-            loadRecords().then(({ data }) => {
-                if (data) sudokuActions.updateRecord(data);
+        if (isStart) {
+            loadRecords().then((response) => {
+                if (response && response.data)
+                    sudokuActions.updateRecord(response.data);
             });
         }
 
         this.resetGame();
-        this.isPaused = true;
         document.getElementById("timer").innerText = "00:00";
 
-        if (difficulty === "restart") {
+        if (difficulty === "Restart") {
             board.restart();
             this.refreshStatusBar();
         } else {
             sudokuActions.loadingData();
-            generateSudoku(difficulty).then(({ data }) => {
-                this.difficulty = difficulty;
-                board.createBoard(data);
-                this.refreshStatusBar();
+            generateSudoku(difficulty).then((response) => {
+                if (response && response.data) {
+                    this.difficulty = difficulty;
+                    board.createBoard(response.data);
+                    this.refreshStatusBar();
+                }
             });
         }
     }
@@ -108,16 +103,17 @@ class Game {
     async finishGame() {
         if (this.mistakes < this.#MAX_MISTAKES) {
             const spentTime = this.timer;
-            this.isPaused = true;
             const data = {
                 spentTime,
                 difficulty: this.difficulty,
             };
 
             sudokuActions.loadingData();
-            uploadResult(data).then(({ data }) => {
-                sudokuActions.updateRecord({ [this.difficulty]: data });
-                sudokuActions.verified();
+            uploadResult(data).then((response) => {
+                if (response && response.data) {
+                    sudokuActions.updateRecord(response.data);
+                    sudokuActions.dataVerified();
+                }
             });
         }
     }

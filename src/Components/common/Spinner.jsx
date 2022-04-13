@@ -7,14 +7,19 @@ function Spinner({ status }) {
     */
     let className = "circle-loader";
 
-    if (status != "loading") className += " load-complete " + status;
+    if (status != SPINNER_STATUSES.LOADING) className += " load-complete " + status;
 
     return (
         <div className={className}>
-            {status == "success" && <div className="checkmark"></div>}
-            {status == "failed" && <div className="cross"></div>}
+            {status == SPINNER_STATUSES.SUCCESS && <div className="checkmark"></div>}
+            {status == SPINNER_STATUSES.FAILED && <div className="cross"></div>}
         </div>
     );
 }
 
 export default Spinner;
+export const SPINNER_STATUSES = {
+    SUCCESS: "success",
+    FAILED: "failed",
+    LOADING: "loading",
+};
