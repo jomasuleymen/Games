@@ -101,21 +101,19 @@ class Game {
     }
 
     async finishGame() {
-        if (this.mistakes < this.#MAX_MISTAKES) {
-            const spentTime = this.timer;
-            const data = {
-                spentTime,
-                difficulty: this.difficulty,
-            };
+        const spentTime = this.timer;
+        const data = {
+            spentTime,
+            difficulty: this.difficulty,
+        };
 
-            sudokuActions.loadingData();
-            uploadResult(data).then((response) => {
-                if (response && response.data) {
-                    sudokuActions.updateRecord(response.data);
-                    sudokuActions.dataVerified();
-                }
-            });
-        }
+        sudokuActions.loadingData();
+        uploadResult(data).then((response) => {
+            if (response && response.data) {
+                sudokuActions.updateRecord(response.data);
+                sudokuActions.dataVerified();
+            }
+        });
     }
 }
 

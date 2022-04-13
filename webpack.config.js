@@ -1,36 +1,61 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-let mode = "development";
-if (process.env.NODE_ENV === "production") {
-    mode = "production";
-}
+const isDev = process.env.NODE_ENV === "development";
+const isProd = !isDev;
 
-function getPlugins() {
+const optimization = () => {
+    const config = {
+        splitChunks: {
+            chunks: "all",
+        },
+    };
+
+    if (isProd) {
+        config.minimizer = [new TerserWebpackPlugin()];
+    }
+
+    return config;
+};
+
+function plugins() {
     const plugins = [
         new HtmlWebpackPlugin({
             template: "./public/index.html",
+            minify: {
+                collapseWhitespace: isProd,
+            },
         }),
-        new MiniCssExtractPlugin({
-            filename: process.env.SERVE
-                ? "[name].css"
-                : "[name].[contenthash].css",
-        }),
+        new CleanWebpackPlugin(),
     ];
 
-    if (process.env.SERVE) {
+    if (isDev) {
         plugins.push(new ReactRefreshWebpackPlugin());
+    }
+
+    if (isProd) {
+        plugins.push(
+            new MiniCssExtractPlugin({
+                filename: isProd ? "[name].css" : "[name].[contenthash].css",
+            })
+        );
     }
 
     return plugins;
 }
 
 module.exports = {
-    mode,
+    mode: "development",
     entry: ["babel-polyfill", "./src/index.js"],
-    devtool: "source-map",
+    output: {
+        path: path.resolve(__dirname, "dist"),
+        clean: true,
+    },
+    devtool: isDev ? "source-map" : "",
     resolve: {
         extensions: ["", ".js", ".jsx"],
         alias: {
@@ -44,15 +69,12 @@ module.exports = {
             "@app": path.resolve(__dirname, "src/app/"),
         },
     },
-    output: {
-        path: path.resolve(__dirname, "dist"),
-        clean: true,
-    },
+    optimization: optimization(),
     devServer: {
-        hot: true,
+        hot: isDev,
         historyApiFallback: true,
     },
-    plugins: getPlugins(),
+    plugins: plugins(),
     module: {
         rules: [
             {
@@ -63,7 +85,7 @@ module.exports = {
             {
                 test: /\.(sc|c)ss$/i,
                 use: [
-                    mode == "development" ? "style-loader" : MiniCssExtractPlugin.loader,
+                    isDev ? "style-loader" : MiniCssExtractPlugin.loader,
                     "css-loader",
                     "postcss-loader",
                     "sass-loader",
@@ -71,13 +93,17 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif|svg|webp|ico)$/i,
-                type: mode === "production" ? "asset" : "asset/resource",
+                type: "asset/resource",
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: "asset/resource",
             },
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader"
+                    loader: "babel-loader",
                 },
             },
         ],
