@@ -12,5 +12,5 @@
             "@store/*": ["store/*"],
         },
     },
-    "exclude": ["node_modules", "build", "dist"]
+    "exclude": ["node_modules", "build", "build"]
 }

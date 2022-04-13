@@ -1,8 +1,8 @@
 import axios from "axios";
 import toast from "@utils/toast";
 
-// axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
-axios.defaults.baseURL = "http://127.0.0.1:3000/";
+axios.defaults.baseURL = "https://boring-games-777.herokuapp.com/";
+// axios.defaults.baseURL = "http://127.0.0.1:3000/";
 
 axios.interceptors.response.use(null, (error) => {
     const expectedError =
