@@ -49,6 +49,7 @@ class Board {
         this.history.clear();
 
         this.selectCell(0, 0);
+        this.refreshBoard();
 
         if (newBoardData !== this.initialData) {
             setSolution(newBoardData, this);

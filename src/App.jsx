@@ -17,12 +17,12 @@ function App() {
     return (
         <>
             <ToastContainer />
-            <BrowserRouter>
-                <Provider store={store}>
+            <Provider store={store}>
+                <BrowserRouter>
                     <NavBar />
                     <MainRoutes />
-                </Provider>
-            </BrowserRouter>
+                </BrowserRouter>
+            </Provider>
         </>
     );
 }

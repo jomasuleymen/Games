@@ -65,8 +65,8 @@ class Game {
         return this.#MAX_MISTAKES;
     }
 
-    get isPaused() {
-        return sudokuActions.getCurrentStatus() === this.STATUSES.PAUSE;
+    get isPlaying() {
+        return sudokuActions.getCurrentStatus() === this.STATUSES.PLAYING;
     }
 
     refreshStatusBar() {

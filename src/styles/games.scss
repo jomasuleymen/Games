@@ -1,27 +1,39 @@
+$game-background-color: rgb(245, 245, 246);
+$item-border-color: rgb(168, 167, 167);
+$border-radius: 5px;
+
 #game-categories {
-    border: 0.5px solid black;
     display: flex;
     justify-content: start;
     flex-wrap: wrap;
-    padding: 5px;
+    padding: 5px 35px;
+    margin-top: 15px;
     gap: 1rem;
-
+    background-color: $game-background-color;
+    border-radius: 5px;
+    
     .game {
-        border: 0.5px solid black;
-        width: 200px;
-        height: 210px;
+        width: 180px;
+        height: 190px;
         display: flex;
         flex-direction: column;
         cursor: pointer;
-        
+        background-color: $game-background-color;
+
         .game-icon {
-            border: 0.5px solid black;
+            border: 0.5px solid $item-border-color;
+            border-top-left-radius: $border-radius;
+            border-top-right-radius: $border-radius;
+            border-bottom: none;
             background-size: 100% 100%;
             flex: 1;
         }
         
         .game-title {
-            border: 0.5px solid black;
+            background-color: white;
+            border: 0.5px solid $item-border-color;
+            border-bottom-left-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
             padding: 0.1rem;
             display: flex;
             justify-content: center;

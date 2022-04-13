@@ -3,6 +3,8 @@
         box-sizing: border-box;
     }
 
+    user-select: none;
+
     background-color: rgb(1, 0, 1);
     display: flex;
     justify-content: center;

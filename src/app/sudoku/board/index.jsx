@@ -9,7 +9,7 @@ import useKeyUpDown from "@utils/hooks/useKeyUpDown";
 import "./board.scss";
 
 const onkeyup = (ev) => {
-    if (!game.isPaused) {
+    if (game.isPlaying) {
         if (ev.key > 0 && ev.key < 10) {
             board.insertToSelectedCell(parseInt(ev.key));
         } else if (ev.key == "Delete" || ev.key == "Backspace") {
@@ -19,6 +19,8 @@ const onkeyup = (ev) => {
 };
 
 const onkeydown = (ev) => {
+    if (!game.isPlaying) return;
+    
     let { row, col } = board.selectedCell;
 
     switch (ev.key) {
