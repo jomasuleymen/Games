@@ -1,64 +1,72 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import Input from "./Input";
-
 import "@styles/form.scss";
 
-const validate = (data, schema) => {
-    const { error } = schema.validate(data, { abortEarly: false });
-    if (!error) return null;
-    const errors = {};
+class Form extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: {},
+            errors: {},
+        };
+    }
 
-    for (let err of error.details) errors[err.path[0]] = err.message;
-    return errors;
-};
+    // Child classess must implement: schema, doSubmit
 
-function Form({ inputs, doSubmit, btnText, schema }) {
-    const defaultData = useMemo(() => {
-        const data = {};
-        inputs.forEach((input) => {
-            data[input.name] = "";
-        });
-        return data;
-    }, []);
+    validate = () => {
+        const { data } = this.state;
+        const { error } = this.schema.validate(data, { abortEarly: false });
+        if (!error) return null;
 
-    const [data, setData] = useState(defaultData);
-    const [errors, setErrors] = useState({});
+        const errorDetails = {};
+        for (let err of error.details) errorDetails[err.path[0]] = err.message;
+        return errorDetails;
+    };
 
-    function submit(e) {
+    submit = (e) => {
         e.preventDefault();
-        const errors = validate(data, schema);
-        setErrors(errors || {});
+        const errors = this.validate();
+        this.setState({ errors: errors || {} });
         if (errors) return;
 
-        doSubmit(data, setErrors);
-    }
+        this.doSubmit();
+    };
 
-    function inputChange({ target: input }) {
-        setData({ ...data, [input.name]: input.value });
-    }
+    inputChange = ({ target: input }) => {
+        this.setState({
+            data: { ...this.state.data, [input.name]: input.value },
+        });
+    };
 
-    return (
-        <form className="form" onSubmit={submit}>
-            {inputs.map(({ name, placeholder, type }, idx) => (
-                <Input
-                    name={name}
-                    error={errors[name]}
-                    type={type}
-                    value={data[name]}
-                    placeholder={placeholder}
-                    onChange={inputChange}
-                    key={idx}
-                />
-            ))}
+    renderInput = (name, placeholder, type) => {
+        const value = this.state.data[name] || "";
+        const error = this.state.errors[name];
+        return (
+            <Input
+                name={name}
+                placeholder={placeholder}
+                type={type}
+                onChange={this.inputChange}
+                error={error}
+                value={value}
+            />
+        );
+    };
 
-            {errors.message && (
-                <div className="alert alert-danger p-1 error w-25 mt-1 mb-0">
-                    {errors.message}
-                </div>
-            )}
-            <button className="btn btn-primary mt-2 w-25">{btnText}</button>
-        </form>
-    );
+    errorMessage = () => {
+        const { message } = this.state.errors;
+        if (!message) return null;
+
+        return (
+            <div className="alert alert-danger p-1 error w-25 mt-1 mb-0">
+                {message}
+            </div>
+        );
+    };
+
+    renderButton = (name) => {
+        return <button className="btn btn-primary mt-2 w-25">{name}</button>;
+    };
 }
 
 export default Form;

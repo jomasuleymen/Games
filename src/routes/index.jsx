@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 
 import Register from "@pages/Register";
 import Login from "@pages/Login";
@@ -11,8 +11,8 @@ function MainRoutes() {
         <div id="main">
             <Routes>
                 <Route path="/" element={<Navigate to="/games" />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register navigate={useNavigate()} />} />
+                <Route path="/login" element={<Login navigate={useNavigate()} />} />
                 <Route path="/games" element={<Games />} />
                 <Route path="/sudoku" element={<Sudoku />} />
             </Routes>

@@ -9,7 +9,6 @@ import MainRoutes from "./routes";
 
 function App() {
     const user = useSelector((state) => state.user);
-    console.log(user);
     useEffect(() => {
         userServices.setCurrentUser();
     }, []);

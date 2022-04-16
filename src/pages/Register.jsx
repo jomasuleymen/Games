@@ -1,64 +1,56 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import Joi from "joi";
 
 import Form from "@components/common/Form";
 import userServices from "@services/userServices";
 
-function Register() {
-    const navigate = useNavigate();
+class Register extends Form {
+    constructor(props) {
+        super(props);
 
-    function doSubmit(data, setErrors) {
+        this.schema = Joi.object({
+            username: Joi.string().alphanum().required().min(5),
+            email: Joi.string()
+                .email({
+                    tlds: {
+                        allow: false,
+                    },
+                })
+                .required(),
+            password: Joi.string().min(6).required(),
+        });
+    }
+    doSubmit = () => {
+        const { data } = this.state;
         for (let name in data) data[name] = data[name].trim();
 
         userServices
             .registerUser(data)
             .then((response) => {
-                navigate("/login");
+                this.props.navigate("/login");
             })
             .catch((error) => {
                 if (error.response && error.response.data) {
-                    setErrors(error.response.data);
+                    super.setState({
+                        errors: {
+                            message: error.response.data.message,
+                        },
+                    });
                 }
             });
+    };
+
+    render() {
+        return (
+            <form className="form" onSubmit={this.submit}>
+                {this.renderInput("username", "username")}
+                {this.renderInput("email", "email")}
+                {this.renderInput("password", "password", "password")}
+                {this.errorMessage()}
+                {this.renderButton("Register")}
+            </form>
+        );
     }
-
-    const inputs = [
-        {
-            name: "username",
-            placeholder: "username",
-        },
-        {
-            name: "email",
-            placeholder: "email",
-        },
-        {
-            name: "password",
-            placeholder: "password",
-            type: "password",
-        },
-    ];
-
-    const validationSchema = Joi.object({
-        username: Joi.string().alphanum().required().min(5),
-        email: Joi.string()
-            .email({
-                tlds: {
-                    allow: false,
-                },
-            })
-            .required(),
-        password: Joi.string().min(6).required(),
-    });
-
-    return (
-        <Form
-            doSubmit={doSubmit}
-            inputs={inputs}
-            btnText="Register"
-            schema={validationSchema}
-        />
-    );
 }
 
 export default Register;

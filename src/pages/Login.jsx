@@ -1,52 +1,46 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import Joi from "joi";
-
-import Form from "@components/common/Form";
+import {useNavigate} from 'react-router-dom'
 import userServices from "@services/userServices";
+import Form from "@components/common/Form";
+class Login extends Form {
+    constructor(props) {
+        super(props);
 
-function Login() {
-    const navigate = useNavigate();
-    function doSubmit(data, setErrors) {
+        this.schema = Joi.object({
+            username: Joi.string().alphanum().min(5).required(),
+            password: Joi.string().min(6).required(),
+        });
+    }
+    doSubmit = () => {
+        const { data } = this.state;
         for (let name in data) data[name] = data[name].trim();
-
         userServices
             .loginUser(data)
             .then(() => {
-                navigate("/games");
+                this.props.navigate('/games');
             })
             .catch((error) => {
                 if (error.response && error.response.data) {
-                    setErrors(error.response.data);
+                    super.setState({
+                        errors: {
+                            message: error.response.data.message,
+                        },
+                    });
                 }
             });
+    };
+
+    render() {
+        return (
+            <form className="form" onSubmit={this.submit}>
+                {this.renderInput("username", "username or email")}
+                {this.renderInput("password", "password", "password")}
+                {this.errorMessage()}
+                {this.renderButton("Log in")}
+            </form>
+        );
     }
-
-    const inputs = [
-        {
-            name: "username",
-            placeholder: "username or email",
-        },
-        {
-            name: "password",
-            placeholder: "password",
-            type: "password",
-        },
-    ];
-
-    const validationSchema = Joi.object({
-        username: Joi.string().alphanum().min(5).required(),
-        password: Joi.string().min(6).required(),
-    });
-
-    return (
-        <Form
-            doSubmit={doSubmit}
-            inputs={inputs}
-            btnText="Login"
-            schema={validationSchema}
-        />
-    );
 }
 
 export default Login;
