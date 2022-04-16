@@ -1,18 +1,19 @@
 import board from "./board-data";
 import sudokuActions from "@store/sudoku/sudokuActions";
 import { loadRecords, uploadResult, generateSudoku } from "../helpers/services";
+import toast from "@utils/toast";
 import userActions from "@store/auth/userActions";
+import STATUSES from "@store/sudoku/gameStatuses";
+
 class Game {
     #MAX_HINTS = 3;
     #MAX_MISTAKES = 3;
 
-    LEVELS = ["Easy", "Medium", "Hard", "Restart"];
-    STATUSES = {
-        LOADING: "loading",
-        PAUSE: "pause",
-        FAILED: "failed",
-        SUCCESS: "success",
-        PLAYING: "playing",
+    LEVELS = {
+        EASY: "Easy",
+        MEDIUM: "Medium",
+        HARD: "Hard",
+        RESTART: "Restart",
     };
 
     constructor() {
@@ -20,7 +21,7 @@ class Game {
         this.board.game = this;
 
         this.autoCheck = false;
-        this.difficulty = this.LEVELS[0];
+        this.difficulty = this.LEVELS.EASY;
         this.resetGame();
     }
 
@@ -28,6 +29,8 @@ class Game {
         this.timer = 0;
         this.usedHints = 0;
         this.mistakes = 0;
+        const timerEl = document.getElementById("timer");
+        if (timerEl) timerEl.innerText = "00:00";
     }
 
     toggleAutoCheck() {
@@ -46,16 +49,15 @@ class Game {
 
     madeError() {
         this.mistakes += 1;
-        sudokuActions.refreshInfoComponent();
+        sudokuActions.refreshInfoBar();
         if (this.mistakes >= this.MAX_MISTAKES) {
-            this.isFailed = true;
             sudokuActions.gameFailed();
         }
     }
 
     hintUsed() {
         this.usedHints += 1;
-        sudokuActions.refreshInfoComponent();
+        sudokuActions.refreshInfoBar();
     }
 
     get MAX_HINTS() {
@@ -67,58 +69,54 @@ class Game {
     }
 
     get isPlaying() {
-        return sudokuActions.getCurrentStatus() === this.STATUSES.PLAYING;
+        return sudokuActions.getCurrentStatus() === STATUSES.PLAYING;
     }
 
     refreshStatusBar() {
         sudokuActions.resetStatus();
-        sudokuActions.refreshInfoComponent();
+        sudokuActions.refreshInfoBar();
     }
 
     async initGame(difficulty) {
-        difficulty = difficulty || this.LEVELS[0];
+        if (sudokuActions.getCurrentStatus() === STATUSES.LOADING) return;
 
-        if (!sudokuActions.isRecordLoaded) {
-            loadRecords().then((response) => {
+        difficulty = difficulty || this.LEVELS.EASY;
+
+        if (!sudokuActions.isRecordLoaded()) {
+            loadRecords((response) => {
                 sudokuActions.setRecords(response.data);
             });
         }
 
         this.resetGame();
-        document.getElementById("timer").innerText = "00:00";
-
-        if (difficulty === "Restart") {
+        if (difficulty === this.LEVELS.RESTART) {
             board.restart();
             this.refreshStatusBar();
         } else {
             sudokuActions.loadingData();
-            generateSudoku(difficulty).then((response) => {
+            generateSudoku(difficulty, (response) => {
                 this.difficulty = difficulty;
                 board.createBoard(response.data);
                 this.refreshStatusBar();
-
-                setTimeout(() => {
-                    this.finishGame();
-                }, 10000);
             });
         }
     }
 
     async finishGame() {
-        const spentTime = this.timer;
         const data = {
-            spentTime,
+            spentTime: this.timer,
             difficulty: this.difficulty,
         };
 
-        if (userActions.isAuth) {
+        if (userActions.isAuth()) {
             sudokuActions.loadingData();
-            uploadResult(data).then((response) => {
-                sudokuActions.updateRecord(response.data);
+            uploadResult(data, (response) => {
+                sudokuActions.updateRecord(this.difficulty, response.data);
                 sudokuActions.dataVerified();
             });
         } else {
             sudokuActions.dataVerified();
+            toast.warning("Please login for saving your records");
         }
     }
 }

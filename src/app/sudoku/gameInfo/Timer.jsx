@@ -3,26 +3,14 @@ import { useSelector } from "react-redux";
 
 import Status from "./Status";
 import game from "@app/sudoku/data/game-data";
-
-const getTimeWithFormat = (time) => {
-    if (time < 10) return `0${time}`;
-    return time;
-};
-
-const formatTime = (millis) => {
-    const hour = getTimeWithFormat(Math.floor(millis / 3600));
-    const minute = getTimeWithFormat(Math.floor((millis % 3600) / 60));
-    const second = getTimeWithFormat(millis % 60);
-
-    if (hour > 0) return `${hour}:${minute}:${second}`;
-    return `${minute}:${second}`;
-};
+import STATUSES from "@store/sudoku/gameStatuses";
+import { formatTime } from "@utils/timeUtils";
 
 function Timer() {
     const { status } = useSelector(({ sudoku }) => sudoku.gameStatus);
 
     useEffect(() => {
-        if (status === game.STATUSES.PLAYING) {
+        if (status === STATUSES.PLAYING) {
             const timerHtml = document.getElementById("timer");
 
             const interval = setInterval(() => {
@@ -40,10 +28,9 @@ function Timer() {
         <div className="time">
             <div id="timer">00:00</div>
             <Status
-                isPause={status === game.STATUSES.PAUSE}
+                isPause={status === STATUSES.PAUSE}
                 isToggable={
-                    status === game.STATUSES.PAUSE ||
-                    status === game.STATUSES.PLAYING
+                    status === STATUSES.PAUSE || status === STATUSES.PLAYING
                 }
             />
         </div>

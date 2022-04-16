@@ -11,11 +11,13 @@ const selectedCellSlice = createSlice({
     },
     reducers: {
         selectCell: (state, { payload }) => {
-            state.row = payload.row;
-            state.col = payload.col;
-            state.value = payload.cellValue;
-            state.squareRowBegin = payload.row - (payload.row % 3);
-            state.squareColBegin = payload.col - (payload.col % 3);
+            const { row, col, cellValue } = payload;
+
+            state.row = row;
+            state.col = col;
+            state.value = cellValue;
+            state.squareRowBegin = row - (row % 3);
+            state.squareColBegin = col - (col % 3);
         },
         updateCells: (state) => {
             return {

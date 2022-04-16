@@ -1,4 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { formatTime } from "@utils/timeUtils";
+
+const updateLevelRecord = (state, difficulty, newRecord) => {
+    const currentRecord = state[difficulty];
+    currentRecord.min = newRecord.min && formatTime(newRecord.min);
+    currentRecord.average = newRecord.average && formatTime(newRecord.average);
+    currentRecord.played = newRecord.played && formatTime(newRecord.played);
+};
 
 const recordSlice = createSlice({
     name: "record",
@@ -22,19 +30,14 @@ const recordSlice = createSlice({
     },
     reducers: {
         updateRecord: (state, { payload }) => {
-            if (payload) {
-                const data = state[payload.difficulty];
-                data.min = payload.min;
-                data.average = payload.average;
-                data.played = payload.played;
-            }
+            const { difficulty, newRecord } = payload;
+            updateLevelRecord(state, difficulty, newRecord);
         },
         setRecord: (state, { payload }) => {
-            if (payload) {
-                state.Easy = payload.Easy;
-                state.Medium = payload.Medium;
-                state.Hard = payload.Hard;
+            for (let difficulty in payload) {
+                updateLevelRecord(state, difficulty, payload[difficulty]);
             }
+
             state.isLoaded = true;
         },
     },

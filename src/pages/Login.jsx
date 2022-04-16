@@ -1,6 +1,5 @@
 import React from "react";
 import Joi from "joi";
-import {useNavigate} from 'react-router-dom'
 import userServices from "@services/userServices";
 import Form from "@components/common/Form";
 class Login extends Form {
@@ -18,13 +17,13 @@ class Login extends Form {
         userServices
             .loginUser(data)
             .then(() => {
-                this.props.navigate('/games');
+                this.props.navigate("/games");
             })
             .catch((error) => {
                 if (error.response && error.response.data) {
                     super.setState({
                         errors: {
-                            message: error.response.data.message,
+                            message: error.response.data.error,
                         },
                     });
                 }

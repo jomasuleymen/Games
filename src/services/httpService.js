@@ -1,10 +1,9 @@
 import axios from "axios";
 
-// axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
-axios.defaults.baseURL = "https://boring-games-777.herokuapp.com/";
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
 const setJwt = (jwt) => {
-    axios.defaults.headers.common["token"] = jwt;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 };
 
 export default {

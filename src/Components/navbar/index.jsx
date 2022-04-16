@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import userServices from "@services/userServices";
 import "./navbar.scss";
@@ -34,8 +33,8 @@ function NavBar({ user }) {
                     Games
                 </Link>
 
-                {!user && <Authenticate />}
-                {user && <User />}
+                {!user.isAuth && <Authenticate />}
+                {user.isAuth && <User />}
             </div>
         </nav>
     );

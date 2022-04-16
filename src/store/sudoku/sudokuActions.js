@@ -8,8 +8,8 @@ import {
     setRecord,
 } from "./reducers/recordSlice";
 import { refreshInfo } from "./reducers/gameInfoSlice";
-import game from "@app/sudoku/data/game-data";
 import store from "@store/store";
+import STATUSES from "@store/sudoku/gameStatuses";
 
 /* Cell actions */
 const selectCell = (row, col, cellValue) => {
@@ -26,29 +26,29 @@ const refreshBoard = () => {
 
 /* Game statuses */
 const toggleStatus = () => {
-    let nextStatus = game.STATUSES.PAUSE;
-    if (getCurrentStatus() === nextStatus) nextStatus = game.STATUSES.PLAYING;
+    let nextStatus = STATUSES.PAUSE;
+    if (getCurrentStatus() === nextStatus) nextStatus = STATUSES.PLAYING;
     store.dispatch(setStatus(nextStatus));
 };
 
 const resumeGame = () => {
-    store.dispatch(setStatus(game.STATUSES.PLAYING));
+    store.dispatch(setStatus(STATUSES.PLAYING));
 };
 
 const resetStatus = () => {
-    store.dispatch(setStatus(game.STATUSES.PLAYING));
+    store.dispatch(setStatus(STATUSES.PLAYING));
 };
 
 const loadingData = () => {
-    store.dispatch(setStatus(game.STATUSES.LOADING));
+    store.dispatch(setStatus(STATUSES.LOADING));
 };
 
 const dataVerified = () => {
-    store.dispatch(setStatus(game.STATUSES.SUCCESS));
+    store.dispatch(setStatus(STATUSES.SUCCESS));
 };
 
 const gameFailed = () => {
-    store.dispatch(setStatus(game.STATUSES.FAILED));
+    store.dispatch(setStatus(STATUSES.FAILED));
 };
 
 const getCurrentStatus = () => {
@@ -56,15 +56,15 @@ const getCurrentStatus = () => {
 };
 
 /* Game records */
-const updateRecord = (data) => {
-    store.dispatch(updateRecordReducer(data));
+const updateRecord = (difficulty, newRecord) => {
+    store.dispatch(updateRecordReducer({ difficulty, newRecord }));
 };
 
 const setRecords = (data) => {
     store.dispatch(setRecord(data));
 };
 
-const refreshInfoComponent = () => {
+const refreshInfoBar = () => {
     store.dispatch(refreshInfo());
 };
 
@@ -88,7 +88,7 @@ export default {
     updateRecord,
     setRecords,
 
-    refreshInfoComponent,
+    refreshInfoBar,
     gameFailed,
     isRecordLoaded,
 };

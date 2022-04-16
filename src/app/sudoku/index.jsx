@@ -5,15 +5,16 @@ import GameInfo from "./gameInfo";
 import Board from "./board";
 import Control from "./control";
 import Recorder from "./recorder";
+
 import "./sudoku.scss";
 
 import game from "./data/game-data";
+import STATUSES from "@store/sudoku/gameStatuses";
 
 function GameBody() {
     const { status } = useSelector(({ sudoku }) => sudoku.gameStatus);
-    const className = status !== game.STATUSES.PLAYING ? "freeze" : null;
-    
-    
+    const className = status !== STATUSES.PLAYING ? "freeze" : null;
+
     return (
         <div id="game-body" className={className}>
             <Board />

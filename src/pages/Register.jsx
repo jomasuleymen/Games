@@ -33,7 +33,7 @@ class Register extends Form {
                 if (error.response && error.response.data) {
                     super.setState({
                         errors: {
-                            message: error.response.data.message,
+                            message: error.response.data.error,
                         },
                     });
                 }

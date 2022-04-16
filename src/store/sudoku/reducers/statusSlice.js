@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import game from "@app/sudoku/data/game-data";
+import STATUSES from '@store/sudoku/gameStatuses';
 
 const gameStatusSlice = createSlice({
     name: "status",
     initialState: {
-        status: game.STATUSES.PLAYING,
+        status: STATUSES.PLAYING,
     },
     reducers: {
         setStatus: (state, { payload }) => {
