@@ -3,7 +3,10 @@ import {
     updateCells,
 } from "./reducers/cellSlice";
 import { setStatus } from "./reducers/statusSlice";
-import { updateRecord as updateRecordReducer } from "./reducers/recordSlice";
+import {
+    updateRecord as updateRecordReducer,
+    setRecord,
+} from "./reducers/recordSlice";
 import { refreshInfo } from "./reducers/gameInfoSlice";
 import game from "@app/sudoku/data/game-data";
 import store from "@store/store";
@@ -57,8 +60,16 @@ const updateRecord = (data) => {
     store.dispatch(updateRecordReducer(data));
 };
 
+const setRecords = (data) => {
+    store.dispatch(setRecord(data));
+};
+
 const refreshInfoComponent = () => {
     store.dispatch(refreshInfo());
+};
+
+const isRecordLoaded = () => {
+    return store.getState().sudoku.record.isLoaded;
 };
 
 export default {
@@ -75,6 +86,9 @@ export default {
     dataVerified,
 
     updateRecord,
+    setRecords,
+
     refreshInfoComponent,
     gameFailed,
+    isRecordLoaded,
 };

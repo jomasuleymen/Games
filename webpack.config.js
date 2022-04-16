@@ -1,3 +1,4 @@
+const Dotenv = require("dotenv-webpack");
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -24,6 +25,10 @@ const optimization = () => {
 
 function plugins() {
     const plugins = [
+        new Dotenv({
+            path: isDev ? "./.env.development" : './.env', // load this now instead of the ones in '.env'
+            systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
+        }),
         new HtmlWebpackPlugin({
             template: "./public/index.html",
             minify: {

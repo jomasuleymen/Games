@@ -18,16 +18,27 @@ const recordSlice = createSlice({
             average: null,
             played: null,
         },
+        isLoaded: false,
     },
     reducers: {
-        updateRecord: (state, action) => {
-            return {
-                ...state,
-                ...action.payload,
-            };
+        updateRecord: (state, { payload }) => {
+            if (payload) {
+                const data = state[payload.difficulty];
+                data.min = payload.min;
+                data.average = payload.average;
+                data.played = payload.played;
+            }
+        },
+        setRecord: (state, { payload }) => {
+            if (payload) {
+                state.Easy = payload.Easy;
+                state.Medium = payload.Medium;
+                state.Hard = payload.Hard;
+            }
+            state.isLoaded = true;
         },
     },
 });
 
 export default recordSlice.reducer;
-export const { updateRecord } = recordSlice.actions;
+export const { updateRecord, setRecord } = recordSlice.actions;

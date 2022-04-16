@@ -26,9 +26,7 @@ const User = () => {
     );
 };
 
-function NavBar() {
-    const user = useSelector((store) => store.user);
-
+function NavBar({ user }) {
     return (
         <nav className="navbar">
             <div className="wrapper">

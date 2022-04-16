@@ -1,6 +1,7 @@
 import board from "./board-data";
 import sudokuActions from "@store/sudoku/sudokuActions";
 import { loadRecords, uploadResult, generateSudoku } from "../helpers/services";
+import userActions from "@store/auth/userActions";
 class Game {
     #MAX_HINTS = 3;
     #MAX_MISTAKES = 3;
@@ -74,11 +75,12 @@ class Game {
         sudokuActions.refreshInfoComponent();
     }
 
-    async initGame(difficulty, isStart) {
-        if (isStart) {
+    async initGame(difficulty) {
+        difficulty = difficulty || this.LEVELS[0];
+
+        if (!sudokuActions.isRecordLoaded) {
             loadRecords().then((response) => {
-                if (response && response.data)
-                    sudokuActions.updateRecord(response.data);
+                sudokuActions.setRecords(response.data);
             });
         }
 
@@ -91,11 +93,13 @@ class Game {
         } else {
             sudokuActions.loadingData();
             generateSudoku(difficulty).then((response) => {
-                if (response && response.data) {
-                    this.difficulty = difficulty;
-                    board.createBoard(response.data);
-                    this.refreshStatusBar();
-                }
+                this.difficulty = difficulty;
+                board.createBoard(response.data);
+                this.refreshStatusBar();
+
+                setTimeout(() => {
+                    this.finishGame();
+                }, 10000);
             });
         }
     }
@@ -107,13 +111,15 @@ class Game {
             difficulty: this.difficulty,
         };
 
-        sudokuActions.loadingData();
-        uploadResult(data).then((response) => {
-            if (response && response.data) {
+        if (userActions.isAuth) {
+            sudokuActions.loadingData();
+            uploadResult(data).then((response) => {
                 sudokuActions.updateRecord(response.data);
                 sudokuActions.dataVerified();
-            }
-        });
+            });
+        } else {
+            sudokuActions.dataVerified();
+        }
     }
 }
 

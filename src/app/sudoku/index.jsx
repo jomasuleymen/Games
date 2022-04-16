@@ -24,7 +24,7 @@ function GameBody() {
 
 function Sudoku() {
     React.useEffect(() => {
-        game.initGame(game.LEVELS[0], true);
+        game.initGame();
     }, []);
 
     return (

@@ -9,6 +9,11 @@ const setUser = (user) => {
     }
 };
 
+const isAuth = () => {
+    return store.getState().user !== null;
+}
+
 export default {
     setUser,
+    isAuth
 };
