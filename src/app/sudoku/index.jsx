@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import GameInfo from "./gameInfo";
+import GameInfo from "./head";
 import Board from "./board";
 import Control from "./control";
 import Recorder from "./recorder";

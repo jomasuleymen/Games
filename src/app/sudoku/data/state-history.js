@@ -20,11 +20,9 @@ class History {
             this.isSameNote(notes, prevState.note)
         )
             return;
-        
-        if (notes.includes(true))
-            this.history.push({ row, col, notes });
-        else
-            this.history.push({ row, col, value });
+
+        if (notes.includes(true)) this.history.push({ row, col, notes });
+        else this.history.push({ row, col, value });
     }
 
     popState() {
@@ -36,7 +34,7 @@ class History {
 
     filterHistory(row, col) {
         this.history = this.history.filter(
-            (state) => state.row != row && state.col != col
+            (state) => !(state.row == row && state.col == col)
         );
     }
 

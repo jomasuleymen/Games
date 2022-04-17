@@ -30,7 +30,10 @@ class Board {
 
     setHint() {
         const { row, col } = this.selectedCell;
-        if (!this.isReadOnly(row, col) && this.game.usedHints < this.game.MAX_HINTS) {
+        if (
+            !this.isReadOnly(row, col) &&
+            this.game.usedHints < this.game.MAX_HINTS
+        ) {
             this.initialData[row][col] = this.#solution[row][col];
             this.history.filterHistory(row, col);
             this.insertToSelectedCell(this.#solution[row][col], true);

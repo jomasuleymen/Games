@@ -26,14 +26,12 @@ const optimization = () => {
 function plugins() {
     const plugins = [
         new Dotenv({
-            path: isDev ? "./.env.development" : './.env', // load this now instead of the ones in '.env'
+            path: isDev ? "./.env.development" : "./.env", // load this now instead of the ones in '.env'
             systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
         }),
         new HtmlWebpackPlugin({
             template: "./public/index.html",
-            minify: {
-                collapseWhitespace: isProd,
-            },
+            inject: 'body'
         }),
         new CleanWebpackPlugin(),
     ];
@@ -57,7 +55,7 @@ module.exports = {
     mode: "development",
     entry: ["babel-polyfill", "./src/index.js"],
     output: {
-        path: path.resolve(__dirname, "build"),
+        path: path.resolve(__dirname, "../Games-api/public"),
         clean: true,
     },
     devtool: isDev ? "source-map" : false,

@@ -7,14 +7,15 @@ const registerUser = (data) => {
     return http.post(userApi + "register", data);
 };
 
+const setUser = (user, token) => {
+    userActions.setUser(user);
+    localStorage.setItem("x-auth-token", token);
+    http.setJwt(token);
+};
+
 const loginUser = (data) => {
     return http.post(userApi + "login", data).then((res) => {
-        const { user } = res.data;
-        userActions.setUser(user);
-
-        const token = res.headers["x-auth-token"]; /* refactor -> separate */
-        localStorage.setItem("x-auth-token", token);
-        http.setJwt(token);
+        setUser(res.data.user, res.headers["x-auth-token"]);
     });
 };
 
@@ -22,26 +23,21 @@ const setCurrentUser = async () => {
     const token = localStorage.getItem("x-auth-token");
     if (!token) return;
 
-    http.get(userApi + "auth", {
-        headers: { Authorization: `Bearer ${token}` },
-    })
-        .then((res) => {
-            const { user } = res.data;
-            userActions.setUser(user);
+    http.setJwt(token);
 
-            const token =
-                res.headers["x-auth-token"]; /* refactor -> separate */
-            localStorage.setItem("x-auth-token", token);
-            http.setJwt(token);
+    http.get(userApi + "auth")
+        .then((res) => {
+            setUser(res.data.user, res.headers["x-auth-token"]);
         })
         .catch((err) => {
             localStorage.removeItem("x-auth-token");
+            http.setJwt(null);
         });
 };
 
 const logout = () => {
-    localStorage.removeItem("x-auth-token");
     http.setJwt(null);
+    localStorage.removeItem("x-auth-token");
     userActions.logOut();
 };
 

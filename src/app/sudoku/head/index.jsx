@@ -4,7 +4,7 @@ import AutoCheck from "./AutoCheck";
 import Info from "./Info";
 import Timer from "./Timer";
 
-import "./gameInfo.scss";
+import "./head.scss";
 
 function GameInfo() {
     return (
