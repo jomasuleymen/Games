@@ -1,4 +1,6 @@
 import httpService from "@services/httpService";
+import toast from "@utils/toast";
+import sudokuActions from "@store/sudoku/sudokuActions";
 
 const loadRecords = async (callBack) => {
     const token = localStorage.getItem("x-auth-token");
@@ -10,7 +12,8 @@ const loadRecords = async (callBack) => {
         })
         .then(callBack)
         .catch((err) => {
-            console.log(err.message);
+            toast.error('Please check your network and choose level again.');
+            sudokuActions.gameFailed();
         });
 };
 
@@ -19,7 +22,8 @@ const uploadResult = async (data, callBack) => {
         .put("sudoku/records", data)
         .then(callBack)
         .catch(function (error) {
-            console.log(error.message);
+            toast.error('Please check your network and choose level again.');
+            sudokuActions.gameFailed();
         });
 };
 
@@ -28,7 +32,8 @@ const generateSudoku = async (difficulty, callBack) => {
         .get(`sudoku/board?difficulty=${difficulty.toLocaleLowerCase()}`)
         .then(callBack)
         .catch((err) => {
-            console.log(err.message);
+            toast.error('Please check your network and choose level again.');
+            sudokuActions.gameFailed();
         });
 };
 

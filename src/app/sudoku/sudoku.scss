@@ -22,14 +22,28 @@
                 opacity: 0.5;
             }
 
-            .cell,
-            .cell * {
+            .cell {
                 pointer-events: none;
                 background-color: white !important;
             }
 
-            .cell * {
-                display: none;
+            &.loading,
+            &.pause {
+                .cell * {
+                    display: none;
+                }
+            }
+
+            &.failed {
+                .cell {
+                    background-color: rgb(251, 235, 235) !important;
+                }
+            }
+
+            &.success {
+                .cell {
+                    background-color: rgb(245, 250, 254) !important;
+                }
             }
 
         }

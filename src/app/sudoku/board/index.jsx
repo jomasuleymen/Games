@@ -1,7 +1,6 @@
 import React from "react";
 
 import board from "../data/board-data";
-import game from "../data/game-data";
 import Grid from "./Grid";
 import BoardStatus from "./BoardStatus";
 import useKeyUpDown from "@utils/hooks/useKeyUpDown";
@@ -9,18 +8,14 @@ import useKeyUpDown from "@utils/hooks/useKeyUpDown";
 import "./board.scss";
 
 const onkeyup = (ev) => {
-    if (game.isPlaying) {
-        if (ev.key > 0 && ev.key < 10) {
-            board.insertToSelectedCell(parseInt(ev.key));
-        } else if (ev.key == "Delete" || ev.key == "Backspace") {
-            board.eraseSelectedCell();
-        }
+    if (ev.key > 0 && ev.key < 10) {
+        board.insertToSelectedCell(parseInt(ev.key));
+    } else if (ev.key == "Delete" || ev.key == "Backspace") {
+        board.eraseSelectedCell();
     }
 };
 
 const onkeydown = (ev) => {
-    if (!game.isPlaying) return;
-
     let { row, col } = board.selectedCell;
 
     switch (ev.key) {

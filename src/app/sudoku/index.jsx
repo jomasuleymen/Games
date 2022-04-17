@@ -13,7 +13,7 @@ import STATUSES from "@store/sudoku/gameStatuses";
 
 function GameBody() {
     const { status } = useSelector(({ sudoku }) => sudoku.gameStatus);
-    const className = status !== STATUSES.PLAYING ? "freeze" : null;
+    const className = status !== STATUSES.PLAYING ? `freeze ${status}` : null;
 
     return (
         <div id="game-body" className={className}>

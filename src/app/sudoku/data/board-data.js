@@ -32,7 +32,8 @@ class Board {
         const { row, col } = this.selectedCell;
         if (
             !this.isReadOnly(row, col) &&
-            this.game.usedHints < this.game.MAX_HINTS
+            this.game.usedHints < this.game.MAX_HINTS && 
+            this.game.isPlaying
         ) {
             this.initialData[row][col] = this.#solution[row][col];
             this.history.filterHistory(row, col);
@@ -95,7 +96,8 @@ class Board {
 
     /* Cell functions with refreshing board */
     selectCell(row, col) {
-        sudokuActions.selectCell(row, col, this.getCellValue(row, col));
+        if (this.game.isPlaying)
+            sudokuActions.selectCell(row, col, this.getCellValue(row, col));
     }
 
     refreshBoard() {
@@ -105,8 +107,9 @@ class Board {
     insertToSelectedCell(newValue, isHint, isUndo) {
         const { row, col } = this.selectedCell;
         if (
-            !isHint &&
-            (this.isReadOnly(row, col) || newValue < 1 || newValue > 9)
+            (!isHint &&
+                (this.isReadOnly(row, col) || newValue < 1 || newValue > 9)) ||
+            !this.game.isPlaying
         )
             return;
 
@@ -145,7 +148,7 @@ class Board {
     eraseSelectedCell(isUndo) {
         const { row, col } = this.selectedCell;
 
-        if (this.isReadOnly(row, col)) return;
+        if (this.isReadOnly(row, col) || !this.game.isPlaying) return;
 
         const oldValue = this.getCellValue(row, col);
         const oldNote = [...this.note.getNote(row, col)];
@@ -162,6 +165,8 @@ class Board {
     }
 
     loadPrevState() {
+        if (!this.game.isPlaying) return;
+
         const prevState = this.history.popState();
         if (!prevState) return;
 
