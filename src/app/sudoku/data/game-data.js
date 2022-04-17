@@ -20,7 +20,7 @@ class Game {
         this.board = board;
         this.board.game = this;
 
-        this.autoCheck = false;
+        this.autoCheck = true;
         this.difficulty = this.LEVELS.EASY;
         this.resetGame();
     }

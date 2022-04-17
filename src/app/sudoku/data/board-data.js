@@ -127,11 +127,12 @@ class Board {
                 this.setCellValue(row, col, newValue);
                 checkForErrors(row, col, this.currentData, this.errorData);
 
-                if (newValue === this.#solution[row][col]) {
-                    this.checkDataForSolution();
-                } else {
-                    this.game.madeError();
-                }
+                if (!isUndo)
+                    if (newValue === this.#solution[row][col]) {
+                        this.checkDataForSolution();
+                    } else {
+                        this.game.madeError();
+                    }
             }
         }
 

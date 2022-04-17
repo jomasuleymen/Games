@@ -6,7 +6,7 @@ function AutoCheck() {
     return (
         <div className="auto-check">
             <span className="text">Auto-Check</span>
-            <input type="checkbox" id="checkMistakes" />
+            <input type="checkbox" id="checkMistakes" defaultChecked={game.autoCheck} />
             <label
                 htmlFor="checkMistakes"
                 onClick={() => {

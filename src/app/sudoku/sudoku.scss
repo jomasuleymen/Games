@@ -8,12 +8,28 @@
         padding: 5px;
     }
 
+    @media all and (max-width: 470px) {
+        .game-info * {
+            font-size: 0.75rem;
+        }
+
+        #board {
+            --board-size: 90vw;
+        }
+
+        .sudoku-recorder {
+            width: 95vw;
+        }
+
+
+    }
+
     #game-body {
         display: flex;
         height: 100%;
         width: 100%;
         max-width: 1000px;
-        margin-top: 5px;
+        margin-bottom: 8px;
         justify-content: center;
 
         @media all and (max-width: 780px) {
@@ -28,6 +44,7 @@
                 margin-top: 10px;
                 flex-direction: column-reverse;
                 gap: 5px;
+                width: 100%;
 
                 .new-game {
                     button {
@@ -39,7 +56,6 @@
                 .control-items {
                     justify-content: space-around;
                     order: 1;
-                    gap: 20px;
                 }
 
                 #numpad {
@@ -62,12 +78,6 @@
                     }
                 }
 
-            }
-        }
-
-        @media all and (max-width: 460px) {
-            #board {
-                --board-size: 90vw;
             }
         }
 
