@@ -139,7 +139,7 @@ class Board {
             }
         }
 
-        this.refreshBoard();
+        this.selectCell(row, col);
 
         if (!isUndo && !isHint)
             this.history.addState(row, col, oldValue, oldNote);
@@ -160,7 +160,8 @@ class Board {
             this.setCellValue(row, col, 0);
         }
 
-        this.refreshBoard();
+        this.selectCell(row, col);
+
         if (!isUndo) this.history.addState(row, col, oldValue, oldNote);
     }
 
