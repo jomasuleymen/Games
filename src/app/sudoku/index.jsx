@@ -30,8 +30,10 @@ function Sudoku() {
 
     return (
         <div className="sudoku">
-            <Head />
-            <GameBody />
+            <div className="game">
+                <Head />
+                <GameBody />
+            </div>
             <div className="sudoku-recorder">
                 <Recorder />
             </div>

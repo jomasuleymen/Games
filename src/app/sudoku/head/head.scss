@@ -1,27 +1,25 @@
 .game-info {
-    user-select: none;
-    margin: 8px 0;
-    padding: 3px;
-    height: 30px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    max-width: 750px;
-    
+    justify-content: space-between;
+    padding: 3px;
+    margin: 10px 0 5px 0;
+    user-select: none;
+
 
     .auto-check {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 3px;
+        margin-right: 3px;
 
         .text {
+            margin-right: 5px;
             color: rgb(148, 163, 190);
             font-size: 13px;
             font-family: Arial, Helvetica, sans-serif;
             font-weight: 600;
-            margin-right: 10px;
             word-wrap: break-word;
         }
 
@@ -40,7 +38,7 @@
 
         label {
             min-width: 40px;
-            height: 16.5px;
+            height: 16px;
             padding: 0 4px;
             display: flex;
             justify-content: left;
@@ -61,15 +59,34 @@
         }
     }
 
+    .info-bar {
+        display: flex;
+        column-gap: 1rem;
+        color: rgb(148, 163, 190);
+        font-size: 15px;
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0 4px;
+
+        .info {
+            font-weight: 600;
+            flex-wrap: wrap;
+            text-align: center;
+
+            span {
+                font-weight: normal;
+                margin-left: 2px;
+            }
+        }
+    }
+
     .time {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: 5px;
         padding: 0 5px;
 
         #timer {
-            margin-right: 5px;
+            margin-right: 3px;
             padding: 0 5px;
             color: rgb(148, 163, 190);
             font-weight: 600;
@@ -114,28 +131,6 @@
             }
         }
 
-    }
-
-    .info-bar {
-        display: flex;
-        column-gap: 1rem;
-        color: rgb(148, 163, 190);
-        font-size: 15px;
-        font-family: Arial, Helvetica, sans-serif;
-        margin: 0 10px;
-
-        .info {
-            font-weight: 600;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-
-            span {
-                font-weight: normal;
-                margin: 0 5px;
-            }
-        }
     }
 
 }

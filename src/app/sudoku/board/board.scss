@@ -2,42 +2,38 @@ $lineWidth: 2px;
 $lineColor: rgb(0, 0, 0);
 
 #board {
-
     --board-size: 450px;
-
-    position: relative;
-    margin: 0 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 0;
-
     width: var(--board-size);
     height: var(--board-size);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 0;
 
     #grid {
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-columns: repeat(9, minmax(30px, 50px));
-        grid-template-rows: repeat(9, minmax(30px, 50px));
+        grid-template-columns: repeat(9, minmax(30px, 55px));
+        grid-template-rows: repeat(9, minmax(30px, 55px));
         padding: 0;
         margin: 0;
         gap: 0;
 
         .cell {
-            border: 0.5px solid rgb(205, 214, 225);
             display: flex;
             justify-content: center;
             align-items: center;
-            flex: 1;
-            text-align: center;
+            border: 0.5px solid rgb(205, 214, 225);
             user-select: none;
-            outline: none;
             cursor: default;
+            outline: none;
             padding: 0;
             margin: 0;
+            flex: 1;
 
             span {
                 padding: 0;
@@ -47,16 +43,16 @@ $lineColor: rgb(0, 0, 0);
         }
 
         .noteMode {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            column-gap: 10px;
+            row-gap: 2px;
             color: grey;
             margin: 0;
         }
 
         .noteNum {
-            flex-basis: 30%;
             margin: 0;
             padding: 0;
             text-align: center;
@@ -89,9 +85,9 @@ $lineColor: rgb(0, 0, 0);
         border-radius: 50%;
         cursor: pointer;
         background-color: rgb(35, 119, 247);
+        display: flex;
         justify-content: center;
         align-items: center;
-        display: flex;
         pointer-events: all !important;
         z-index: 10;
 
