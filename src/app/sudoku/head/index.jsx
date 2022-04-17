@@ -6,7 +6,7 @@ import Timer from "./Timer";
 
 import "./head.scss";
 
-function GameInfo() {
+function Head() {
     return (
         <div className="game-info">
             <AutoCheck />
@@ -16,4 +16,4 @@ function GameInfo() {
     );
 }
 
-export default GameInfo;
+export default Head;

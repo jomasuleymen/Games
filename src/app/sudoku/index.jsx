@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import GameInfo from "./head";
+import Head from "./head";
 import Board from "./board";
 import Control from "./control";
 import Recorder from "./recorder";
@@ -30,10 +30,8 @@ function Sudoku() {
 
     return (
         <div className="sudoku">
-            <div className="sudoku-game">
-                <GameInfo />
-                <GameBody />
-            </div>
+            <Head />
+            <GameBody />
             <div className="sudoku-recorder">
                 <Recorder />
             </div>

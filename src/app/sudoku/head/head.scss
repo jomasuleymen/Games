@@ -3,10 +3,11 @@
     margin-top: 2px;
     padding: 3px;
     height: 30px;
-    width: 800px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 750px;
 
     .auto-check {
         display: flex;
@@ -20,6 +21,7 @@
             font-family: Arial, Helvetica, sans-serif;
             font-weight: 600;
             margin-right: 10px;
+            word-wrap: break-word;
         }
 
         #checkMistakes {
@@ -36,7 +38,7 @@
         }
 
         label {
-            width: 33px;
+            min-width: 40px;
             height: 16.5px;
             padding: 0 4px;
             display: flex;
@@ -115,16 +117,22 @@
 
     .info-bar {
         display: flex;
-        column-gap: 2rem;
+        column-gap: 1rem;
         color: rgb(148, 163, 190);
         font-size: 15px;
         font-family: Arial, Helvetica, sans-serif;
+        margin: 0 10px;
 
         .info {
             font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
 
             span {
                 font-weight: normal;
+                margin: 0 5px;
             }
         }
     }

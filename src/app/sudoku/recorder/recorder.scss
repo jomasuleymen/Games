@@ -1,5 +1,6 @@
 .recorder {
-    width: 500px;
+    min-width: 350px;
+    max-width: 500px;
     user-select: none;
     cursor: default;
     font-weight: 400 !important;

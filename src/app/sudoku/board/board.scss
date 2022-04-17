@@ -1,114 +1,105 @@
-$lineWidth: 2.3px;
+$lineWidth: 2px;
 $lineColor: rgb(0, 0, 0);
 
-:root {
-    --board-width: 480px;
-    --grid-size: 480px;
-}
-
 #board {
-    width: var(--board-width);
-    height: 100%;
     position: relative;
-    margin-right: 3px;
+    margin: 0 3px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-#board_pause {
-    position: absolute;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    cursor: pointer;
-    background-color: rgb(35, 119, 247);
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    pointer-events: all !important;
-    z-index: 10;
-
-    .sign {
-        width: 0;
-        height: 0;
-        border: 0;
-        padding: 0;
-        margin-left: 5px;
-        background: transparent;
-        border-color: transparent transparent transparent white;
-        cursor: pointer;
-        border-radius: 5px;
-        border-style: solid;
-        border-width: 13px 0 13px 20px;
-    }
-}
-
-#grid {
-    width: var(--grid-size);
-    height: var(--grid-size);
-
-    display: grid;
-    grid-template-columns: repeat(9, minmax(40px, 1fr));
-    grid-template-rows: repeat(9, minmax(40px, 1fr));
-    gap: 0;
-
     padding: 0;
-    margin: 0;
 
-    .cell {
-        border: 0.5px solid rgb(205, 214, 225);
+    #grid {
+        display: grid;
+        grid-template-columns: repeat(9, minmax(45px, 48px));
+        grid-template-rows: repeat(9, minmax(45px, 48px));
         padding: 0;
         margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
-        text-align: center;
-        user-select: none;
-        outline: none;
-        cursor: default;
-        
-        span {
+        gap: 0;
+
+        .cell {
+            border: 0.5px solid rgb(205, 214, 225);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            text-align: center;
+            user-select: none;
+            outline: none;
+            cursor: default;
             padding: 0;
             margin: 0;
-            font-size: 30px;
+
+            span {
+                padding: 0;
+                margin: 0;
+                font-size: 30px;
+            }
+        }
+
+        .noteMode {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            color: grey;
+            margin: 0;
+        }
+
+        .noteNum {
+            flex-basis: 30%;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+
+        .line-left {
+            border-left: $lineWidth solid $lineColor;
+        }
+
+        .line-top {
+            border-top: $lineWidth solid $lineColor;
+        }
+
+        .line-bottom {
+            border-bottom: $lineWidth solid $lineColor;
+        }
+
+        .line-right {
+            border-right: $lineWidth solid $lineColor;
         }
     }
 
-    .noteMode {
-        display: flex;
+    #board_pause {
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        cursor: pointer;
+        background-color: rgb(35, 119, 247);
+        justify-content: center;
         align-items: center;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        color: grey;
-        margin: 0;
+        display: flex;
+        pointer-events: all !important;
+        z-index: 10;
+
+        .sign {
+            width: 0;
+            height: 0;
+            border: 0;
+            padding: 0;
+            margin-left: 5px;
+            background: transparent;
+            border-color: transparent transparent transparent white;
+            cursor: pointer;
+            border-radius: 5px;
+            border-style: solid;
+            border-width: 13px 0 13px 20px;
+        }
     }
 
-    .noteNum {
-        flex-basis: 30%;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        font-size: 10px;
-        font-weight: 600;
-    }
-
-
-    .line-left {
-        border-left: $lineWidth solid $lineColor;
-    }
-
-    .line-top {
-        border-top: $lineWidth solid $lineColor;
-    }
-
-    .line-bottom {
-        border-bottom: $lineWidth solid $lineColor;
-    }
-
-    .line-right {
-        border-right: $lineWidth solid $lineColor;
-    }
 }

@@ -1,42 +1,84 @@
-.sudoku{
+.sudoku {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
-    .sudoku-game {
+    .sudoku-recorder {
         padding: 5px;
     }
-    
-    .sudoku-recorder{
-        padding: 5px;
-    }
-    
+
     #game-body {
         display: flex;
-        height: 480px;
+        height: 100%;
+        width: 100%;
+        max-width: 1000px;
         margin-top: 5px;
-        padding: 0;
         justify-content: center;
-    
+        
+        @media all and (max-width: 740px) {
+            flex-direction: column;
+            align-items: center;
+
+            .control{
+                margin-top: 10px;
+                flex-direction: column-reverse;
+                gap: 5px;
+
+                .new-game{
+                    button{
+                        padding: 12px;
+
+                    }
+                }
+
+                .control-items {
+                    justify-content: space-around;
+                    order: 1;
+                }
+
+                #numpad{
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                }
+
+                .numpad-item {
+                    background-color: rgb(233, 238, 244);
+                    color: #0072E3;
+                    border-radius: 5%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0;
+                    font-size: 35px;
+                    user-select: none;
+                    cursor: pointer;
+                    padding: 0 10px;
+                }
+
+            }
+        }
+
         &.freeze {
-            
+
             .control-items,
             #numpad,
-            #grid{
+            #grid {
                 pointer-events: none;
                 opacity: 0.5;
             }
-            
-            .cell, .cell * {
+
+            .cell,
+            .cell * {
                 pointer-events: none;
                 background-color: white !important;
             }
 
-            .cell *{
+            .cell * {
                 display: none;
             }
-            
+
         }
     }
 }
