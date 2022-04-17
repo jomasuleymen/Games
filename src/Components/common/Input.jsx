@@ -2,7 +2,7 @@ import React from "react";
 
 const Input = ({ name, error, type = "text", ...rest }) => {
     return (
-        <div className="form-group w-25 mt-3">
+        <div className="form-group">
             <input
                 name={name}
                 id={name}
@@ -12,7 +12,7 @@ const Input = ({ name, error, type = "text", ...rest }) => {
                 {...rest}
             />
             {error && (
-                <div className="alert alert-danger p-1 error mb-0">{error}</div>
+                <div className="alert alert-danger error">{error}</div>
             )}
         </div>
     );

@@ -4,7 +4,80 @@
     cursor: default;
     font-weight: 400 !important;
     font-size: 16px;
-    
+
     .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+        border-collapse: collapse !important;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.5rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table tbody+tbody {
+        border-top: 2px solid #dee2e6;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .table-bordered {
+        border: 1px solid #dee2e6;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #dee2e6;
+    }
+
+    .table-bordered thead th,
+    .table-bordered thead td {
+        border-bottom-width: 2px;
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.25em 0.4em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .bg-success {
+        background-color: #28a745 !important;
+        color: white;
+    }
+
+    .bg-warning {
+        background-color: #ffc107 !important;
+    }
+    
+    .text-dark {
+        color: #343a40 !important;
+    }
+    
+    .bg-danger {
+        background-color: #dc3545 !important;
+        color: white;
     }
 }

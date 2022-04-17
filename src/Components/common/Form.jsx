@@ -58,14 +58,14 @@ class Form extends React.Component {
         if (!message) return null;
 
         return (
-            <div className="alert alert-danger p-1 error w-25 mt-1 mb-0">
+            <div className="alert alert-danger error">
                 {message}
             </div>
         );
     };
 
     renderButton = (name) => {
-        return <button className="btn btn-primary mt-2 w-25">{name}</button>;
+        return <button className="btn btn-primary">{name}</button>;
     };
 }
 

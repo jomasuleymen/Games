@@ -3,21 +3,22 @@
     src: url('./fonts/SourceSansPro-Regular.ttf');
 }
 
-:root{
-    --max-width: 1000px;
-}
-
 * {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+:root {
+    --max-width: 1000px;
+}
+
+
 body {
     margin: 0;
     padding: 0;
-    min-width: 1000px;
+    // min-width: 1000px;
 }
 
-#main{
+#main {
     max-width: var(--max-width);
     margin: 0 auto;
     position: relative;
