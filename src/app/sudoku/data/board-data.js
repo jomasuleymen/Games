@@ -32,7 +32,7 @@ class Board {
         const { row, col } = this.selectedCell;
         if (
             !this.isReadOnly(row, col) &&
-            this.game.usedHints < this.game.MAX_HINTS && 
+            this.game.usedHints < this.game.MAX_HINTS &&
             this.game.isPlaying
         ) {
             this.initialData[row][col] = this.#solution[row][col];
@@ -52,7 +52,7 @@ class Board {
         this.note.clear();
         this.history.clear();
 
-        this.selectCell(0, 0);
+        sudokuActions.selectCell(0, 0);
         this.refreshBoard();
 
         if (newBoardData !== this.initialData) {
