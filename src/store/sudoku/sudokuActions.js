@@ -1,6 +1,6 @@
 import {
     selectCell as selectCellReducer,
-    updateCells,
+    updateCurrentCell,
 } from "./reducers/cellSlice";
 import { setStatus } from "./reducers/statusSlice";
 import {
@@ -20,8 +20,8 @@ const getSelectedCell = () => {
     return store.getState().sudoku.selectedCell;
 };
 
-const refreshBoard = () => {
-    store.dispatch(updateCells());
+const updateCell = (newValue) => {
+    store.dispatch(updateCurrentCell({ newValue }));
 };
 
 /* Game statuses */
@@ -79,7 +79,7 @@ export default {
 
     selectCell,
     getSelectedCell,
-    refreshBoard,
+    updateCell,
 
     loadingData,
     resumeGame,

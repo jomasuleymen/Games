@@ -53,7 +53,6 @@ class Board {
         this.history.clear();
 
         sudokuActions.selectCell(0, 0);
-        this.refreshBoard();
 
         if (newBoardData !== this.initialData) {
             setSolution(newBoardData, this);
@@ -100,8 +99,9 @@ class Board {
             sudokuActions.selectCell(row, col, this.getCellValue(row, col));
     }
 
-    refreshBoard() {
-        sudokuActions.refreshBoard();
+    updateSelectedCell() {
+        const { row, col } = sudokuActions.getSelectedCell();
+        sudokuActions.updateCell(this.getCellValue(row, col));
     }
 
     insertToSelectedCell(newValue, isHint, isUndo) {
@@ -139,7 +139,7 @@ class Board {
             }
         }
 
-        this.selectCell(row, col);
+        this.updateSelectedCell();
 
         if (!isUndo && !isHint)
             this.history.addState(row, col, oldValue, oldNote);
@@ -160,7 +160,7 @@ class Board {
             this.setCellValue(row, col, 0);
         }
 
-        this.selectCell(row, col);
+        this.updateSelectedCell();
 
         if (!isUndo) this.history.addState(row, col, oldValue, oldNote);
     }

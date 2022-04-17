@@ -19,13 +19,11 @@ const selectedCellSlice = createSlice({
             state.squareRowBegin = row - (row % 3);
             state.squareColBegin = col - (col % 3);
         },
-        updateCells: (state) => {
-            return {
-                ...state,
-            };
+        updateCurrentCell: (state, { payload }) => {
+            state.value = payload.newValue;
         },
     },
 });
 
 export default selectedCellSlice.reducer;
-export const { selectCell, updateCells } = selectedCellSlice.actions;
+export const { selectCell, updateCurrentCell } = selectedCellSlice.actions;

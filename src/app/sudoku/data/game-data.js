@@ -35,7 +35,7 @@ class Game {
 
     toggleAutoCheck() {
         this.autoCheck = !this.autoCheck;
-        board.refreshBoard();
+        board.updateSelectedCell();
     }
 
     /* Play - Pause */
