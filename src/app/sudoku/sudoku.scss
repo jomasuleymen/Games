@@ -41,15 +41,22 @@
             align-items: center;
         }
 
+        .auto-check {
+            .text {
+                font-size: 11px;
+            }
+        }
+
         .control {
             flex-direction: column-reverse;
-            width: 90%;
+            width: 95%;
 
             .new-game {
                 button {
                     padding: 12px;
                 }
             }
+
 
             .control-items {
                 justify-content: space-between;
@@ -60,11 +67,13 @@
                 display: flex;
                 justify-content: space-between;
                 width: 100%;
+                padding: 0;
+                margin-bottom: 5px;
 
                 .numpad-item {
                     color: #0072E3;
                     border-radius: 5%;
-                    font-size: 60px;
+                    font-size: 45px;
                     user-select: none;
                     cursor: pointer;
                     background-color: white;
@@ -81,10 +90,10 @@
 
     @media all and (max-width: 490px) {
         .game-info * {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
-        #board{
+        #board {
             --board-size: 98vw;
         }
     }
