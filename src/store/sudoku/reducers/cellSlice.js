@@ -20,7 +20,7 @@ const selectedCellSlice = createSlice({
             state.squareColBegin = col - (col % 3);
         },
         updateCurrentCell: (state, { payload }) => {
-            state.value = payload.newValue;
+            return { ...state, value: payload.newValue };
         },
     },
 });
