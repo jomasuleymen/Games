@@ -2,6 +2,9 @@ $lineWidth: 2px;
 $lineColor: rgb(0, 0, 0);
 
 #board {
+
+    --board-size: 450px;
+
     position: relative;
     margin: 0 3px;
     display: flex;
@@ -10,10 +13,15 @@ $lineColor: rgb(0, 0, 0);
     flex-direction: column;
     padding: 0;
 
+    width: var(--board-size);
+    height: var(--board-size);
+
     #grid {
+        width: 100%;
+        height: 100%;
         display: grid;
-        grid-template-columns: repeat(9, minmax(45px, 48px));
-        grid-template-rows: repeat(9, minmax(45px, 48px));
+        grid-template-columns: repeat(9, minmax(30px, 50px));
+        grid-template-rows: repeat(9, minmax(30px, 50px));
         padding: 0;
         margin: 0;
         gap: 0;

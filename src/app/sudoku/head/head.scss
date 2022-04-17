@@ -1,6 +1,6 @@
 .game-info {
     user-select: none;
-    margin-top: 2px;
+    margin: 8px 0;
     padding: 3px;
     height: 30px;
     width: 100%;
@@ -8,6 +8,7 @@
     justify-content: space-between;
     align-items: center;
     max-width: 750px;
+    
 
     .auto-check {
         display: flex;

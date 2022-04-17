@@ -20,7 +20,7 @@ const onkeyup = (ev) => {
 
 const onkeydown = (ev) => {
     if (!game.isPlaying) return;
-    
+
     let { row, col } = board.selectedCell;
 
     switch (ev.key) {
