@@ -35,7 +35,6 @@ class Board {
             this.game.usedHints < this.game.MAX_HINTS &&
             this.game.isPlaying
         ) {
-            this.initialData[row][col] = this.#solution[row][col];
             this.history.filterHistory(row, col);
             this.insertToSelectedCell(this.#solution[row][col], true);
             this.game.hintUsed();
@@ -107,23 +106,24 @@ class Board {
     insertToSelectedCell(newValue, isHint, isUndo) {
         const { row, col } = this.selectedCell;
         if (
-            (!isHint &&
-                (this.isReadOnly(row, col) || newValue < 1 || newValue > 9)) ||
+            this.isReadOnly(row, col) ||
+            newValue < 1 ||
+            newValue > 9 ||
             !this.game.isPlaying
         )
             return;
-
-        const oldValue = this.getCellValue(row, col);
-        const oldNote = [...this.note.getNote(row, col)];
 
         if (this.cellHasNumber(row, col)) {
             revertErrors(row, col, this.currentData, this.errorData);
             this.setCellValue(row, col, 0);
         }
 
-        if (this.note.isEnabled && !isHint) {
+        const oldValue = this.getCellValue(row, col);
+        const oldNote = [...this.note.getNote(row, col)];
+
+        if (this.note.isEnabled && !isHint && !isUndo)
             this.note.addNote(row, col, newValue);
-        } else {
+        else {
             this.note.eraseNote(row, col);
 
             if (isHint || oldValue != newValue) {
@@ -136,11 +136,13 @@ class Board {
                     } else {
                         this.game.madeError();
                     }
+
+                if (isHint)
+                    this.initialData[row][col] = this.#solution[row][col];
             }
         }
 
         this.updateSelectedCell();
-
         if (!isUndo && !isHint)
             this.history.addState(row, col, oldValue, oldNote);
     }

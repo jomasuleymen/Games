@@ -90,7 +90,7 @@
                     font-size: 45px;
                     user-select: none;
                     cursor: pointer;
-                    background-color: white;
+                    background-color: transparent;
 
                     &:hover {
                         background-color: none;
@@ -102,7 +102,7 @@
         }
     }
 
-    @media all and (max-width: 490px) {
+    @media all and (max-width: 520px) {
         .game-info * {
             font-size: 0.7rem;
         }
