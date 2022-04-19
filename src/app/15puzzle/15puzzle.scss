@@ -1,0 +1,195 @@
+#puzzle-game {
+
+    --body-size: 75vmin;
+    --border-radius: 1vmin;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    margin: 1vmin auto;
+
+    width: var(--body-size);
+
+    #header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: calc(var(--body-size) * 0.9);
+        height: 8vmin;
+        color: rgb(133, 132, 132);
+        fill: rgb(133, 132, 132);
+        border-bottom: rgb(117, 116, 116) 1px solid;
+
+        .new-game {
+            height: 80%;
+            margin: 0 1vmin;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2vmin;
+            border-radius: var(--border-radius);
+
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            outline: none;
+            text-decoration: none;
+            text-align: center;
+            background-color: rgb(210, 210, 210);
+            color: rgba(56, 56, 56, 0.879);
+            font-size: 4vmin;
+
+            &:hover {
+                background-color: rgb(191, 190, 190);
+            }
+        }
+
+        .grid-input {
+            height: 80%;
+            margin: 0 1vmin;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.4vmin;
+
+            input#grid-size {
+                padding: 1vmin;
+                width: 6vmin;
+                font-size: 3vmin;
+                border: none;
+                border-radius: var(--border-radius);
+                font-weight: bold;
+                outline: none;
+                text-decoration: none;
+                text-align: center;
+                background-color: rgb(210, 210, 210);
+                color: rgba(56, 56, 56, 0.879);
+            }
+            
+            .arrows {
+                display: flex;
+                flex-direction: column;
+                gap: 0.3vmin;
+
+                .arrow {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex: 1;
+                    width: 3vmin;
+                    height: 100%;
+                    background-color: rgb(210, 210, 210);
+                    color: rgba(56, 56, 56, 0.879);
+                    border: none;
+                    font-weight: bold;
+                    outline: none;
+                    border-radius: 0.5vmin;
+                    font-size: 2vmin;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: rgb(191, 190, 190);
+                    }
+                }
+            }
+
+
+        }
+
+
+        .title {
+            text-align: center;
+            margin: 0;
+            flex-grow: 1;
+            font-size: 5vmin;
+        }
+    }
+
+    #board {
+        --cell-gap: 0.5vmin;
+        --background-color: #CCC;
+        --cell-bacground-color: #AAA;
+        --board-size: calc(var(--body-size) * 0.9);
+
+        width: var(--board-size);
+        display: grid;
+        grid-template-columns: repeat(var(--grid-size), 1fr);
+        grid-template-rows: repeat(var(--grid-size), 1fr);
+        background-color: var(--background-color);
+        gap: var(--cell-gap);
+        padding: var(--cell-gap);
+        border-radius: var(--border-radius);
+        position: relative;
+        margin: 1.5vmin 0;
+
+        .cell {
+            background-color: var(--cell-bacground-color);
+            border-radius: var(--border-radius);
+            aspect-ratio: 1;
+        }
+
+        .tail {
+            --cell-size: calc(var(--board-size) / var(--grid-size) - var(--cell-gap) - var(--cell-gap) / var(--grid-size));
+            font-size: calc(1 / var(--grid-size) * 20vmin);
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            top: calc(var(--y) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+            left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+            align-items: center;
+            width: var(--cell-size);
+            height: var(--cell-size);
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            background-color: rgb(133, 132, 132);
+            transition: all 50ms ease-in;
+            animation: show 500ms ease-in-out;
+
+            &.blank {
+                background-color: transparent;
+
+            }
+
+            &.right {
+                background-color: rgb(150, 239, 150);
+            }
+
+        }
+
+        @keyframes show {
+            0% {
+                opacity: 0;
+                transform: scale3d(0, 0, 0);
+            }
+
+            20% {
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+
+            40% {
+                transform: scale3d(0.9, 0.9, 0.9);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+
+            80% {
+                transform: scale3d(0.97, 0.97, 0.97);
+            }
+
+            100% {
+                transform: scale3d(1, 1, 1);
+            }
+        }
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+}

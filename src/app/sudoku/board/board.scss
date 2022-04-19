@@ -1,109 +1,112 @@
 $lineWidth: 2px;
 $lineColor: rgb(0, 0, 0);
 
-#board {
-    --board-size: 450px;
-    width: var(--board-size);
-    height: var(--board-size);
+.sudoku {
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    padding: 0;
+    #board {
+        --board-size: 450px;
+        width: var(--board-size);
+        height: var(--board-size);
 
-    #grid {
-        width: 100%;
-        height: 100%;
-        display: grid;
-        grid-template-columns: repeat(9, minmax(30px, 1fr));
-        grid-template-rows: repeat(9, minmax(30px, 1fr));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
         padding: 0;
-        margin: 0;
-        gap: 0;
 
-        .cell {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 0.5px solid rgb(205, 214, 225);
-            user-select: none;
-            cursor: default;
-            outline: none;
+        #grid {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(9, minmax(30px, 1fr));
+            grid-template-rows: repeat(9, minmax(30px, 1fr));
             padding: 0;
             margin: 0;
-            flex: 1;
+            gap: 0;
 
-            span {
+            .cell {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 0.5px solid rgb(205, 214, 225);
+                user-select: none;
+                cursor: default;
+                outline: none;
                 padding: 0;
                 margin: 0;
-                font-size: 30px;
+                flex: 1;
+
+                span {
+                    padding: 0;
+                    margin: 0;
+                    font-size: 30px;
+                }
+            }
+
+            .noteMode {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr;
+                column-gap: 9px;
+                row-gap: 2px;
+                color: grey;
+                margin: 0;
+            }
+
+            .noteNum {
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                font-size: 10px;
+                font-weight: 600;
+            }
+
+
+            .line-left {
+                border-left: $lineWidth solid $lineColor;
+            }
+
+            .line-top {
+                border-top: $lineWidth solid $lineColor;
+            }
+
+            .line-bottom {
+                border-bottom: $lineWidth solid $lineColor;
+            }
+
+            .line-right {
+                border-right: $lineWidth solid $lineColor;
             }
         }
 
-        .noteMode {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr 1fr;
-            column-gap: 9px;
-            row-gap: 2px;
-            color: grey;
-            margin: 0;
-        }
-
-        .noteNum {
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-
-        .line-left {
-            border-left: $lineWidth solid $lineColor;
-        }
-
-        .line-top {
-            border-top: $lineWidth solid $lineColor;
-        }
-
-        .line-bottom {
-            border-bottom: $lineWidth solid $lineColor;
-        }
-
-        .line-right {
-            border-right: $lineWidth solid $lineColor;
-        }
-    }
-
-    #board_pause {
-        position: absolute;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        cursor: pointer;
-        background-color: rgb(35, 119, 247);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        pointer-events: all !important;
-        z-index: 10;
-
-        .sign {
-            width: 0;
-            height: 0;
-            border: 0;
-            padding: 0;
-            margin-left: 5px;
-            background: transparent;
-            border-color: transparent transparent transparent white;
+        #board_pause {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
             cursor: pointer;
-            border-radius: 5px;
-            border-style: solid;
-            border-width: 13px 0 13px 20px;
-        }
-    }
+            background-color: rgb(35, 119, 247);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: all !important;
+            z-index: 10;
 
+            .sign {
+                width: 0;
+                height: 0;
+                border: 0;
+                padding: 0;
+                margin-left: 5px;
+                background: transparent;
+                border-color: transparent transparent transparent white;
+                cursor: pointer;
+                border-radius: 5px;
+                border-style: solid;
+                border-width: 13px 0 13px 20px;
+            }
+        }
+
+    }
 }

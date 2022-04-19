@@ -5,6 +5,7 @@ import Register from "@pages/Register";
 import Login from "@pages/Login";
 import Games from "@pages/Games";
 import Sudoku from "@app/sudoku";
+import Puzzle from "@app/15puzzle";
 
 function MainRoutes() {
     return (
@@ -15,6 +16,7 @@ function MainRoutes() {
                 <Route path="/login" element={<Login navigate={useNavigate()} />} />
                 <Route path="/games" element={<Games />} />
                 <Route path="/sudoku" element={<Sudoku />} />
+                <Route path="/15puzzle" element={<Puzzle />} />
             </Routes>
         </div>
     );

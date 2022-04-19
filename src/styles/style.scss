@@ -3,9 +3,12 @@
     src: url('./fonts/SourceSansPro-Regular.ttf');
 }
 
-* {
+*,
+*::before,
+*::after {
     font-family: 'Source Sans Pro', sans-serif;
     box-sizing: border-box;
+    user-select: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -18,8 +21,9 @@
     --max-width: 1000px;
 }
 
-
-body {
+#root,
+body,
+html {
     margin: 0;
     padding: 0;
 }
@@ -28,7 +32,6 @@ body {
     max-width: var(--max-width);
     margin: 0 auto;
     position: relative;
-    height: 100%;
 }
 
 .Toastify__toast-container {
