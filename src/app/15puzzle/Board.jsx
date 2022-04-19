@@ -5,6 +5,7 @@ import Tile from "./Tile";
 
 function Board({ game }) {
     const cells = useSelector((store) => store.puzzle.currentBoard);
+    const size = cells.length;
 
     function moveTileByIndex(y, x) {
         game.moveTileByIndex(y, x);
@@ -20,6 +21,7 @@ function Board({ game }) {
                 onClick={(y, x) => {
                     moveTileByIndex(y, x);
                 }}
+                isRightValue={value === rowIndex*size + colIndex + 1}
             />
         ))
     );

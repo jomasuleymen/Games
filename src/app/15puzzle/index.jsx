@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import Board from "./Board";
 
 import "./15puzzle.scss";
 import Game from "./game";
+import useKeyUpDown from "@utils/hooks/useKeyUpDown";
 
 function GridInput({ game }) {
     const [gridSize, setGridSize] = useState(4);
@@ -50,42 +51,77 @@ function GridInput({ game }) {
     );
 }
 
+function Timer({ game }) {
+    const ref = useRef();
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (!game.isSolved) {
+                ref.current.innerText = `${game.time} sec`;
+                game.time += 1;
+            }
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    return (
+        <div className="timer" ref={ref}>
+            0 sec
+        </div>
+    );
+}
+
+function Arrows({ game }) {
+    return (
+        <div className="control-arrows">
+            <div className="control-arrow hidden"></div>
+            <div className="control-arrow" onClick={() => game.moveUp()}>↑</div>
+            <div className="control-arrow hidden"></div>
+            <div className="control-arrow" onClick={() => game.moveLeft()}>←</div>
+            <div className="control-arrow" onClick={() => game.moveDown()}>↓</div>
+            <div className="control-arrow" onClick={() => game.moveRight()}>→</div>
+        </div>
+    );
+}
+
 function Puzzle() {
     const game = new Game();
     const ref = useRef();
 
+    useKeyUpDown(null, (ev) => {
+        switch (ev.key) {
+            case "ArrowUp": {
+                game.moveUp();
+                break;
+            }
+            case "ArrowDown": {
+                game.moveDown();
+                break;
+            }
+            case "ArrowLeft": {
+                game.moveLeft();
+                break;
+            }
+            case "ArrowRight": {
+                game.moveRight();
+                break;
+            }
+            default:
+                return;
+        }
+    });
+
     React.useEffect(() => {
         game.setBoardElement(ref.current);
 
-        const hundleInput = (ev) => {
-            switch (ev.key) {
-                case "ArrowUp": {
-                    game.moveUp();
-                    break;
-                }
-                case "ArrowDown": {
-                    game.moveDown();
-                    break;
-                }
-                case "ArrowLeft": {
-                    game.moveLeft();
-                    break;
-                }
-                case "ArrowRight": {
-                    game.moveRight();
-                    break;
-                }
-                default:
-                    return;
-            }
-        };
-        window.onkeydown = hundleInput;
-
         return () => {
-            window.onkeydown = null;
             game.clearData();
         };
     }, []);
+
     return (
         <div id="puzzle-game">
             <div id="header">
@@ -99,6 +135,7 @@ function Puzzle() {
                 </button>
                 <GridInput game={game}></GridInput>
                 <h1 className="title">15 Puzzle</h1>
+                <Timer game={game} />
             </div>
             <div id="board" ref={ref}>
                 {game.board.map((row) =>
@@ -106,6 +143,7 @@ function Puzzle() {
                 )}
                 <Board game={game} />
             </div>
+            <Arrows game={game} />
         </div>
     );
 }

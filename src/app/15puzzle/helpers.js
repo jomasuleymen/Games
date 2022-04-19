@@ -41,7 +41,7 @@ export function generateBoard(size) {
         board.push(row);
     }
 
-    if (isSolvable(board)) {
+    if (!isSolvable(board)) {
         let oneIndex = 0;
         let twoIndex = 0;
 

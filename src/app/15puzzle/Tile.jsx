@@ -1,13 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-function Tile({ value, x, y, onClick }) {
+function Tile({ value, x, y, onClick, isRightValue }) {
     let { toX, toY, isRight } = useSelector(
         (store) => store.puzzle,
         (left) => {
             return left.tileValue && left.tileValue != value;
         }
     );
+
+    if (!toX && !toY) isRight = isRightValue;
 
     toX = toX === null ? x : toX;
     toY = toY === null ? y : toY;

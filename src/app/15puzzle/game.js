@@ -17,6 +17,7 @@ class Game {
         this.board = generateBoard(this.#SIZE);
         this.updateTiles();
         this.#solved = false;
+        this.time = 0;
     }
 
     setBoardElement(boardElement) {
@@ -43,7 +44,7 @@ class Game {
     checkSolution() {
         for (let i = 0; i < this.#SIZE; i++) {
             for (let j = 0; j < this.#SIZE; j++) {
-                if (this.board[i][j] != this.#SIZE * i + j + 1);
+                if (this.board[i][j] != this.#SIZE * i + j + 1) return;
             }
         }
         this.#solved = true;
@@ -55,8 +56,12 @@ class Game {
                 if (this.board[i][j] == 0) return [i, j];
     }
 
+    get isSolved() {
+        return this.#solved;
+    }
+
     moveTile(direction) {
-        if (this.#solved) return;
+        if (this.isSolved) return;
         const [blankY, blankX] = this.getBlankPosition();
 
         let tileY = blankY;
@@ -97,13 +102,17 @@ class Game {
                     blankY * this.#SIZE + blankX + 1,
             })
         );
+
+        this.checkSolution();
     }
 
-    moveTileByIndex(row, col){
-        if (row + 1 < this.#SIZE && this.board[row+1][col] == 0) this.moveDown();
-        else if (row - 1 >= 0 && this.board[row-1][col] == 0) this.moveUp();
-        else if (col + 1 < this.#SIZE && this.board[row][col+1] == 0) this.moveRight();
-        else if (col - 1 >= 0 && this.board[row][col-1] == 0) this.moveLeft();
+    moveTileByIndex(row, col) {
+        if (row + 1 < this.#SIZE && this.board[row + 1][col] == 0)
+            this.moveDown();
+        else if (row - 1 >= 0 && this.board[row - 1][col] == 0) this.moveUp();
+        else if (col + 1 < this.#SIZE && this.board[row][col + 1] == 0)
+            this.moveRight();
+        else if (col - 1 >= 0 && this.board[row][col - 1] == 0) this.moveLeft();
     }
 
     moveDown() {
