@@ -22,7 +22,7 @@ function Games() {
                 <div
                     className="game-icon"
                     style={{
-                        backgroundImage: `url(${require("@components/categories/images/sudoku.png")})`,
+                        backgroundImage: `url(${require("@components/categories/images/15puzzle.png")})`,
                     }}
                     onClick={() => navigate("/15puzzle")}
                 ></div>
