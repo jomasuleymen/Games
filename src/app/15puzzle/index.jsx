@@ -3,11 +3,69 @@ import React, { useEffect, useRef, useState } from "react";
 import Board from "./Board";
 
 import "./15puzzle.scss";
-import Game from "./game";
+import game from "./game";
 import useKeyUpDown from "@utils/hooks/useKeyUpDown";
 
-function GridInput({ game }) {
-    const [gridSize, setGridSize] = useState(4);
+function Puzzle() {
+    const ref = useRef();
+
+    useKeyUpDown(null, (ev) => {
+        switch (ev.key) {
+            case "ArrowUp": {
+                game.moveUp();
+                break;
+            }
+            case "ArrowDown": {
+                game.moveDown();
+                break;
+            }
+            case "ArrowLeft": {
+                game.moveLeft();
+                break;
+            }
+            case "ArrowRight": {
+                game.moveRight();
+                break;
+            }
+            default:
+                return;
+        }
+    });
+
+    React.useEffect(() => {
+        game.setBoardElement(ref.current);
+        game.newGame();
+
+        return () => {
+            game.clearData();
+        };
+    }, []);
+
+    return (
+        <div id="puzzle-game">
+            <div id="header">
+                <button
+                    className="new-game"
+                    onClick={() => {
+                        game.newGame();
+                    }}
+                >
+                    New game
+                </button>
+                <GridInput game={game}></GridInput>
+                <h1 className="title">15 Puzzle</h1>
+                <Timer />
+            </div>
+            <div id="board" ref={ref}>
+                <Board />
+            </div>
+            <Arrows />
+        </div>
+    );
+}
+
+function GridInput() {
+    const [gridSize, setGridSize] = useState(game.size);
 
     return (
         <div className="grid-input">
@@ -51,7 +109,7 @@ function GridInput({ game }) {
     );
 }
 
-function Timer({ game }) {
+function Timer() {
     const ref = useRef();
 
     useEffect(() => {
@@ -74,77 +132,25 @@ function Timer({ game }) {
     );
 }
 
-function Arrows({ game }) {
+function Arrows() {
     return (
         <div className="control-arrows">
             <div className="control-arrow hidden"></div>
-            <div className="control-arrow" onClick={() => game.moveUp()}>↑</div>
+            <div className="control-arrow" onClick={() => game.moveUp()}>
+                ↑
+            </div>
             <div className="control-arrow hidden"></div>
-            <div className="control-arrow" onClick={() => game.moveLeft()}>←</div>
-            <div className="control-arrow" onClick={() => game.moveDown()}>↓</div>
-            <div className="control-arrow" onClick={() => game.moveRight()}>→</div>
+            <div className="control-arrow" onClick={() => game.moveLeft()}>
+                ←
+            </div>
+            <div className="control-arrow" onClick={() => game.moveDown()}>
+                ↓
+            </div>
+            <div className="control-arrow" onClick={() => game.moveRight()}>
+                →
+            </div>
         </div>
     );
 }
 
-function Puzzle() {
-    const game = new Game();
-    const ref = useRef();
-
-    useKeyUpDown(null, (ev) => {
-        switch (ev.key) {
-            case "ArrowUp": {
-                game.moveUp();
-                break;
-            }
-            case "ArrowDown": {
-                game.moveDown();
-                break;
-            }
-            case "ArrowLeft": {
-                game.moveLeft();
-                break;
-            }
-            case "ArrowRight": {
-                game.moveRight();
-                break;
-            }
-            default:
-                return;
-        }
-    });
-
-    React.useEffect(() => {
-        game.setBoardElement(ref.current);
-
-        return () => {
-            game.clearData();
-        };
-    }, []);
-
-    return (
-        <div id="puzzle-game">
-            <div id="header">
-                <button
-                    className="new-game"
-                    onClick={() => {
-                        game.newGame();
-                    }}
-                >
-                    New game
-                </button>
-                <GridInput game={game}></GridInput>
-                <h1 className="title">15 Puzzle</h1>
-                <Timer game={game} />
-            </div>
-            <div id="board" ref={ref}>
-                {game.board.map((row) =>
-                    row.map((value) => <div className="cell" key={value}></div>)
-                )}
-                <Board game={game} />
-            </div>
-            <Arrows game={game} />
-        </div>
-    );
-}
 export default Puzzle;

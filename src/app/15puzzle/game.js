@@ -88,6 +88,8 @@ class Game {
                 tileX += 1;
                 break;
             }
+            default:
+                return;
         }
 
         this.board[blankY][blankX] = this.board[tileY][tileX];
@@ -131,9 +133,13 @@ class Game {
     clearData() {
         store.dispatch(setBoard(null));
     }
+
+    get size() {
+        return this.#SIZE;
+    }
 }
 
-export default Game;
+export default new Game();
 
 export const directions = {
     UP: "up",
