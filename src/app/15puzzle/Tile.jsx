@@ -8,10 +8,11 @@ function Tile({ value, x, y, onClick, isRightValue }) {
             return right.tileValue !== null && right.tileValue != value;
         }
     );
-    if (!toX && !toY) isRight = isRightValue;
-
-    toX = toX === null ? x : toX;
-    toY = toY === null ? y : toY;
+    if (toX === null && toY === null) {
+        isRight = isRightValue;
+        toX = x;
+        toY = y;
+    }
 
     const style = {
         "--x": toX,
