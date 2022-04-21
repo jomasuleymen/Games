@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const selectedCellSlice = createSlice({
     name: "selectedCell",
     initialState: {
-        row: 0,
-        col: 0,
-        squareRowBegin: 0,
-        squareColBegin: 0,
-        value: -1,
+        row: null,
+        col: null,
+        squareRowBegin: null,
+        squareColBegin: null,
+        value: null,
     },
     reducers: {
         selectCell: (state, { payload }) => {
@@ -22,8 +22,16 @@ const selectedCellSlice = createSlice({
         updateCurrentCell: (state, { payload }) => {
             return { ...state, value: payload.newValue };
         },
+        resetData: (state) => {
+            state.row = null;
+            state.col = null;
+            state.squareRowBegin = null;
+            state.squareColBegin = null;
+            state.value = null;
+        },
     },
 });
 
 export default selectedCellSlice.reducer;
-export const { selectCell, updateCurrentCell } = selectedCellSlice.actions;
+export const { selectCell, updateCurrentCell, resetData } =
+    selectedCellSlice.actions;

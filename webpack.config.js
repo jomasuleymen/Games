@@ -55,7 +55,7 @@ module.exports = {
     mode: "development",
     entry: ["babel-polyfill", "./src/index.js"],
     output: {
-        path: path.resolve(__dirname, "../Games-api/public"),
+        path: path.resolve(__dirname, "../puzzle-games-backend/public"),
         clean: true,
     },
     devtool: isDev ? "source-map" : false,

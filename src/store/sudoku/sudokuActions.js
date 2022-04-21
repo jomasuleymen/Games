@@ -1,6 +1,7 @@
 import {
     selectCell as selectCellReducer,
     updateCurrentCell,
+    resetData,
 } from "./reducers/cellSlice";
 import { setStatus } from "./reducers/statusSlice";
 import {
@@ -22,6 +23,10 @@ const getSelectedCell = () => {
 
 const updateCell = (newValue) => {
     store.dispatch(updateCurrentCell({ newValue }));
+};
+
+const resetCells = () => {
+    store.dispatch(resetData());
 };
 
 /* Game statuses */
@@ -76,6 +81,7 @@ export default {
     toggleStatus,
     resetStatus,
     getCurrentStatus,
+    resetCells,
 
     selectCell,
     getSelectedCell,

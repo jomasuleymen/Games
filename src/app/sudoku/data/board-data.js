@@ -42,6 +42,8 @@ class Board {
     }
 
     createBoard(newBoardData) {
+        sudokuActions.resetCells();
+
         newBoardData.forEach((row, index) => {
             this.currentData[index] = [...row];
             this.initialData[index] = [...row];
@@ -51,7 +53,7 @@ class Board {
         this.note.clear();
         this.history.clear();
 
-        sudokuActions.selectCell(0, 0);
+        sudokuActions.selectCell(0, 0, this.getCellValue(0, 0));
 
         if (newBoardData !== this.initialData) {
             setSolution(newBoardData, this);
@@ -113,13 +115,13 @@ class Board {
         )
             return;
 
+        const oldValue = this.getCellValue(row, col);
+        const oldNote = [...this.note.getNote(row, col)];
+
         if (this.cellHasNumber(row, col)) {
             revertErrors(row, col, this.currentData, this.errorData);
             this.setCellValue(row, col, 0);
         }
-
-        const oldValue = this.getCellValue(row, col);
-        const oldNote = [...this.note.getNote(row, col)];
 
         if (this.note.isEnabled && !isHint && !isUndo)
             this.note.addNote(row, col, newValue);

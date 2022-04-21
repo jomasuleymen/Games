@@ -32,6 +32,7 @@ const generateSudoku = async (difficulty, callBack) => {
         .get(`sudoku/board?difficulty=${difficulty.toLocaleLowerCase()}`)
         .then(callBack)
         .catch((err) => {
+            console.log(err)
             toast.error('Please check your network and choose level again.');
             sudokuActions.gameFailed();
         });
