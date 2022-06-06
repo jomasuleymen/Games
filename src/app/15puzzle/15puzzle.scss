@@ -39,7 +39,7 @@
             outline: none;
             text-decoration: none;
             text-align: center;
-            background-color: rgb(210, 210, 210);
+            background-color: #d5d5d5;
             color: rgba(56, 56, 56, 0.879);
             font-size: var(--font-size);
 
@@ -67,7 +67,7 @@
                 outline: none;
                 text-decoration: none;
                 text-align: center;
-                background-color: rgb(210, 210, 210);
+                background-color: #d5d5d5;
                 color: rgba(56, 56, 56, 0.879);
             }
 
@@ -85,7 +85,7 @@
                     align-items: center;
                     flex: 1;
                     width: 3vmin;
-                    background-color: rgb(210, 210, 210);
+                    background-color: #d5d5d5;
                     color: rgba(56, 56, 56, 0.879);
                     border: none;
                     font-weight: bold;
@@ -124,7 +124,7 @@
             outline: none;
             text-decoration: none;
             text-align: center;
-            background-color: rgb(210, 210, 210);
+            background-color: #d5d5d5;
             color: rgba(56, 56, 56, 0.879);
             font-size: var(--font-size);
         }
@@ -133,10 +133,10 @@
 
     #board {
         --cell-gap: 0.5vmin;
-        --background-color: #e5e6eb;
-        --cell-background-color: #bfbfbf;
-        --tile-success-color: rgb(102, 183, 102);
-        --tile-background-color: #9c9a9a;
+        --background-color: #c8c8c8;
+        --cell-background-color: #dedede;
+        --tile-background-color: rgb(245, 245, 245);
+        --tile-success-color: rgb(172,216,230);
         --board-size: calc(var(--body-size) * 0.85);
 
         width: var(--board-size);
